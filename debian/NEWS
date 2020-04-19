@@ -1,0 +1,36 @@
+cgal (5.0-2) experimental; urgency=medium
+
+  In order to closely match a default installation of CGAL, the Debian package
+  does no longer set the CGAL_USE_GMPXX macro. To restore the previous state,
+  add -DCGAL_USE_GMPXX=1 to the preprocessor flags.
+
+ -- Joachim Reichel <reichel@debian.org>  Sat, 23 Nov 2019 10:41:42 +0100
+
+cgal (5.0-1) experimental; urgency=medium
+
+  Since version 5.0 the so-called header-only mode of CGAL is now enabled by
+  default. That means, all library code resides in header files and there
+  are no more any pre-compiled shared or static libraries. As a result, the
+  binary packages libcgal13 and libcgal-qt5-14 are gone. User code should
+  no longer attempt to link with the no longer existing libraries
+  libCGAL.so, libCGAL_Core.so, libCGAL_ImageIO.so, libCGAL_Qt5.so.
+
+ -- Joachim Reichel <reichel@debian.org>  Sat, 09 Nov 2019 10:58:26 +0100
+
+cgal (4.7-1) unstable; urgency=medium
+
+  The CGAL support library for Qt and the demos have been upgraded to work with
+  Qt5 instead of Qt4.
+
+ -- Joachim Reichel <reichel@debian.org>  Mon, 19 Oct 2015 18:59:58 +0200
+
+cgal (4.2-1) unstable; urgency=low
+
+  The Qt4 support library libCGAL_Qt4.so.10.0.0 has been moved from the package
+  libcgal10 to the new package libcgal-qt4-10. Similarly, the corresponding
+  headers and the static library have been moved from the package libcgal-dev
+  to the new package libcgal-qt4-dev. That is the packages libcgal10 and
+  libcgal-dev do not any longer depend on the Qt packages.
+
+ -- Joachim Reichel <reichel@debian.org>  Sun, 02 Sep 2012 12:31:08 +0200
+

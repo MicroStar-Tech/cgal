@@ -1,0 +1,5 @@
+usr/bin/*
+usr/include/*
+usr/lib/*/cmake/CGAL/*
+usr/share/man/man1/cgal_create_cmake_script.1
+usr/share/doc/cgal/changelog   usr/share/doc/libcgal-dev

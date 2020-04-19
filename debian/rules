@@ -1,0 +1,121 @@
+#!/usr/bin/make -f
+
+# export DH_VERBOSE=1
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+bindnow
+
+# See http://wiki.debian.org/Hardening#Notes_for_packages_using_CMake
+CPPFLAGS := $(shell dpkg-buildflags --get CPPFLAGS)
+CFLAGS   := $(shell dpkg-buildflags --get CFLAGS) $(CPPFLAGS)
+CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS) $(CPPFLAGS)
+LDFLAGS  := $(shell dpkg-buildflags --get LDFLAGS)
+
+export DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+COMMA = ,
+ifneq (,$(filter parallel=%,$(subst $(COMMA), ,$(DEB_BUILD_OPTIONS))))
+  NJOBS := -j $(subst parallel=,,$(filter parallel=%,$(subst $(COMMA), ,$(DEB_BUILD_OPTIONS))))
+endif
+
+OPENGL_ES_ARCHITECTURES := armel armhf
+ifneq (,$(findstring $(DEB_HOST_ARCH), $(OPENGL_ES_ARCHITECTURES)))
+  DEBHELPER_QT5 := -Nlibcgal-qt5-dev
+	CMAKE_QT5 := -DWITH_CGAL_Qt5=OFF
+endif
+
+%:
+	dh $@ $(DEBHELPER_QT5)
+
+override_dh_auto_clean:
+	dh_auto_clean $(DEBHELPER_QT5)
+	rm -fr build
+	$(MAKE) -C debian/tests clean
+
+override_dh_auto_configure-arch:
+	QTDIR= dh_auto_configure --builddirectory=build -- \
+	  -DCMAKE_BUILD_TYPE=Release \
+	  -DWITH_demos=OFF -DWITH_examples=OFF \
+	  -DCGAL_INSTALL_CMAKE_DIR=lib/$(DEB_HOST_MULTIARCH)/cmake/CGAL $(CMAKE_QT5)
+	QTDIR= dh_auto_configure --builddirectory=build/demo/CGAL_ipelets --sourcedirectory=demo/CGAL_ipelets -- \
+	  -DCMAKE_BUILD_TYPE=Release \
+	  -DCGAL_DIR=$(CURDIR)/build
+
+override_dh_auto_configure-indep:
+	# empty
+
+override_dh_auto_build-arch:
+	$(MAKE) $(NJOBS) -C build
+	$(MAKE) $(NJOBS) -C build/demo/CGAL_ipelets
+
+override_dh_auto_build-indep:
+	# empty
+
+override_dh_auto_test-arch:
+ifeq (,$(findstring nocheck,$(DEB_BUILD_OPTIONS)))
+	$(MAKE) -C debian/tests rounding_modes_simple
+	debian/tests/rounding_modes_simple
+	$(MAKE) -C debian/tests rounding_math_simple
+	debian/tests/rounding_math_simple
+	$(MAKE) -C debian/tests rounding_modes_cgal
+	debian/tests/rounding_modes_cgal
+endif
+
+override_dh_auto_test-indep:
+	# empty
+
+override_dh_install-arch:
+	# install files into debian/tmp
+	$(MAKE) -C build DESTDIR=$(CURDIR)/debian/tmp install
+	$(MAKE) -C build/demo/CGAL_ipelets DESTDIR=$(CURDIR)/debian/tmp install
+
+	# remove -fdebug-prefix-map, -ffile-prefix-map, and -fmacro-prefix-map settings
+  # from CGALConfig.cmake to avoid false positives in reproducible builds report
+	sed -i 's/-f\(debug\|file\|macro\)-prefix-map=[^ ]* //' debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/CGAL/CGALConfig.cmake
+
+	# tweak installed documentation files
+	mv debian/tmp/usr/share/doc/CGAL-`cat VERSION` debian/tmp/usr/share/doc/cgal
+	mv debian/tmp/usr/share/doc/cgal/CHANGES.md debian/tmp/usr/share/doc/cgal/changelog
+	rm debian/tmp/usr/share/doc/cgal/LICENSE*
+	rm debian/tmp/usr/share/doc/cgal/AUTHORS
+
+	# remove irrelevant binary
+	rm debian/tmp/usr/bin/cgal_make_macosx_app
+
+	dh_install --sourcedir=debian/tmp
+	dh_missing --list-missing
+
+	# move Qt header and cmake files into libcgal-qt5-dev package
+ifeq (,$(findstring $(DEB_HOST_ARCH), $(OPENGL_ES_ARCHITECTURES)))
+	mkdir -p  debian/libcgal-qt5-dev/usr/include/CGAL
+	mv debian/libcgal-dev/usr/include/CGAL/Qt debian/libcgal-qt5-dev/usr/include/CGAL
+	mkdir -p debian/libcgal-qt5-dev/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/CGAL
+	mv debian/libcgal-dev/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/CGAL/CGAL_Qt5* debian/libcgal-qt5-dev/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/CGAL
+endif
+
+	# create symlinks to /usr/share/doc/libcgal-dev
+	mkdir -p debian/libcgal-ipelets/usr/share/doc
+	ln -s libcgal-dev debian/libcgal-ipelets/usr/share/doc/libcgal-ipelets
+ifeq (,$(findstring $(DEB_HOST_ARCH), $(OPENGL_ES_ARCHITECTURES)))
+	mkdir -p debian/libcgal-qt5-dev/usr/share/doc
+	ln -s libcgal-dev debian/libcgal-qt5-dev/usr/share/doc/libcgal-qt5-dev
+endif
+
+override_dh_install-indep:
+	mkdir -p debian/tmp/usr/share/doc/cgal
+	tar cf - --sort=name --mode u=rwX,g=rX,o=rX --owner root --group root demo | gzip --no-name --best >debian/tmp/usr/share/doc/cgal/demo.tar.gz
+	tar cf - --sort=name --mode u=rwX,g=rX,o=rX --owner root --group root examples | gzip --no-name --best >debian/tmp/usr/share/doc/cgal/examples.tar.gz
+
+	dh_install --sourcedir=debian/tmp
+	dh_missing --list-missing
+
+	mkdir -p debian/libcgal-demo/usr/share/doc
+	ln -s libcgal-dev debian/libcgal-demo/usr/share/doc/libcgal-demo
+
+override_dh_installdocs:
+	dh_installdocs -plibcgal-dev debian/copyright
+
+override_dh_installchangelogs:
+	dh_installchangelogs -plibcgal-dev
+
+override_dh_gencontrol:
+	dh_gencontrol -- -VIpe-Version=`dpkg-awk 'Package:^ipe$$' -- Version | grep Version | sed 's/Version: //;s/-[^-]*$$//'`
