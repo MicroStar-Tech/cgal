@@ -1,3 +1,0 @@
-# The shared directory in /usr/share/doc used to belong to libcgal13 which
-# disappeared in 5.0-1.
-symlink_to_dir /usr/share/doc/libcgal-dev libcgal13 5.0~

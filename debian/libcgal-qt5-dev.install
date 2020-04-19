@@ -1,6 +1,0 @@
-# The first and last entry is disabled here because it overlaps with the
-# corresponding entry in libcgal-dev.install.  The files are moved in
-# debian/rules.
-#
-# usr/include/CGAL/Qt
-# usr/lib/*/cmake/CGAL/CGAL_Qt5*
