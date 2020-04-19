@@ -25,6 +25,8 @@ Standards-Version: 4.5.0
 Section: libs
 Rules-Requires-Root: no
 Homepage: http://www.cgal.org/
+Vcs-Git: https://salsa.debian.org/reichel/cgal.git
+Vcs-Browser: https://salsa.debian.org/reichel/cgal
 
 Package: libcgal-dev
 Section: libdevel
