@@ -1,9 +1,10 @@
-cgal (5.0.2-4) UNRELEASED; urgency=medium
+cgal (5.0.3-1) unstable; urgency=medium
 
+  * New upstream release.
   * Add Suggests: libceres-dev to libcal-demo.
   * Remove duplicate Suggests: libglpk-dev for libcgal-demo.
 
- -- Joachim Reichel <reichel@debian.org>  Sat, 29 Feb 2020 15:30:14 +0100
+ -- Joachim Reichel <reichel@debian.org>  Mon, 03 Aug 2020 17:57:06 +0200
 
 cgal (5.0.2-3) unstable; urgency=medium
 

@@ -3,7 +3,7 @@ Priority: optional
 Maintainer: Joachim Reichel <reichel@debian.org>
 # "ipe" is only needed because it contains goodies.lua which is needed by FindIPE.cmake
 Build-Depends:
- cmake,
+  cmake,
  debhelper-compat (= 12),
  dpkg-awk,
  ipe,
