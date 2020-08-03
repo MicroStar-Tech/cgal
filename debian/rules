@@ -73,7 +73,7 @@ override_dh_install-arch:
 	sed -i 's/-f\(debug\|file\|macro\)-prefix-map=[^ ]* //' debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/CGAL/CGALConfig.cmake
 
 	# tweak installed documentation files
-	mv debian/tmp/usr/share/doc/CGAL-`cat VERSION` debian/tmp/usr/share/doc/cgal
+	mv debian/tmp/usr/share/doc/CGAL debian/tmp/usr/share/doc/cgal
 	mv debian/tmp/usr/share/doc/cgal/CHANGES.md debian/tmp/usr/share/doc/cgal/changelog
 	rm debian/tmp/usr/share/doc/cgal/LICENSE*
 	rm debian/tmp/usr/share/doc/cgal/AUTHORS

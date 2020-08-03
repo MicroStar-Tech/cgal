@@ -1,6 +1,7 @@
 cgal (5.0.3-1) unstable; urgency=medium
 
   * New upstream release.
+  * Adapt to renaming of /usr/share/doc/CGAL-x.y.z to /usr/share/doc/CGAL.
   * Add Suggests: libceres-dev to libcal-demo.
   * Remove duplicate Suggests: libglpk-dev for libcgal-demo.
 
