@@ -5,8 +5,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Surface_mesh/include/CGAL/Surface_mesh/Properties.h $
-// $Id: Properties.h 5b2d46c 2020-04-21T10:03:00+02:00 Maxime Gimeno
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Surface_mesh/include/CGAL/Surface_mesh/Properties.h $
+// $Id: Properties.h e9d41d7 2020-04-21T10:03:00+02:00 Maxime Gimeno
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 
@@ -486,6 +486,7 @@ public:
     void swap (Property_container& other)
     {
       this->parrays_.swap (other.parrays_);
+      std::swap(this->size_, other.size_);
     }
 
 private:

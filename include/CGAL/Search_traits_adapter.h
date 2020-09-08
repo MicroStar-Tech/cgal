@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Spatial_searching/include/CGAL/Search_traits_adapter.h $
-// $Id: Search_traits_adapter.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Spatial_searching/include/CGAL/Search_traits_adapter.h $
+// $Id: Search_traits_adapter.h 2e180ac 2020-03-26T19:29:44+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -182,7 +182,11 @@ public:
     }
 
     Dereference_type&
-    dereference() const { return const_cast<Dereference_type&>((*point)[idx]); }
+    dereference() const
+    {
+      // Point::operator[] takes an int as parameter...
+      return const_cast<Dereference_type&>((*point)[static_cast<int>(idx)]);
+    }
 
   };
 
@@ -269,7 +273,6 @@ public:
 template <class Point_with_info,class PointPropertyMap,class Base_distance>
 class Distance_adapter : public Base_distance {
   PointPropertyMap ppmap;
-  typedef typename Base_distance::FT FT;
 
 public:
 
@@ -279,6 +282,7 @@ public:
 
   using Base_distance::transformed_distance;
 
+  typedef typename Base_distance::FT FT;
   typedef Point_with_info Point_d;
   typedef typename Base_distance::Query_item Query_item;
 

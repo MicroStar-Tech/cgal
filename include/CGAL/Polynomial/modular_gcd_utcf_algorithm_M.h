@@ -2,8 +2,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Polynomial/include/CGAL/Polynomial/modular_gcd_utcf_algorithm_M.h $
-// $Id: modular_gcd_utcf_algorithm_M.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Polynomial/include/CGAL/Polynomial/modular_gcd_utcf_algorithm_M.h $
+// $Id: modular_gcd_utcf_algorithm_M.h fdb17cb 2020-03-26T19:26:10+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -109,7 +109,7 @@ Polynomial<NT> modular_gcd_utcf_algorithm_M(
     MScalar mg_;
     MPoly   mF1,mF2,mG_;
 
-    typename CRT::Scalar_type p,q,pq,s,t;
+    typename CRT::Scalar_type p(0),q(0),pq,s,t;
     Poly Gs,H1s,H2s, Gs_old; // s =^ star
 #ifdef CGAL_MODULAR_GCD_TIMER
     timer_init.stop();

@@ -2,8 +2,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/BGL/include/CGAL/boost/graph/Dual.h $
-// $Id: Dual.h 2dd06eb 2020-04-13T10:44:26+02:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/BGL/include/CGAL/boost/graph/Dual.h $
+// $Id: Dual.h ebd65c9 2020-07-20T11:47:30+02:00 Mael Rouxel-Labbé
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -56,18 +56,18 @@ public:
   /*! The underlying primal type. */
   typedef Primal_ Primal;
 
-  /*! Construct a Dual from a given primal. */
+  /*! constructs a Dual from a given primal. */
   Dual(const Primal& primal)
     : primal_(primal) {}
 
-  /*! Returns the underlying primal. */
+  /*! returns the underlying primal. */
   const Primal& primal() const
   { return primal_; }
 };
 
 
 /*!
-  Construct a `Dual` from a given `primal`.
+  constructs a `Dual` from a given `primal`.
   \relates CGAL::Dual
  */
 template<typename Primal>

@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Algebraic_kernel_d/include/CGAL/Algebraic_kernel_d/Bitstream_coefficient_kernel_at_alpha.h $
-// $Id: Bitstream_coefficient_kernel_at_alpha.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Algebraic_kernel_d/include/CGAL/Algebraic_kernel_d/Bitstream_coefficient_kernel_at_alpha.h $
+// $Id: Bitstream_coefficient_kernel_at_alpha.h fdb17cb 2020-03-26T19:26:10+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -39,7 +39,7 @@ public:
 
     typedef typename Algebraic_kernel_d_1::Algebraic_real_1 Algebraic_real_1;
 
-    Bitstream_coefficient_kernel_at_alpha_rep() {}
+    Bitstream_coefficient_kernel_at_alpha_rep() : _m_kernel(nullptr) {}
 
     Bitstream_coefficient_kernel_at_alpha_rep(Algebraic_kernel_d_1* kernel,
                                               Algebraic_real_1 alpha)

@@ -21,13 +21,15 @@
  * WWW URL: http://cs.nyu.edu/exact/
  * Email: exact@cs.nyu.edu
  *
- * $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/CGAL_Core/include/CGAL/CORE/Real.h $
- * $Id: Real.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+ * $URL: https://github.com/CGAL/cgal/blob/v5.1/CGAL_Core/include/CGAL/CORE/Real.h $
+ * $Id: Real.h 10e99cb 2020-07-22T09:51:07+02:00 Laurent Rineau
  * SPDX-License-Identifier: LGPL-3.0-or-later
  ***************************************************************************/
 #ifndef _CORE_REAL_H_
 #define _CORE_REAL_H_
+
 #include "RealRep.h"
+#include <CGAL/use.h>
 
 namespace CORE {
 // class Real
@@ -481,6 +483,12 @@ inline Real Realbase_for<T>::operator-() const {
 template <>
 inline Real RealLong::operator-() const {
   return ker < -LONG_MAX ? -BigInt(ker) : -ker;
+}
+
+inline void init_CORE() {
+  using RealRep = CORE::RealDouble;
+  CGAL_STATIC_THREAD_LOCAL_VARIABLE(MemoryPool<RealRep>*, pool_real_rep, &MemoryPool<RealRep>::global_allocator());
+  CGAL_USE(pool_real_rep);
 }
 
 } //namespace CORE

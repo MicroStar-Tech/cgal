@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Triangulation_3/include/CGAL/Delaunay_triangulation_cell_base_with_circumcenter_3.h $
-// $Id: Delaunay_triangulation_cell_base_with_circumcenter_3.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Triangulation_3/include/CGAL/Delaunay_triangulation_cell_base_with_circumcenter_3.h $
+// $Id: Delaunay_triangulation_cell_base_with_circumcenter_3.h d1a323c 2020-03-26T19:24:14+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Monique Teillaud <Monique.Teillaud@sophia.inria.fr>
@@ -63,11 +63,25 @@ public:
     : Cb(c), circumcenter_(c.circumcenter_ != nullptr ? new Point(*(c.circumcenter_)) : nullptr)
   {}
 
+  Delaunay_triangulation_cell_base_with_circumcenter_3
+        (Delaunay_triangulation_cell_base_with_circumcenter_3 &&c)
+    : Cb(std::move(c)), circumcenter_(std::exchange(c.circumcenter_, nullptr))
+  {
+  }
+
   Delaunay_triangulation_cell_base_with_circumcenter_3&
   operator=(const Delaunay_triangulation_cell_base_with_circumcenter_3 &c)
   {
       Delaunay_triangulation_cell_base_with_circumcenter_3 tmp=c;
       std::swap(tmp, *this);
+      return *this;
+  }
+
+  Delaunay_triangulation_cell_base_with_circumcenter_3&
+  operator=(Delaunay_triangulation_cell_base_with_circumcenter_3 &&c)
+  {
+      Cb::operator=(std::move(c));
+      circumcenter_ = std::exchange(c.circumcenter_, nullptr);
       return *this;
   }
 

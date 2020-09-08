@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/HalfedgeDS/include/CGAL/HalfedgeDS_iterator.h $
-// $Id: HalfedgeDS_iterator.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/HalfedgeDS/include/CGAL/HalfedgeDS_iterator.h $
+// $Id: HalfedgeDS_iterator.h 1d3c8bb 2020-06-10T22:33:26+02:00 Laurent Rineau
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -262,6 +262,8 @@ public:
     bool operator!=( std::nullptr_t p) const { return !(*this == p); }
     bool operator==( const Self& i) const { return  It::operator==(i); }
     bool operator!=( const Self& i) const { return !(*this == i); }
+    bool operator==( const It& i) const { return  It::operator==(i); }
+    bool operator!=( const It& i) const { return !(*this == i); }
 
     Self& operator++() {
         this->nt = (*this->nt).next();

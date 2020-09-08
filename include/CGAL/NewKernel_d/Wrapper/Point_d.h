@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/NewKernel_d/include/CGAL/NewKernel_d/Wrapper/Point_d.h $
-// $Id: Point_d.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/NewKernel_d/include/CGAL/NewKernel_d/Wrapper/Point_d.h $
+// $Id: Point_d.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Marc Glisse
@@ -51,12 +51,12 @@ public:
   typedef typename Get_type<Kbase, Point_tag>::type      Rep;
   //typedef typename CGAL::decay<typename boost::result_of<CPI(Rep,Begin_tag)>::type>::type Cartesian_const_iterator;
 
-  const Rep& rep() const
+  const Rep& rep() const noexcept
   {
     return *this;
   }
 
-  Rep& rep()
+  Rep& rep() noexcept
   {
     return *this;
   }
@@ -101,6 +101,14 @@ public:
   Point_d(Origin&& v)
     : Rep(CPBase()(std::move(v))) {}
 
+  friend void swap(Self& a, Self& b)
+#ifdef __cpp_lib_is_swappable
+    noexcept(std::is_nothrow_swappable_v<Rep>)
+#endif
+    {
+      using std::swap;
+      swap(a.rep(), b.rep());
+    }
 
   decltype(auto) cartesian(int i)const{
           return CCBase()(rep(),i);

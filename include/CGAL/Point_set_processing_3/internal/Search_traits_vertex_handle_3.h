@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Point_set_processing_3/include/CGAL/Point_set_processing_3/internal/Search_traits_vertex_handle_3.h $
-// $Id: Search_traits_vertex_handle_3.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Point_set_processing_3/include/CGAL/Point_set_processing_3/internal/Search_traits_vertex_handle_3.h $
+// $Id: Search_traits_vertex_handle_3.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s) : Pierre Alliez and Laurent Saboret
@@ -117,8 +117,10 @@ struct Construct_cartesian_const_iterator_vertex_handle_3
 template <class Vertex_handle>
 struct Euclidean_distance_vertex_handle_3
 {
+  typedef double FT;
   typedef CGAL::internal::Point_vertex_handle_3<Vertex_handle> Point_vertex_handle_3;
   typedef Point_vertex_handle_3 Query_item;
+  typedef Point_vertex_handle_3 Point_d;
 
   double transformed_distance(const Point_vertex_handle_3& p1, const Point_vertex_handle_3& p2) const {
     double distx = p1.x()-p2.x();

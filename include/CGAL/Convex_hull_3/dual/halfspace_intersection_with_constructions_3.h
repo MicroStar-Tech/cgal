@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Convex_hull_3/include/CGAL/Convex_hull_3/dual/halfspace_intersection_with_constructions_3.h $
-// $Id: halfspace_intersection_with_constructions_3.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Convex_hull_3/include/CGAL/Convex_hull_3/dual/halfspace_intersection_with_constructions_3.h $
+// $Id: halfspace_intersection_with_constructions_3.h 9f2eafd 2020-03-26T19:17:02+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -142,7 +142,7 @@ namespace CGAL
                                                             boost::optional<typename Kernel_traits<typename std::iterator_traits<PlaneIterator>::value_type>::Kernel::Point_3> const& origin = boost::none) {
           typedef typename Kernel_traits<typename std::iterator_traits<PlaneIterator>::value_type>::Kernel K;
           typedef typename K::Point_3 Point_3;
-          typedef typename internal::Convex_hull_3::Default_traits_for_Chull_3<Point_3>::type Traits;
+          typedef typename Convex_hull_3::internal::Default_traits_for_Chull_3<Point_3>::type Traits;
 
           halfspace_intersection_with_constructions_3(pbegin, pend, P, origin, Traits());
         }

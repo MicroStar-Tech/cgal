@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Nef_2/include/CGAL/Nef_polynomial.h $
-// $Id: Nef_polynomial.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Nef_2/include/CGAL/Nef_polynomial.h $
+// $Id: Nef_polynomial.h 9d16a42 2020-06-15T17:07:35+02:00 Laurent Rineau
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -69,6 +69,41 @@ class Nef_polynomial
       CGAL_STATIC_THREAD_LOCAL_VARIABLE(NT, R_, 1);
       return R_;
     }
+
+  friend bool operator==(const Nef_polynomial<NT> &a, const Nef_polynomial<NT> &b)
+  {
+    return a.polynomial() == b.polynomial();
+  }
+
+  friend bool operator==(const Nef_polynomial<NT> &a, const NT& b)
+  {
+    return a.polynomial() == b;
+  }
+
+  friend bool operator==(const Nef_polynomial<NT> &a, int b)
+  {
+    return a.polynomial() == b;
+  }
+
+  friend bool operator<(const Nef_polynomial<NT> &a, const Nef_polynomial<NT> &b)
+  {
+    return a.polynomial() < b.polynomial();
+  }
+
+  friend bool operator<(const Nef_polynomial<NT> &a, const NT& b)
+  {
+    return a.polynomial() < b;
+  }
+
+  friend bool operator<(const Nef_polynomial<NT> &a, int b)
+  {
+    return a.polynomial() < b;
+  }
+
+  friend bool operator>(const Nef_polynomial<NT> &a, int b)
+  {
+    return a.polynomial() > b;
+  }
 };
 
 template <class NT>
@@ -84,42 +119,6 @@ Nef_polynomial<NT> operator-(const Nef_polynomial<NT> &a)
 {
   return - a.polynomial();
 }
-
-template <class NT>
-inline
-bool operator<(const Nef_polynomial<NT> &a, const Nef_polynomial<NT> &b)
-{
-  return a.polynomial() < b.polynomial();
-}
-
-template <class NT>
-inline
-bool operator==(const Nef_polynomial<NT> &a, const Nef_polynomial<NT> &b)
-{
-  return a.polynomial() == b.polynomial();
-}
-
-template <class NT>
-inline
-bool operator==(const Nef_polynomial<NT> &a, int b)
-{
-  return a.polynomial() == b;
-}
-
-template <class NT>
-inline
-bool operator<(const Nef_polynomial<NT> &a, int b)
-{
-  return a.polynomial() < b;
-}
-
-template <class NT>
-inline
-bool operator>(const Nef_polynomial<NT> &a, int b)
-{
-  return a.polynomial() > b;
-}
-
 
 #undef CGAL_double
 #undef CGAL_int

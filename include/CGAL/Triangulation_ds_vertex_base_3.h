@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/TDS_3/include/CGAL/Triangulation_ds_vertex_base_3.h $
-// $Id: Triangulation_ds_vertex_base_3.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/TDS_3/include/CGAL/Triangulation_ds_vertex_base_3.h $
+// $Id: Triangulation_ds_vertex_base_3.h d1a323c 2020-03-26T19:24:14+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Monique Teillaud <Monique.Teillaud@sophia.inria.fr>
@@ -59,8 +59,8 @@ public:
   // For use by the Compact_container.
   void *   for_compact_container() const
   { return _c.for_compact_container(); }
-  void * & for_compact_container()
-  { return _c.for_compact_container(); }
+  void for_compact_container(void* p)
+  { _c.for_compact_container(p); }
 
 private:
   Cell_handle _c;

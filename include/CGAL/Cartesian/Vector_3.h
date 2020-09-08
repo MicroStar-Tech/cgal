@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Cartesian_kernel/include/CGAL/Cartesian/Vector_3.h $
-// $Id: Vector_3.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Cartesian_kernel/include/CGAL/Cartesian/Vector_3.h $
+// $Id: Vector_3.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -27,6 +27,7 @@ template < class R_ >
 class VectorC3
 {
 // https://doc.cgal.org/latest/Manual/devman_code_format.html#secprogramming_conventions
+  typedef VectorC3<R_>                      Self;
   typedef typename R_::FT                   FT_;
   typedef typename R_::Point_3              Point_3;
   typedef typename R_::Vector_3             Vector_3;
@@ -69,6 +70,15 @@ public:
   VectorC3(const FT_ &x, const FT_ &y, const FT_ &z, const FT_ &w)
     : base( w != FT_(1) ? CGAL::make_array<FT_>(x/w, y/w, z/w)
                        : CGAL::make_array(x, y, z) ) {}
+
+  friend void swap(Self& a, Self& b)
+#ifdef __cpp_lib_is_swappable
+    noexcept(std::is_nothrow_swappable_v<Base>)
+#endif
+  {
+    using std::swap;
+    swap(a.base, b.base);
+  }
 
   const FT_ & x() const
   {

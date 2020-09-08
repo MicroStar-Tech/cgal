@@ -2,8 +2,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Triangulation_2/include/CGAL/Triangulation_face_base_with_id_2.h $
-// $Id: Triangulation_face_base_with_id_2.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Triangulation_2/include/CGAL/Triangulation_face_base_with_id_2.h $
+// $Id: Triangulation_face_base_with_id_2.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -42,11 +42,15 @@ public:
     : Fb(v0, v1, v2, n0, n1, n2)
   { }
 
-  int& id() { return _id; }
-  int id() const { return _id; }
+  int& id() { return face_id; }
+  int id() const { return face_id; }
+
+  int& edge_id(const std::size_t i) { return edge_ids[i]; }
+  int edge_id(const std::size_t i) const { return edge_ids[i]; }
 
 private:
-  int _id;
+  int face_id;
+  std::array<int, 3> edge_ids;
 };
 
 } //namespace CGAL

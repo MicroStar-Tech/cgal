@@ -26,8 +26,8 @@
  * WWW URL: http://cs.nyu.edu/exact/
  * Email: exact@cs.nyu.edu
  *
- * $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/CGAL_Core/include/CGAL/CORE/BigFloat_impl.h $
- * $Id: BigFloat_impl.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+ * $URL: https://github.com/CGAL/cgal/blob/v5.1/CGAL_Core/include/CGAL/CORE/BigFloat_impl.h $
+ * $Id: BigFloat_impl.h bd172e5 2020-07-21T17:15:45+02:00 Laurent Rineau
  * SPDX-License-Identifier: LGPL-3.0-or-later
  ***************************************************************************/
 
@@ -78,12 +78,14 @@ BigInt FiveTo(unsigned long exp) {
 // ZERO
 CGAL_INLINE_FUNCTION
 const BigFloat& BigFloat::getZero() {
+  init_CORE();
   CGAL_STATIC_THREAD_LOCAL_VARIABLE(BigFloat, Zero,0);
   return Zero;
 }
 // ONE
 CGAL_INLINE_FUNCTION
 const BigFloat& BigFloat::getOne() {
+  init_CORE();
   CGAL_STATIC_THREAD_LOCAL_VARIABLE(BigFloat, One,1);
   return One;
 }

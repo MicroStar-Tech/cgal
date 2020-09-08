@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/NewKernel_d/include/CGAL/NewKernel_d/functor_tags.h $
-// $Id: functor_tags.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/NewKernel_d/include/CGAL/NewKernel_d/functor_tags.h $
+// $Id: functor_tags.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Marc Glisse
@@ -303,6 +303,7 @@ namespace CGAL {
         CGAL_DECL_PREDICATE(Contained_in_simplex);
         CGAL_DECL_PREDICATE(Power_side_of_power_sphere_raw);
         CGAL_DECL_PREDICATE(Power_side_of_power_sphere);
+        CGAL_DECL_PREDICATE(Power_side_of_bounded_power_circumsphere);
         CGAL_DECL_PREDICATE(In_flat_power_side_of_power_sphere_raw);
         CGAL_DECL_PREDICATE(In_flat_power_side_of_power_sphere);
 #undef CGAL_DECL_PREDICATE

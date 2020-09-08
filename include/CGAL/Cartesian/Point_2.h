@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Cartesian_kernel/include/CGAL/Cartesian/Point_2.h $
-// $Id: Point_2.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Cartesian_kernel/include/CGAL/Cartesian/Point_2.h $
+// $Id: Point_2.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -49,6 +49,15 @@ public:
 
   PointC2(const FT &hx, const FT &hy, const FT &hw)
     : base(hx, hy, hw) {}
+
+  friend void swap(Self& a, Self& b)
+#ifdef __cpp_lib_is_swappable
+    noexcept(std::is_nothrow_swappable_v<Vector_2_>)
+#endif
+  {
+    using std::swap;
+    swap(a.base, b.base);
+  }
 
   const FT& x() const
   {

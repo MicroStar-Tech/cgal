@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Point_set_processing_3/include/CGAL/grid_simplify_point_set.h $
-// $Id: grid_simplify_point_set.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Point_set_processing_3/include/CGAL/grid_simplify_point_set.h $
+// $Id: grid_simplify_point_set.h c253679 2020-04-18T16:27:58+02:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s) : Nader Salman and Laurent Saboret
@@ -175,19 +175,34 @@ public:
 
    \param points input point range.
    \param epsilon tolerance value when merging 3D points.
-   \param np optional sequence of \ref psp_namedparameters "Named Parameters" among the ones listed below.
+   \param np an optional sequence of \ref bgl_namedparameters "Named Parameters" among the ones listed below
 
    \cgalNamedParamsBegin
-     \cgalParamBegin{point_map} a model of `ReadWritePropertyMap` with value type `geom_traits::Point_3`.
-     If this parameter is omitted, `CGAL::Identity_property_map<geom_traits::Point_3>` is used.\cgalParamEnd
-     \cgalParamBegin{callback} an instance of
-      `std::function<bool(double)>`. It is called regularly when the
-      algorithm is running: the current advancement (between 0. and
-      1.) is passed as parameter. If it returns `true`, then the
-      algorithm continues its execution normally; if it returns
-      `false`, the algorithm is stopped and simplification stops with
-      no guarantee on the output.\cgalParamEnd
-     \cgalParamBegin{geom_traits} an instance of a geometric traits class, model of `Kernel`\cgalParamEnd
+     \cgalParamNBegin{point_map}
+       \cgalParamDescription{a property map associating points to the elements of the point set `points`}
+       \cgalParamType{a model of `ReadWritePropertyMap` whose key type is the value type
+                      of the iterator of `PointRange` and whose value type is `geom_traits::Point_3`}
+       \cgalParamDefault{`CGAL::Identity_property_map<geom_traits::Point_3>`}
+     \cgalParamNEnd
+
+     \cgalParamNBegin{callback}
+       \cgalParamDescription{a mechanism to get feedback on the advancement of the algorithm
+                             while it's running and to interrupt it if needed}
+       \cgalParamType{an instance of `std::function<bool(double)>`.}
+       \cgalParamDefault{unused}
+       \cgalParamExtra{It is called regularly when the
+                       algorithm is running: the current advancement (between 0. and
+                       1.) is passed as parameter. If it returns `true`, then the
+                       algorithm continues its execution normally; if it returns
+                       `false`, the algorithm is stopped and simplification stops with no guarantee on the output. }
+       \cgalParamExtra{The callback will be copied and therefore needs to be lightweight.}
+     \cgalParamNEnd
+
+     \cgalParamNBegin{geom_traits}
+       \cgalParamDescription{an instance of a geometric traits class}
+       \cgalParamType{a model of `Kernel`}
+       \cgalParamDefault{a \cgal Kernel deduced from the point type, using `CGAL::Kernel_traits`}
+     \cgalParamNEnd
    \cgalNamedParamsEnd
 
    \return iterator over the first point to remove.
@@ -202,8 +217,8 @@ grid_simplify_point_set(
   using parameters::choose_parameter;
   using parameters::get_parameter;
 
-  typedef typename Point_set_processing_3::GetPointMap<PointRange, NamedParameters>::const_type PointMap;
-  PointMap point_map = choose_parameter(get_parameter(np, internal_np::point_map), PointMap());
+  typedef typename CGAL::GetPointMap<PointRange, NamedParameters>::const_type PointMap;
+  PointMap point_map = choose_parameter<PointMap>(get_parameter(np, internal_np::point_map));
   const std::function<bool(double)>& callback = choose_parameter(get_parameter(np, internal_np::callback),
                                                                  std::function<bool(double)>());
 

@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Kernel_23/include/CGAL/Kernel/global_functions_internal_2.h $
-// $Id: global_functions_internal_2.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Kernel_23/include/CGAL/Kernel/global_functions_internal_2.h $
+// $Id: global_functions_internal_2.h a943082 2020-03-26T19:01:31+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -341,9 +341,7 @@ compare_signed_distance_to_line(const typename K::Point_2& p,
                                 const typename K::Point_2& s,
                                 const K& k)
 {
-  if (k.less_signed_distance_to_line_2_object()(p, q, r, s)) return SMALLER;
-  if (k.less_signed_distance_to_line_2_object()(p, q, s, r)) return LARGER;
-  return EQUAL;
+  return k.compare_signed_distance_to_line_2_object()(p, q, r, s);
 }
 
 template <class K>
@@ -354,9 +352,7 @@ compare_signed_distance_to_line(const typename K::Line_2& l,
                                 const typename K::Point_2& q,
                                 const K& k)
 {
-  if (k.less_signed_distance_to_line_2_object()(l, p, q)) return SMALLER;
-  if (k.less_signed_distance_to_line_2_object()(l, q, p)) return LARGER;
-  return EQUAL;
+  return k.compare_signed_distance_to_line_2_object()(l, p, q);
 }
 
 template < class K >

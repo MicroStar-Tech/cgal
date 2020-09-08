@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Nef_S2/include/CGAL/Nef_S2/SM_overlayer.h $
-// $Id: SM_overlayer.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Nef_S2/include/CGAL/Nef_S2/SM_overlayer.h $
+// $Id: SM_overlayer.h fdb17cb 2020-03-26T19:26:10+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -540,8 +540,13 @@ public:
     Mark m[2];
     Object_handle o_supp[2];
     SHalfedge_handle e_below;
+
     vertex_info()
-    { o_supp[0]=o_supp[1]=Object_handle(); }
+    {
+      m[0]=m[1]=Mark();
+      o_supp[0]=o_supp[1]=Object_handle();
+    }
+
     LEDA_MEMORY(vertex_info)
   }; // vertex_info
 

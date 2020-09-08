@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Polygon_mesh_processing/include/CGAL/Polygon_mesh_processing/internal/Isotropic_remeshing/remesh_impl.h $
-// $Id: remesh_impl.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Polygon_mesh_processing/include/CGAL/Polygon_mesh_processing/internal/Isotropic_remeshing/remesh_impl.h $
+// $Id: remesh_impl.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -372,7 +372,6 @@ namespace internal {
       }
       for(std::size_t i=0; i < trees.size(); ++i){
         trees[i]->build();
-        trees[i]->accelerate_distance_queries();
       }
     }
 

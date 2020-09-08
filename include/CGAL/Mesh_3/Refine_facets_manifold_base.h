@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Mesh_3/include/CGAL/Mesh_3/Refine_facets_manifold_base.h $
-// $Id: Refine_facets_manifold_base.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Mesh_3/include/CGAL/Mesh_3/Refine_facets_manifold_base.h $
+// $Id: Refine_facets_manifold_base.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -19,9 +19,9 @@
 
 #include <CGAL/Mesh_facet_topology.h>
 
-#include <CGAL/Hash_handles_with_or_without_timestamps.h>
-#include <CGAL/utility.h>
 #include <CGAL/atomic.h>
+#include <CGAL/utility.h>
+#include <CGAL/Time_stamper.h>
 
 #include <boost/bimap.hpp>
 #include <boost/bimap/unordered_set_of.hpp>

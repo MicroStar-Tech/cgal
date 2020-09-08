@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/TDS_2/include/CGAL/Triangulation_ds_face_base_2.h $
-// $Id: Triangulation_ds_face_base_2.h dc12dea 2020-05-04T17:52:26+02:00 Laurent Rineau
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/TDS_2/include/CGAL/Triangulation_ds_face_base_2.h $
+// $Id: Triangulation_ds_face_base_2.h dcc4fb1 2020-05-20T09:46:26+02:00 Laurent Rineau
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -79,7 +79,7 @@ public:
 
    // For use by Compact_container.
   void * for_compact_container() const {return N[0].for_compact_container(); }
-  void * & for_compact_container()     { return N[0].for_compact_container();}
+  void for_compact_container(void* p) { N[0].for_compact_container(p);}
 
 
   static int ccw(int i) {return Triangulation_cw_ccw_2::ccw(i);}

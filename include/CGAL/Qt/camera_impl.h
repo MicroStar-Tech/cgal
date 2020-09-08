@@ -6,8 +6,8 @@
  This file is part of a fork of the QGLViewer library version 2.7.0.
 
 *****************************************************************************/
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/GraphicsView/include/CGAL/Qt/camera_impl.h $
-// $Id: camera_impl.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/GraphicsView/include/CGAL/Qt/camera_impl.h $
+// $Id: camera_impl.h 66040cb 2020-07-20T17:13:01+02:00 Laurent Rineau
 // SPDX-License-Identifier: GPL-3.0-only
 
 #ifdef CGAL_HEADER_ONLY
@@ -1725,6 +1725,11 @@ CGAL_INLINE_FUNCTION
    MAT(out, 3, 3) = r3[7];
    return 1;
   }
+
+#undef MAT
+#undef SWAP_ROWS_GLdouble
+#undef SWAP_ROWS_DOUBLE
+
 CGAL_INLINE_FUNCTION
 int unProject(GLdouble winx, GLdouble winy, GLdouble winz, GLdouble *modelview, GLdouble *projection, int *viewport,
               GLdouble *objX,GLdouble *objY,GLdouble *objZ)

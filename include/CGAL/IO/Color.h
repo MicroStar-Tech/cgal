@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Stream_support/include/CGAL/IO/Color.h $
-// $Id: Color.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Stream_support/include/CGAL/IO/Color.h $
+// $Id: Color.h 401d266 2020-08-23T05:55:48+02:00 oboes
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -221,8 +221,6 @@ public:
   /*!
     replaces the rgb values of the colors by the conversion to rgb of
     the hsv values given as parameters.
-
-    Double values given as parameters should take range between 0 and 1.
   */
   void set_hsv (double hue,
                 double saturation,
@@ -232,8 +230,8 @@ public:
     saturation /= 100.;
     value /= 100.;
     double C = value*saturation;
-    int hh = (int)(hue/60.);
-    double X = C * (1-std::abs (hh % 2 - 1));
+    double hh = (hue/60.);
+    double X = C * (1-std::abs(std::fmod(hh, 2) - 1));
     double r = 0, g = 0, b = 0;
 
     if( hh>=0 && hh<1 )

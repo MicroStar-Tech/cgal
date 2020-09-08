@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Intersections_2/include/CGAL/intersection_2.h $
-// $Id: intersection_2.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Intersections_2/include/CGAL/intersection_2.h $
+// $Id: intersection_2.h 8b41189 2020-03-26T18:58:21+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -28,6 +28,10 @@
 #include <CGAL/Intersections_2/Circle_2_Iso_rectangle_2.h>
 #include <CGAL/Intersections_2/Circle_2_Line_2.h>
 #include <CGAL/Intersections_2/Circle_2_Point_2.h>
+#include <CGAL/Intersections_2/Circle_2_Segment_2.h>
+#include <CGAL/Intersections_2/Circle_2_Ray_2.h>
+#include <CGAL/Intersections_2/Circle_2_Triangle_2.h>
+
 
 #include <CGAL/Intersections_2/Iso_rectangle_2_Iso_rectangle_2.h>
 #include <CGAL/Intersections_2/Iso_rectangle_2_Line_2.h>

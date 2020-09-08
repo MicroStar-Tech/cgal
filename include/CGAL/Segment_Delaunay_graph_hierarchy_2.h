@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Segment_Delaunay_graph_2/include/CGAL/Segment_Delaunay_graph_hierarchy_2.h $
-// $Id: Segment_Delaunay_graph_hierarchy_2.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Segment_Delaunay_graph_2/include/CGAL/Segment_Delaunay_graph_hierarchy_2.h $
+// $Id: Segment_Delaunay_graph_hierarchy_2.h cc18ed3 2020-04-06T18:33:26+02:00 Mael Rouxel-Labbé
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -246,11 +246,11 @@ public:
 
     if ( t.is_segment() ) {
       Point_handle_pair php =
-        this->register_input_site(t.source(), t.target());
+        this->register_input_site(t.source_of_supporting_site(), t.target_of_supporting_site());
       Storage_site_2 ss =
         this->st_.construct_storage_site_2_object()(php.first, php.second);
       Vertex_handle v =
-        insert_segment(t.source(), t.target(), ss, UNDEFINED_LEVEL);
+        insert_segment(t.source_of_supporting_site(), t.target_of_supporting_site(), ss, UNDEFINED_LEVEL);
       if ( v == Vertex_handle() ) {
         this->unregister_input_site( php.first, php.second );
       }
@@ -282,12 +282,12 @@ public:
 
     if ( t.is_segment() ) {
       Point_handle_pair php =
-        this->register_input_site(t.source(), t.target());
+        this->register_input_site(t.source_of_supporting_site(), t.target_of_supporting_site());
       Storage_site_2 ss =
         this->st_.construct_storage_site_2_object()(php.first, php.second);
       ss.set_info(info);
       Vertex_handle v =
-        insert_segment(t.source(), t.target(), ss, UNDEFINED_LEVEL);
+        insert_segment(t.source_of_supporting_site(), t.target_of_supporting_site(), ss, UNDEFINED_LEVEL);
       if ( v == Vertex_handle() ) {
         this->unregister_input_site( php.first, php.second );
       }

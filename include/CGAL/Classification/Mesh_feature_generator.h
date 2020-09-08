@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Classification/include/CGAL/Classification/Mesh_feature_generator.h $
-// $Id: Mesh_feature_generator.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Classification/include/CGAL/Classification/Mesh_feature_generator.h $
+// $Id: Mesh_feature_generator.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Simon Giraudot
@@ -79,7 +79,7 @@ namespace Classification {
   is `GeomTraits::Point_3`.
   \tparam ConcurrencyTag enables sequential versus parallel
   computation of `CGAL::Classification::Local_eigen_analysis`
-  objects. Possible values are `Parallel_tag` (default value is %CGAL
+  objects. Possible values are `Parallel_tag` (default value if %CGAL
   is linked with TBB) or `Sequential_tag` (default value otherwise).
   \tparam DiagonalizeTraits model of `DiagonalizeTraits` used for
   matrix diagonalization. It can be omitted: if Eigen 3 (or greater)
@@ -93,10 +93,8 @@ template <typename GeomTraits,
           typename PointMap,
 #if defined(DOXYGEN_RUNNING)
           typename ConcurrencyTag,
-#elif defined(CGAL_LINKED_WITH_TBB)
-          typename ConcurrencyTag = CGAL::Parallel_tag,
 #else
-          typename ConcurrencyTag = CGAL::Sequential_tag,
+          typename ConcurrencyTag = CGAL::Parallel_if_available_tag,
 #endif
           typename DiagonalizeTraits = CGAL::Default_diagonalize_traits<float,3> >
 class Mesh_feature_generator

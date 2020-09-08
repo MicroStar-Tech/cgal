@@ -2,8 +2,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Scale_space_reconstruction_3/include/CGAL/Scale_space_reconstruction_3/Jet_smoother.h $
-// $Id: Jet_smoother.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Scale_space_reconstruction_3/include/CGAL/Scale_space_reconstruction_3/Jet_smoother.h $
+// $Id: Jet_smoother.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s):      Simon Giraudot
@@ -39,17 +39,15 @@ namespace Scale_space_reconstruction_3
  *  `RealEmbeddable` field number type. Generally,
  *  `Exact_predicates_inexact_constructions_kernel` is preferred.
  *  \tparam ConcurrencyTag indicates whether to use concurrent
- *  processing. It can be omitted: if TBB (or greater) is available
+ *  processing. It can be omitted: if \ref thirdpartyTBB is available
  *  and `CGAL_LINKED_WITH_TBB` is defined then `Parallel_tag` is
  *  used. Otherwise, `Sequential_tag` is used.
  */
 template <typename Geom_traits,
 #ifdef DOXYGEN_RUNNING
           typename ConcurrencyTag>
-#elif CGAL_LINKED_WITH_TBB
-          typename ConcurrencyTag = CGAL::Parallel_tag>
 #else
-          typename ConcurrencyTag = CGAL::Sequential_tag>
+          typename ConcurrencyTag = CGAL::Parallel_if_available_tag>
 #endif
 class Jet_smoother
 {

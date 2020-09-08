@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/TDS_2/include/CGAL/Triangulation_ds_vertex_base_2.h $
-// $Id: Triangulation_ds_vertex_base_2.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/TDS_2/include/CGAL/Triangulation_ds_vertex_base_2.h $
+// $Id: Triangulation_ds_vertex_base_2.h d1a323c 2020-03-26T19:24:14+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -49,7 +49,7 @@ public:
 
     // For use by the Compact_container.
   void *   for_compact_container() const { return _f.for_compact_container(); }
-  void * & for_compact_container()       { return _f.for_compact_container(); }
+  void for_compact_container(void* p) { _f.for_compact_container(p); }
 
 private:
   Face_handle _f;

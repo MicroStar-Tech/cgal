@@ -7,12 +7,12 @@
 #include <CGAL/Shape_detection/Region_growing/Region_growing_on_point_set.h>
 #include <CGAL/Polygonal_surface_reconstruction.h>
 
-#ifdef CGAL_USE_SCIP
+#ifdef CGAL_USE_SCIP  // defined (or not) by CMake scripts, do not define by hand
 
 #include <CGAL/SCIP_mixed_integer_program_traits.h>
 typedef CGAL::SCIP_mixed_integer_program_traits<double> MIP_Solver;
 
-#elif defined(CGAL_USE_GLPK)
+#elif defined(CGAL_USE_GLPK)  // defined (or not) by CMake scripts, do not define by hand
 
 #include <CGAL/GLPK_mixed_integer_program_traits.h>
 typedef CGAL::GLPK_mixed_integer_program_traits<double>        MIP_Solver;
@@ -178,8 +178,11 @@ int main()
   t.reset();
   const std::string& output_file("data/cube_result.off");
   std::ofstream output_stream(output_file.c_str());
-  if (output_stream && CGAL::write_off(output_stream, model))
+  if (output_stream && CGAL::write_off(output_stream, model)) {
+    // flush the buffer
+    output_stream << std::flush;
     std::cout << " Done. Saved to " << output_file << ". Time: " << t.time() << " sec." << std::endl;
+  }
   else {
     std::cerr << " Failed saving file." << std::endl;
     return EXIT_FAILURE;

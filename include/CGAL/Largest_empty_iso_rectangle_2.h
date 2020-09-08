@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Inscribed_areas/include/CGAL/Largest_empty_iso_rectangle_2.h $
-// $Id: Largest_empty_iso_rectangle_2.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Inscribed_areas/include/CGAL/Largest_empty_iso_rectangle_2.h $
+// $Id: Largest_empty_iso_rectangle_2.h 0fcbaf5 2020-05-24T11:15:12+02:00 Marc Glisse
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -233,12 +233,11 @@ public:
   ~Largest_empty_iso_rectangle_2();
 
   //! An operator=
-  Largest_empty_iso_rectangle_2<T>&
-    operator =(const Largest_empty_iso_rectangle_2<T>& ler);
+  Largest_empty_iso_rectangle_2&
+    operator =(const Largest_empty_iso_rectangle_2& ler);
 
   //! A copy constructor
-  Largest_empty_iso_rectangle_2<T>(
-               const Largest_empty_iso_rectangle_2<T>& ler);
+  Largest_empty_iso_rectangle_2(const Largest_empty_iso_rectangle_2& ler);
 
   struct Internal_point {
     Point_2 x_part;// the x coordinate of the point

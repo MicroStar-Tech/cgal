@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/STL_Extension/include/CGAL/Uncertain.h $
-// $Id: Uncertain.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/STL_Extension/include/CGAL/Uncertain.h $
+// $Id: Uncertain.h 3302086 2020-06-13T23:41:39+05:30 Abhay Raj Singh
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Sylvain Pion
@@ -66,8 +66,6 @@ class Uncertain_conversion_exception
 public:
   Uncertain_conversion_exception(const std::string &s)
     : std::range_error(s) {}
-
-  ~Uncertain_conversion_exception() throw() {}
 };
 
 

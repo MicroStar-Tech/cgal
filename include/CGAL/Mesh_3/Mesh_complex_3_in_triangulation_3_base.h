@@ -4,8 +4,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Mesh_3/include/CGAL/Mesh_3/Mesh_complex_3_in_triangulation_3_base.h $
-// $Id: Mesh_complex_3_in_triangulation_3_base.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Mesh_3/include/CGAL/Mesh_3/Mesh_complex_3_in_triangulation_3_base.h $
+// $Id: Mesh_complex_3_in_triangulation_3_base.h 5572d9d 2020-06-24T10:59:19+02:00 Laurent Rineau
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -18,7 +18,7 @@
 #ifndef CGAL_MESH_3_MESH_COMPLEX_3_IN_TRIANGULATION_3_BASE_H
 #define CGAL_MESH_3_MESH_COMPLEX_3_IN_TRIANGULATION_3_BASE_H
 
-#include <CGAL/license/Mesh_3.h>
+#include <CGAL/license/Triangulation_3.h>
 
 #include <CGAL/disable_warnings.h>
 
@@ -31,7 +31,7 @@
 #include <CGAL/Bbox_3.h>
 #include <CGAL/Mesh_3/io_signature.h>
 #include <CGAL/Union_find.h>
-#include <CGAL/Hash_handles_with_or_without_timestamps.h>
+#include <CGAL/Time_stamper.h>
 
 #include <boost/functional/hash.hpp>
 #include <boost/unordered_map.hpp>
@@ -191,6 +191,20 @@ public:
     init(number_of_cells_, rhs.number_of_cells_);
   }
 
+  /// Move constructor
+  Mesh_complex_3_in_triangulation_3_base(Self&& rhs)
+    : Base()
+    , tr_(std::move(rhs.tr_))
+    , edge_facet_counter_(std::move(rhs.edge_facet_counter_))
+    , manifold_info_initialized_(std::exchange(rhs.manifold_info_initialized_, false))
+  {
+    Init_number_of_elements<Concurrency_tag> init;
+    init(number_of_facets_, rhs.number_of_facets_);
+    init(number_of_cells_, rhs.number_of_cells_);
+    init(rhs.number_of_facets_); // set to 0
+    init(rhs.number_of_cells_); // set to 0
+  }
+
   /// Destructor
   ~Mesh_complex_3_in_triangulation_3_base() {}
 
@@ -203,6 +217,13 @@ public:
 
   /// Assignment operator
   Self& operator=(Self rhs)
+  {
+    swap(rhs);
+    return *this;
+  }
+
+  /// Assignment operator, also serves as move-assignment
+  Self& operator=(Self&& rhs)
   {
     swap(rhs);
     return *this;
@@ -861,6 +882,11 @@ private:
     {
       a = b;
     }
+    template<typename T>
+    void operator()(T& a)
+    {
+      a = 0;
+    }
   };
 
   template<typename Concurrency_tag2, typename dummy = void>
@@ -887,6 +913,11 @@ private:
     void operator()(T& a, const T& b)
     {
       a = b.load();
+    }
+    template<typename T>
+    void operator()(T& a)
+    {
+      a = 0;
     }
   };
 

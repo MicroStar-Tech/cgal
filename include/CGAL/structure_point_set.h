@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Point_set_processing_3/include/CGAL/structure_point_set.h $
-// $Id: structure_point_set.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Point_set_processing_3/include/CGAL/structure_point_set.h $
+// $Id: structure_point_set.h c253679 2020-04-18T16:27:58+02:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -164,22 +164,42 @@ public:
     \param points input point range.
     \param planes input plane range.
     \param epsilon size parameter.
-    \param np optional sequence of \ref psp_namedparameters "Named Parameters" among the ones listed below.
+    \param np an optional sequence of \ref bgl_namedparameters "Named Parameters" among the ones listed below
 
     \cgalNamedParamsBegin
-      \cgalParamBegin{point_map} a model of `ReadablePropertyMap` with value type `Kernel::Point_3`.
-      If this parameter is omitted, `CGAL::Identity_property_map<Kernel::Point_3>` is used.\cgalParamEnd
-      \cgalParamBegin{normal_map} a model of `ReadablePropertyMap` with value type
-      `Kernel::Vector_3`.\cgalParamEnd
-      \cgalParamBegin{plane_index_map} a model of `ReadablePropertyMap` with value type `int`.
-      Associates the index of a point in the input range to the index of plane (-1 if point does is not assigned to
-      a plane).\cgalParamEnd
-      \cgalParamBegin{plane_map} a model of `ReadablePropertyMap` with value type
-      `Kernel::Plane_3`. If this parameter is omitted, `CGAL::Identity_property_map<Kernel::Plane_3>`
-      is used.\cgalParamEnd
-      \cgalParamBegin{attraction_factor} multiple of `epsilon` used to connect simplices.\cgalParamEnd
-    \cgalNamedParamsEnd
+      \cgalParamNBegin{point_map}
+        \cgalParamDescription{a property map associating points to the elements of the point set `points`}
+        \cgalParamType{a model of `ReadablePropertyMap` whose key type is the value type
+                       of the iterator of `PointRange` and whose value type is `geom_traits::Point_3`}
+        \cgalParamDefault{`CGAL::Identity_property_map<geom_traits::Point_3>`}
+      \cgalParamNEnd
 
+      \cgalParamNBegin{normal_map}
+        \cgalParamDescription{a property map associating normals to the elements of the point set `points`}
+        \cgalParamType{a model of `ReadablePropertyMap` whose key type is the value type
+                       of the iterator of `PointRange` and whose value type is `geom_traits::Vector_3`}
+      \cgalParamNEnd
+
+      \cgalParamNBegin{plane_index_map}
+        \cgalParamDescription{a property map associating the index of a point in the input range
+                              to the index of plane (`-1` if the point is not assigned to a plane)}
+        \cgalParamType{a class model of `ReadablePropertyMap` with `std::size_t` as key type and `int` as value type}
+        \cgalParamDefault{unused}
+      \cgalParamNEnd
+
+      \cgalParamNBegin{plane_map}
+        \cgalParamDescription{a property map containing the planes associated to the elements of the plane range `planes`}
+         \cgalParamType{a class model of `ReadablePropertyMap` with `PlaneRange::iterator::value_type`
+                        as key type and `geom_traits::Plane_3` as value type}
+        \cgalParamDefault{`CGAL::Identity_property_map<Kernel::Plane_3>`}
+      \cgalParamNEnd
+
+      \cgalParamNBegin{attraction_factor}
+        \cgalParamDescription{multiple of a tolerance `epsilon` used to connect simplices}
+        \cgalParamType{floating scalar value}
+        \cgalParamDefault{`3`}
+      \cgalParamNEnd
+    \cgalNamedParamsEnd
   */
   template <typename PointRange,
             typename PlaneRange,
@@ -206,7 +226,7 @@ public:
     using parameters::get_parameter;
 
     // basic geometric types
-    typedef typename Point_set_processing_3::GetPointMap<PointRange, NamedParameters>::type PointMap;
+    typedef typename CGAL::GetPointMap<PointRange, NamedParameters>::type PointMap;
     typedef typename Point_set_processing_3::GetNormalMap<PointRange, NamedParameters>::type NormalMap;
     typedef typename Point_set_processing_3::GetPlaneMap<PlaneRange, NamedParameters>::type PlaneMap;
     typedef typename Point_set_processing_3::GetPlaneIndexMap<NamedParameters>::type PlaneIndexMap;
@@ -218,10 +238,10 @@ public:
                                 typename Point_set_processing_3::GetPlaneIndexMap<NamedParameters>::NoMap>::value),
                               "Error: no plane index map");
 
-    PointMap point_map = choose_parameter(get_parameter(np, internal_np::point_map), PointMap());
-    NormalMap normal_map = choose_parameter(get_parameter(np, internal_np::normal_map), NormalMap());
-    PlaneMap plane_map = choose_parameter(get_parameter(np, internal_np::plane_map), PlaneMap());
-    PlaneIndexMap index_map = choose_parameter(get_parameter(np, internal_np::plane_index_map), PlaneIndexMap());
+    PointMap point_map = choose_parameter<PointMap>(get_parameter(np, internal_np::point_map));
+    NormalMap normal_map = choose_parameter<NormalMap>(get_parameter(np, internal_np::normal_map));
+    PlaneMap plane_map = choose_parameter<PlaneMap>(get_parameter(np, internal_np::plane_map));
+    PlaneIndexMap index_map = choose_parameter<PlaneIndexMap>(get_parameter(np, internal_np::plane_index_map));
     double attraction_factor = choose_parameter(get_parameter(np, internal_np::attraction_factor), 3.);
 
     m_points.reserve(points.size());
@@ -1491,21 +1511,47 @@ private:
    \param planes input plane range.
    \param output output iterator where output points are written
    \param epsilon size parameter.
-   \param np optional sequence of \ref psp_namedparameters "Named Parameters" among the ones listed below.
+   \param np an optional sequence of \ref bgl_namedparameters "Named Parameters" among the ones listed below
 
    \cgalNamedParamsBegin
-     \cgalParamBegin{point_map} a model of `ReadablePropertyMap` with value type `geom_traits::Point_3`.
-     If this parameter is omitted, `CGAL::Identity_property_map<geom_traits::Point_3>` is used.\cgalParamEnd
-     \cgalParamBegin{normal_map} a model of `ReadablePropertyMap` with value type
-     `geom_traits::Vector_3`.\cgalParamEnd
-     \cgalParamBegin{plane_index_map} a model of `ReadablePropertyMap` with value type `int`.
-     Associates the index of a point in the input range to the index of plane (-1 if point does is not assigned to
-     a plane).\cgalParamEnd
-     \cgalParamBegin{plane_map} a model of `ReadablePropertyMap` with value type
-     `geom_traits::Plane_3`. If this parameter is omitted, `CGAL::Identity_property_map<geom_traits::Plane_3>`
-     is used.\cgalParamEnd
-     \cgalParamBegin{attraction_factor} multiple of `epsilon` used to connect simplices.\cgalParamEnd
-     \cgalParamBegin{geom_traits} an instance of a geometric traits class, model of `Kernel`\cgalParamEnd
+      \cgalParamNBegin{point_map}
+        \cgalParamDescription{a property map associating points to the elements of the point set `points`}
+        \cgalParamType{a model of `ReadablePropertyMap` whose key type is the value type
+                       of the iterator of `PointRange` and whose value type is `geom_traits::Point_3`}
+        \cgalParamDefault{`CGAL::Identity_property_map<geom_traits::Point_3>`}
+      \cgalParamNEnd
+
+      \cgalParamNBegin{normal_map}
+        \cgalParamDescription{a property map associating normals to the elements of the point set `points`}
+        \cgalParamType{a model of `ReadablePropertyMap` whose key type is the value type
+                       of the iterator of `PointRange` and whose value type is `geom_traits::Vector_3`}
+      \cgalParamNEnd
+
+      \cgalParamNBegin{plane_index_map}
+        \cgalParamDescription{a property map associating the index of a point in the input range
+                              to the index of plane (`-1` if the point is not assigned to a plane)}
+        \cgalParamType{a class model of `ReadablePropertyMap` with `std::size_t` as key type and `int` as value type}
+        \cgalParamDefault{unused}
+      \cgalParamNEnd
+
+      \cgalParamNBegin{plane_map}
+        \cgalParamDescription{a property map containing the planes associated to the elements of the plane range `planes`}
+         \cgalParamType{a class model of `ReadablePropertyMap` with `PlaneRange::iterator::value_type`
+                        as key type and `geom_traits::Plane_3` as value type}
+        \cgalParamDefault{`CGAL::Identity_property_map<Kernel::Plane_3>`}
+      \cgalParamNEnd
+
+      \cgalParamNBegin{attraction_factor}
+        \cgalParamDescription{multiple of a tolerance `epsilon` used to connect simplices}
+        \cgalParamType{floating scalar value}
+        \cgalParamDefault{`3`}
+      \cgalParamNEnd
+
+     \cgalParamNBegin{geom_traits}
+       \cgalParamDescription{an instance of a geometric traits class}
+       \cgalParamType{a model of `Kernel`}
+       \cgalParamDefault{a \cgal Kernel deduced from the point type, using `CGAL::Kernel_traits`}
+     \cgalParamNEnd
    \cgalNamedParamsEnd
 
 */
@@ -1557,4 +1603,3 @@ structure_point_set (const PointRange& points, ///< range of points.
 #include <CGAL/enable_warnings.h>
 
 #endif // CGAL_STRUCTURE_POINT_SET_3_H
-

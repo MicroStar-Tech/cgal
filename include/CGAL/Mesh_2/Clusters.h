@@ -4,8 +4,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Mesh_2/include/CGAL/Mesh_2/Clusters.h $
-// $Id: Clusters.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Mesh_2/include/CGAL/Mesh_2/Clusters.h $
+// $Id: Clusters.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -89,7 +89,7 @@ public:
 
     /**
      * The following map tells what vertices are in the cluster and if
-     * the corresponding segment has been splitted once.
+     * the corresponding segment has been split once.
      */
     typedef std::map<Vertex_handle, bool> Vertices_map;
     Vertices_map vertices;

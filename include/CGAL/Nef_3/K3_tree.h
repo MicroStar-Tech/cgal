@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Nef_3/include/CGAL/Nef_3/K3_tree.h $
-// $Id: K3_tree.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Nef_3/include/CGAL/Nef_3/K3_tree.h $
+// $Id: K3_tree.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -162,11 +162,11 @@ private:
   template<typename SNC_structure, typename Kernel>
   class Triangulation_handler {
 
-    typedef typename CGAL::Triangulation_vertex_base_2<Kernel>               Vb;
-    typedef typename CGAL::Constrained_triangulation_face_base_2<Kernel>     Fb;
-    typedef typename CGAL::Triangulation_data_structure_2<Vb,Fb>             TDS;
-    typedef typename CGAL::No_intersection_tag                               Itag;
-    typedef typename CGAL::Constrained_triangulation_2<Kernel,TDS,Itag>      CT;
+    typedef typename CGAL::Triangulation_vertex_base_2<Kernel>                      Vb;
+    typedef typename CGAL::Constrained_triangulation_face_base_2<Kernel>            Fb;
+    typedef typename CGAL::Triangulation_data_structure_2<Vb,Fb>                    TDS;
+    typedef typename CGAL::No_constraint_intersection_requiring_constructions_tag   Itag;
+    typedef typename CGAL::Constrained_triangulation_2<Kernel,TDS,Itag>             CT;
 
     typedef typename CT::Face_handle           Face_handle;
     typedef typename CT::Finite_faces_iterator Finite_face_iterator;

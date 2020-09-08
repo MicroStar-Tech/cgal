@@ -382,8 +382,6 @@ include(${CGAL_MODULES_DIR}/CGAL_Macros.cmake)
 include(${CGAL_MODULES_DIR}/CGAL_enable_end_of_configuration_hook.cmake)
 cgal_setup_module_path()
 
-message( STATUS "CGAL_REFERENCE_CACHE_DIR=${CGAL_REFERENCE_CACHE_DIR}" )
-
 if ( RUNNING_CGAL_AUTO_TEST )
   message(STATUS "Operating system:")
   execute_process(COMMAND uname -a
@@ -392,41 +390,6 @@ if ( RUNNING_CGAL_AUTO_TEST )
     ERROR_VARIABLE uname_a)
   message(STATUS "${uname_a}")
   CGAL_display_compiler_version()
-  if ( NOT "${CGAL_REFERENCE_CACHE_DIR}" STREQUAL "" )
-    if ( EXISTS ${CGAL_REFERENCE_CACHE_DIR} )
-      if ( EXISTS ${CGAL_REFERENCE_CACHE_DIR}/CMakeCache.txt )
-        message( STATUS "Loading reference cache from ${CGAL_REFERENCE_CACHE_DIR}" )
-        load_cache( ${CGAL_REFERENCE_CACHE_DIR}
-          EXCLUDE CGAL_Core_LIBRARY
-                  CGAL_CORE_PACKAGE_DIR
-                  WITH_CGAL_Core
-                  CGAL_INSTALLATION_PACKAGE_DIR
-                  CGAL_MAINTENANCE_PACKAGE_DIR
-                  CGAL_PDB_BINARY_DIR
-                  CGAL_PDB_SOURCE_DIR
-                  CGAL_BINARY_DIR
-                  CGAL_SOURCE_DIR)
-#        message("List of cache variables:")
-
-        ## The following lines removes nasty loaded cache values. We do not
-        ## want that the current build tree depends on binaries that were
-        ## build in the reference build tree.
-        get_property(cache_variables DIRECTORY PROPERTY CACHE_VARIABLES)
-        foreach(var ${cache_variables})
-#          get_property(var_value CACHE ${var} PROPERTY VALUE)
-#          get_property(type CACHE ${var} PROPERTY TYPE)
-          string(REGEX MATCH "^CGAL(_.*_(DEPENDS|BINARY_DIR)|_.*LIBRARY)$" var_name_matches ${var})
-          if(var_name_matches)
-            unset(${var} CACHE)
-#          else()
-#            message("${var}:${var_type}=${var_value}")
-          endif()
-        endforeach()
-
-
-      endif()
-    endif()
-  endif()
 endif()
 
 include(CGAL_Common)
@@ -564,10 +527,6 @@ message("== Detect external libraries ==")
 #  Coin is used in KDS, but no FindCoin or FindCOIN exists
 #  There exists FindIPE, FindMKL, but they are only used to support supporting libs
 list (INSERT CGAL_SUPPORTING_3RD_PARTY_LIBRARIES 0 GMP MPFR ZLIB OpenGL LEDA MPFI RS RS3 OpenNL Eigen3 ESBTL Coin3D NTL IPE)
-if (NOT WIN32)
-  # GMPXX is not supported on WIN32 machines
-  list (INSERT CGAL_SUPPORTING_3RD_PARTY_LIBRARIES 1 GMPXX)
-endif()
 
 # Where CMake is run several times, to avoid duplicates
 list(REMOVE_DUPLICATES CGAL_SUPPORTING_3RD_PARTY_LIBRARIES)
@@ -607,8 +566,6 @@ if(CGAL_DISABLE_GMP)
   unset(WITH_GMP CACHE)
   unset(CGAL_USE_GMP)
   unset(CGAL_USE_GMP CACHE)
-  unset(WITH_GMPXX)
-  unset(WITH_GMPXX CACHE)
   unset(WITH_MPFR)
   unset(WITH_MPFR CACHE)
 
@@ -617,9 +574,6 @@ if(CGAL_DISABLE_GMP)
     "#error GMP is disabled by the CMake option CGAL_DISABLE_GMP")
 else()
   list(APPEND      CGAL_ESSENTIAL_3RD_PARTY_LIBRARIES GMP MPFR)
-  if(WITH_GMPXX)
-    list(APPEND      CGAL_ESSENTIAL_3RD_PARTY_LIBRARIES GMPXX)
-  endif()
 
   # When CMake is run several times, to avoid duplicates
   list (REMOVE_DUPLICATES CGAL_ESSENTIAL_3RD_PARTY_LIBRARIES)
@@ -639,7 +593,7 @@ foreach (lib ${CGAL_SUPPORTING_3RD_PARTY_LIBRARIES})
   # add option
   list( FIND CGAL_ESSENTIAL_3RD_PARTY_LIBRARIES "${lib}" POSITION )
   if ( "${POSITION}" STRGREATER "-1" ) # if lib is essential
-   option(WITH_${lib} "Select external library ${lib}" ON)
+    option(WITH_${lib} "Select external library ${lib}" ON)
   else()
     option(WITH_${lib} "Select external library ${lib}" OFF)
   endif()
@@ -925,6 +879,7 @@ if(NOT CGAL_HEADER_ONLY)
 else()
   install(FILES
     ${CMAKE_CURRENT_LIST_DIR}/lib/cmake/CGAL/CGALConfig.cmake
+    ${CMAKE_CURRENT_LIST_DIR}/lib/cmake/CGAL/CGALConfigBuildVersion.cmake
     ${CMAKE_CURRENT_LIST_DIR}/lib/cmake/CGAL/CGALConfigVersion.cmake
     DESTINATION ${CGAL_INSTALL_CMAKE_DIR})
   if(NOT CGAL_INSTALL_CMAKE_DIR STREQUAL "${CGAL_INSTALL_LIB_DIR}/cmake/CGAL")
@@ -1194,7 +1149,7 @@ You must disable CGAL_ENABLE_CHECK_HEADERS.")
   file(GLOB html_files RELATIVE "${DOC_DIR}/doc_output/" "${DOC_DIR}/doc_output/*/*.html")
   file(GLOB example_files RELATIVE "${CMAKE_SOURCE_DIR}/" "${CMAKE_SOURCE_DIR}/*/examples/*/*.cpp")
   find_program(AWK awk)
-  set(awk_arguments [=[{ match($0, /# *include *(&lt;|[<"])(CGAL\/[^>&"]*)([>"]|&gt;)/,arr); if(arr[2]!="") print arr[2] }]=])
+  set(awk_arguments [=[{ match($0, /# *include *(&lt;|[<"])(CGAL\/[^>&"]*)([>"]|&gt;)| (CGAL\/[^>&"]*\.h)/,arr); if(arr[2]!="") print arr[2]; if(arr[4]!="") print arr[4] }]=])
   message("listing headers from html files")
   foreach(f ${html_files})
     execute_process(COMMAND "${AWK}" "${awk_arguments}" "${DOC_DIR}/doc_output/${f}"

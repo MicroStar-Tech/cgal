@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/STL_Extension/include/CGAL/iterator.h $
-// $Id: iterator.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/STL_Extension/include/CGAL/iterator.h $
+// $Id: iterator.h c1d8fb6 2020-04-22T13:47:33+02:00 Simon Giraudot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -1470,6 +1470,15 @@ dispatch_or_drop_output(O... o)
 {
   return Dispatch_or_drop_output_iterator<std::tuple<V...>, std::tuple<O...> >(o...);
 }
+
+
+// Trick to select iterator or const_iterator depending on the range constness
+template <typename RangeRef>
+struct Range_iterator_type;
+template <typename RangeRef>
+struct Range_iterator_type<RangeRef&>       { typedef typename RangeRef::iterator       type; };
+template <typename RangeRef>
+struct Range_iterator_type<const RangeRef&> { typedef typename RangeRef::const_iterator type; };
 
 } //namespace CGAL
 

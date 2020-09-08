@@ -4,8 +4,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Mesh_3/include/CGAL/Mesh_cell_base_3.h $
-// $Id: Mesh_cell_base_3.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Mesh_3/include/CGAL/Mesh_cell_base_3.h $
+// $Id: Mesh_cell_base_3.h 4dda7b6 2020-05-27T15:53:05+02:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -15,7 +15,7 @@
 #ifndef CGAL_MESH_CELL_BASE_3_H
 #define CGAL_MESH_CELL_BASE_3_H
 
-#include <CGAL/license/Mesh_3.h>
+#include <CGAL/license/Triangulation_3.h>
 
 
 // #define CGAL_DEPRECATED_HEADER "<CGAL/Mesh_cell_base_3.h>"

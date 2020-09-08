@@ -33,6 +33,7 @@
 #include <CGAL/Polygon_mesh_processing/polygon_soup_to_polygon_mesh.h>
 #include "triangulate_primitive.h"
 
+#include <CGAL/exceptions.h>
 #include <CGAL/IO/File_writer_wavefront.h>
 #include <CGAL/IO/generic_copy_OFF.h>
 #include <CGAL/IO/OBJ_reader.h>
@@ -135,6 +136,7 @@ struct Scene_surface_mesh_item_priv{
                               << GouraudPlusEdges
                               << Points;
     item->setProperty("classname", QString("surface_mesh"));
+    ids_need_update = false;
   }
 
   Scene_surface_mesh_item_priv(SMesh* sm, Scene_surface_mesh_item *parent):
@@ -167,7 +169,8 @@ struct Scene_surface_mesh_item_priv{
                               << Gouraud
                                  << GouraudPlusEdges
                               << Points;
-    item->setProperty("classname", QString("surface_mesh"));
+    item->setProperty("classname", QString("surface_mesh"));\
+    ids_need_update = false;
   }
 
   ~Scene_surface_mesh_item_priv()
@@ -223,7 +226,6 @@ struct Scene_surface_mesh_item_priv{
   mutable bool edges_displayed;
   mutable bool faces_displayed;
   mutable bool all_displayed;
-  mutable QList<double> text_ids;
   mutable std::vector<TextItem*> targeted_id;
 
   std::string comments;
@@ -238,7 +240,6 @@ struct Scene_surface_mesh_item_priv{
   mutable bool isinit;
   mutable std::vector<unsigned int> idx_data_;
   mutable std::size_t idx_data_size;
-  mutable std::map<unsigned int, unsigned int> current_indices; //map im values to ghosts-free values
   mutable std::vector<unsigned int> idx_edge_data_;
   mutable std::size_t idx_edge_data_size;
   mutable std::vector<unsigned int> idx_feature_edge_data_;
@@ -266,6 +267,7 @@ struct Scene_surface_mesh_item_priv{
   bool has_nm_vertices;
   int genus;
   bool self_intersect;
+  bool ids_need_update;
   mutable QSlider* alphaSlider;
   QList<RenderingMode> supported_rendering_modes;
 };
@@ -1581,7 +1583,7 @@ QString Scene_surface_mesh_item::computeStats(int type)
     try{
       CGAL::Polygon_mesh_processing::non_manifold_vertices(*d->smesh_, OutputIterator());
     }
-    catch( CGAL::internal::Throw_at_output::Throw_at_output_exception& )
+    catch( CGAL::internal::Throw_at_output_exception& )
     {
       d->has_nm_vertices = true;
     }
@@ -1659,7 +1661,7 @@ QString Scene_surface_mesh_item::computeStats(int type)
   {
     //todo : add a test about cache validity
     if(is_triangle_mesh(*d->smesh_))
-      d->self_intersect = CGAL::Polygon_mesh_processing::does_self_intersect(*(d->smesh_));
+      d->self_intersect = CGAL::Polygon_mesh_processing::does_self_intersect<CGAL::Parallel_if_available_tag>(*(d->smesh_));
     if (d->self_intersect)
       return QString("Yes");
     else if(is_triangle_mesh(*d->smesh_))
@@ -2016,6 +2018,7 @@ void Scene_surface_mesh_item_priv::fillTargetedIds(const face_descriptor &select
                                                  CGAL::Three::Viewer_interface *viewer,
                                                  const CGAL::qglviewer::Vec& offset)
 {
+  all_displayed = false;
   compute_displayed_ids(*smesh_,
                         viewer,
                         selected_fh,
@@ -2367,9 +2370,31 @@ void Scene_surface_mesh_item::updateVertex(vertex_descriptor vh)
             getTriangleContainer(0)->getVbo(Tri::Smooth_normals),
             new_point,id);
     }
+    d->ids_need_update = true;
+    redraw();
   }
-  invalidate_aabb_tree();
-  redraw();
+}
+
+void Scene_surface_mesh_item::updateIds(vertex_descriptor vh)
+{
+  if(d->ids_need_update &&
+     (d->faces_displayed || d->vertices_displayed || d->edges_displayed))
+  {
+    invalidate_aabb_tree();
+
+    if(d->all_displayed)
+    {
+      d->killIds();
+      d->all_displayed = true;
+      ::printVertexIds(*d->smesh_, d->textVItems);
+    }
+    else
+    {
+      d->fillTargetedIds(face(halfedge(vh, *d->smesh_), *d->smesh_),
+                         face_graph()->point(vh), CGAL::Three::Three::mainViewer(), CGAL::Three::Three::mainViewer()->offset());
+    }
+    d->ids_need_update = false;
+  }
 }
 
 void Scene_surface_mesh_item::switchToGouraudPlusEdge(bool b)

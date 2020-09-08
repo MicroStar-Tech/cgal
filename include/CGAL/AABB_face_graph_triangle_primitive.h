@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/AABB_tree/include/CGAL/AABB_face_graph_triangle_primitive.h $
-// $Id: AABB_face_graph_triangle_primitive.h ff82af6 2020-07-08T12:57:05+02:00 Laurent Rineau
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/AABB_tree/include/CGAL/AABB_face_graph_triangle_primitive.h $
+// $Id: AABB_face_graph_triangle_primitive.h 18f4e44 2020-07-07T11:44:40+02:00 Laurent Rineau
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -38,7 +38,7 @@ namespace CGAL {
  *\tparam FaceGraph is a model of the face graph concept.
  *\tparam VertexPointPMap  is a property map with `boost::graph_traits<FaceGraph>::%vertex_descriptor`
  *   as key type and a \cgal Kernel `Point_3` as value type.
- *                         The default is `typename boost::property_map< FaceGraph,vertex_point_t>::%type`.
+ *                         The default is `typename boost::property_map< FaceGraph,vertex_point_t>::%const_type`.
  *\tparam OneFaceGraphPerTree is either `CGAL::Tag_true` or `CGAL::Tag_false`.
  * In the former case, we guarantee that all the primitives will be from a
  * common `FaceGraph` and some data will be factorized so that the size of
@@ -130,7 +130,7 @@ public:
   // constructors
   /*!
     \tparam Iterator an input iterator with `Id` as value type.
-    Constructs a primitive.
+    constructs a primitive.
     If `VertexPointPMap` is the default of the class, an additional constructor
     is available with `vppm` set to `get(vertex_point, graph)`.
   */
@@ -142,7 +142,7 @@ public:
   {}
 
   /*!
-    Constructs a primitive.
+    constructs a primitive.
     If `VertexPointPMap` is the default of the class, an additional constructor
     is available with `vppm` set to `get(vertex_point, graph)`.
   */

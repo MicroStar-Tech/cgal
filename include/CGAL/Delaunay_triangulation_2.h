@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Triangulation_2/include/CGAL/Delaunay_triangulation_2.h $
-// $Id: Delaunay_triangulation_2.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Triangulation_2/include/CGAL/Delaunay_triangulation_2.h $
+// $Id: Delaunay_triangulation_2.h d1a323c 2020-03-26T19:24:14+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Mariette Yvinec
@@ -89,6 +89,11 @@ public:
          const Delaunay_triangulation_2<Gt,Tds> &tr)
        : Triangulation_2<Gt,Tds>(tr)
   {   CGAL_triangulation_postcondition(is_valid());  }
+
+  Delaunay_triangulation_2(Delaunay_triangulation_2&&) = default;
+  Delaunay_triangulation_2& operator=(const Delaunay_triangulation_2&) = default;
+  Delaunay_triangulation_2& operator=(Delaunay_triangulation_2&&) = default;
+  ~Delaunay_triangulation_2() = default;
 
  template <class InputIterator>
  Delaunay_triangulation_2(InputIterator first, InputIterator last,

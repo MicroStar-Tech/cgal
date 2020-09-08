@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/STL_Extension/include/CGAL/Object.h $
-// $Id: Object.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/STL_Extension/include/CGAL/Object.h $
+// $Id: Object.h bcf8409 2020-06-23T18:50:20+02:00 Laurent Rineau
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -132,10 +132,10 @@ class Object
 
 #ifndef CGAL_NO_DEPRECATED_CODE
     // The comparisons with nullptr are only there for Nef...
-    bool operator==(std::nullptr_t CGAL_assertion_code(n)) const
-    { CGAL_assertion(n == 0); return empty(); }
-    bool operator!=(std::nullptr_t CGAL_assertion_code(n)) const
-    { CGAL_assertion(n == 0); return !empty(); }
+  bool operator==(std::nullptr_t /*CGAL_assertion_code(n)*/) const
+  { /*CGAL_assertion(n == 0);*/ return empty(); }
+  bool operator!=(std::nullptr_t /*CGAL_assertion_code(n)*/) const
+  { /*CGAL_assertion(n == 0);*/ return !empty(); }
 #endif // CGAL_NO_DEPRECATED_CODE
 
 };
@@ -161,7 +161,7 @@ assign(T& t, const Object& o)
 struct Bad_object_cast
   : public std::bad_cast
 {
-    virtual const char * what() const throw()
+    virtual const char * what() const noexcept
     {
         return "CGAL::bad_object_cast: "
                "failed conversion using CGAL::object_cast";

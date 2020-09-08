@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Mesh_3/include/CGAL/Mesh_3/mesh_standard_facet_criteria.h $
-// $Id: mesh_standard_facet_criteria.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Mesh_3/include/CGAL/Mesh_3/mesh_standard_facet_criteria.h $
+// $Id: mesh_standard_facet_criteria.h 58b10a3 2020-03-26T18:58:50+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -565,6 +565,10 @@ protected:
       {
         if ( !(v2->index() == index) )
         {
+#ifdef CGAL_MESH_3_DEBUG_FACET_CRITERIA
+          std::cerr << "Bad facet (on same surface criterion: "
+                    << v2->index() << " != " << index << ")" << std::endl;
+#endif
           return Is_bad(Quality(1));
         }
       }
@@ -579,6 +583,10 @@ protected:
     {
       if ( is_index_initialized && !(v3->index() == index) )
       {
+#ifdef CGAL_MESH_3_DEBUG_FACET_CRITERIA
+          std::cerr << "Bad facet (on same surface criterion: "
+                    << v3->index() << " != " << index << ")" << std::endl;
+#endif
         return Is_bad(Quality(1));
       }
     }

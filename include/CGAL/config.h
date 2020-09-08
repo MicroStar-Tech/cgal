@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Installation/include/CGAL/config.h $
-// $Id: config.h 2e8a59d 2020-07-21T15:25:54+02:00 Laurent Rineau
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Installation/include/CGAL/config.h $
+// $Id: config.h 022b1a7 2020-07-21T15:27:49+02:00 Laurent Rineau
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -34,6 +34,11 @@
 //   https://svn.boost.org/trac/boost/ticket/5519
 #if defined(_WIN64) && ! defined(WIN64)
 #  define WIN64
+#endif
+
+#ifdef _MSC_VER
+#define _SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING 1
+#define _SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING 1
 #endif
 
 #ifdef CGAL_INCLUDE_WINDOWS_DOT_H
@@ -101,6 +106,10 @@
 // <boost/type_traits/detail/has_postfix_operator.hpp> fails as well
 #  define BOOST_TT_HAS_POST_DECREMENT_HPP_INCLUDED
 #  define BOOST_TT_HAS_POST_INCREMENT_HPP_INCLUDED
+//work around for moc bug : https://bugreports.qt.io/browse/QTBUG-80990
+#if defined(CGAL_LINKED_WITH_TBB)
+#undef CGAL_LINKED_WITH_TBB
+#endif
 #endif
 
 // Macro used by Boost Parameter. Mesh_3 needs at least 12, before the
@@ -287,6 +296,10 @@
 // Same for C++14.
 #if __cplusplus >= 201402L || _MSVC_LANG >= 201402L
 #  define CGAL_CXX14 1
+#endif
+// Same for C++17
+#if __cplusplus >= 201703L || _MSVC_LANG >= 201703L
+#  define CGAL_CXX17 1
 #endif
 
 #if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL) || BOOST_VERSION < 105000
@@ -736,6 +749,5 @@ typedef const void * Nullptr_t;   // Anticipate C++0x's std::nullptr_t
 #endif // not BOOST_MSVC
 /// @}
 #include <CGAL/license/lgpl.h>
-
 
 #endif // CGAL_CONFIG_H

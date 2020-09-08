@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Cartesian_kernel/include/CGAL/Cartesian/function_objects.h $
-// $Id: function_objects.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Cartesian_kernel/include/CGAL/Cartesian/function_objects.h $
+// $Id: function_objects.h 4527b1f 2020-03-26T19:01:49+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -523,6 +523,39 @@ namespace CartesianKernelFunctors {
       return CGAL::compare_power_distanceC2(p.x(), p.y(), p.weight(),
                                             q.x(), q.y(), q.weight(),
                                             r.x(), r.y());
+    }
+  };
+
+  template <typename K>
+  class Compare_signed_distance_to_line_2
+  {
+    typedef typename K::Point_2   Point_2;
+    typedef typename K::Line_2    Line_2;
+    typedef typename K::Equal_2   Equal_2;
+    typedef typename K::Less_signed_distance_to_line_2 Less_signed_distance_to_line_2;
+
+  public:
+    typedef typename K::Comparison_result     result_type;
+
+    result_type
+    operator()(const Point_2& a, const Point_2& b,
+               const Point_2& c, const Point_2& d) const
+    {
+      CGAL_kernel_precondition_code(Equal_2 equal;)
+          CGAL_kernel_precondition(! equal(a,b));
+      return cmp_signed_dist_to_lineC2( a.x(), a.y(),
+                                        b.x(), b.y(),
+                                        c.x(), c.y(),
+                                        d.x(), d.y());
+    }
+
+    result_type
+    operator()(const Line_2& l, const Point_2& p, const Point_2& q) const
+    {
+      Less_signed_distance_to_line_2 less = K().less_signed_distance_to_line_2_object();
+      if (less(l, p, q)) return SMALLER;
+      if (less(l, q, p)) return LARGER;
+      return EQUAL;
     }
   };
 
@@ -3884,7 +3917,7 @@ namespace CartesianKernelFunctors {
     }
   };
 
-  // TODO ...
+
   template <typename K>
   class Less_signed_distance_to_line_2
   {

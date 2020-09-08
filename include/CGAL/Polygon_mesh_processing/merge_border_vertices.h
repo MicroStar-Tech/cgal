@@ -3,12 +3,13 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Polygon_mesh_processing/include/CGAL/Polygon_mesh_processing/merge_border_vertices.h $
-// $Id: merge_border_vertices.h 38abfdf 2020-03-18T08:51:09+01:00 Mael
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Polygon_mesh_processing/include/CGAL/Polygon_mesh_processing/merge_border_vertices.h $
+// $Id: merge_border_vertices.h c253679 2020-04-18T16:27:58+02:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
 // Author(s)     : Sebastien Loriot
+//                 Mael Rouxel-Labbé
 
 #ifndef CGAL_POLYGON_MESH_PROCESSING_MERGE_BORDER_VERTICES_H
 #define CGAL_POLYGON_MESH_PROCESSING_MERGE_BORDER_VERTICES_H
@@ -261,19 +262,21 @@ void merge_vertices_in_range(const HalfedgeRange& sorted_hedges,
 /// merges identical vertices around a cycle of boundary edges.
 ///
 /// @tparam PolygonMesh a model of `FaceListGraph` and `MutableFaceGraph`.
-/// @tparam NamedParameter a sequence of \ref pmp_namedparameters "Named Parameters".
+/// @tparam NamedParameter a sequence of \ref bgl_namedparameters "Named Parameters".
 ///
 /// @param h a halfedge that belongs to a boundary cycle.
 /// @param pm the polygon mesh which contains the boundary cycle.
-/// @param np optional parameter of \ref pmp_namedparameters "Named Parameters" listed below.
+/// @param np an optional sequence of \ref bgl_namedparameters "Named Parameters" among the ones listed below
 ///
 /// \cgalNamedParamsBegin
-/// \cgalParamBegin{vertex_point_map}
-///   the property map with the points associated to the vertices of `pm`.
-///    If this parameter is omitted, an internal property map for
-///  `CGAL::vertex_point_t` should be available in `PolygonMesh`
-/// \cgalParamEnd
+///   \cgalParamNBegin{vertex_point_map}
+///     \cgalParamDescription{a property map associating points to the vertices of `pm`}
+///     \cgalParamType{a class model of `ReadWritePropertyMap` with `boost::graph_traits<PolygonMesh>::%vertex_descriptor`
+///                    as key type and `%Point_3` as value type}
+///     \cgalParamDefault{`boost::get(CGAL::vertex_point, pm)`}
+///   \cgalParamNEnd
 /// \cgalNamedParamsEnd
+///
 template <class PolygonMesh, class NamedParameter>
 void merge_duplicated_vertices_in_boundary_cycle(
         typename boost::graph_traits<PolygonMesh>::halfedge_descriptor h,
@@ -315,17 +318,18 @@ void merge_duplicated_vertices_in_boundary_cycle(
 /// extracts boundary cycles and merges the duplicated vertices of each cycle.
 ///
 /// @tparam PolygonMesh a model of `FaceListGraph` and `MutableFaceGraph`.
-/// @tparam NamedParameter a sequence of \ref pmp_namedparameters "Named Parameters".
+/// @tparam NamedParameter a sequence of \ref bgl_namedparameters "Named Parameters".
 ///
 /// @param pm the polygon mesh which contains the cycles.
-/// @param np optional parameter of \ref pmp_namedparameters "Named Parameters" listed below.
+/// @param np an optional sequence of \ref bgl_namedparameters "Named Parameters" among the ones listed below
 ///
 /// \cgalNamedParamsBegin
-/// \cgalParamBegin{vertex_point_map}
-///   the property map with the points associated to the vertices of `pm`.
-///    If this parameter is omitted, an internal property map for
-///  `CGAL::vertex_point_t` should be available in `PolygonMesh`
-/// \cgalParamEnd
+///   \cgalParamNBegin{vertex_point_map}
+///     \cgalParamDescription{a property map associating points to the vertices of `pm`}
+///     \cgalParamType{a class model of `ReadWritePropertyMap` with `boost::graph_traits<PolygonMesh>::%vertex_descriptor`
+///                    as key type and `%Point_3` as value type}
+///     \cgalParamDefault{`boost::get(CGAL::vertex_point, pm)`}
+///   \cgalParamNEnd
 /// \cgalNamedParamsEnd
 ///
 /// \sa `merge_duplicated_vertices_in_boundary_cycle()`

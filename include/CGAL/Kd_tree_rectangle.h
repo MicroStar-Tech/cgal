@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Spatial_searching/include/CGAL/Kd_tree_rectangle.h $
-// $Id: Kd_tree_rectangle.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Spatial_searching/include/CGAL/Kd_tree_rectangle.h $
+// $Id: Kd_tree_rectangle.h 2e180ac 2020-03-26T19:29:44+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -105,6 +105,7 @@ namespace CGAL {
     }
 
     Kd_tree_rectangle()
+      : max_span_coord_(-1)
     {}
 
 
@@ -138,6 +139,7 @@ namespace CGAL {
 
     template <class Construct_cartesian_const_iterator_d,class PointPointerIter> // was PointIter
     Kd_tree_rectangle(int,  PointPointerIter begin,  PointPointerIter end,const Construct_cartesian_const_iterator_d& construct_it)
+      : max_span_coord_(-1)
     {
       update_from_point_pointers<Construct_cartesian_const_iterator_d>(begin,end,construct_it);
     }
@@ -288,7 +290,7 @@ namespace CGAL {
     }
 
     Kd_tree_rectangle()
-      : coords_(0), dim(0)
+      : coords_(0), dim(0), max_span_coord_(-1)
     {
 }
 
@@ -323,7 +325,7 @@ namespace CGAL {
 
     template <class Construct_cartesian_const_iterator_d,class PointPointerIter> // was PointIter
     Kd_tree_rectangle(int d,  PointPointerIter begin,  PointPointerIter end,const Construct_cartesian_const_iterator_d& construct_it)
-      : coords_(new FT[2*d]), dim(d)
+      : coords_(new FT[2*d]), dim(d), max_span_coord_(-1)
     {
       update_from_point_pointers<Construct_cartesian_const_iterator_d>(begin,end,construct_it);
     }

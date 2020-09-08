@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Polygon_mesh_processing/include/CGAL/Polygon_mesh_processing/internal/Hole_filling/Triangulate_hole_polyline.h $
-// $Id: Triangulate_hole_polyline.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Polygon_mesh_processing/include/CGAL/Polygon_mesh_processing/internal/Hole_filling/Triangulate_hole_polyline.h $
+// $Id: Triangulate_hole_polyline.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -35,6 +35,7 @@
 #include <CGAL/boost/iterator/transform_iterator.hpp>
 #include <boost/next_prior.hpp>
 #include <boost/unordered_set.hpp>
+#include <boost/next_prior.hpp>
 
 namespace CGAL {
 namespace internal {

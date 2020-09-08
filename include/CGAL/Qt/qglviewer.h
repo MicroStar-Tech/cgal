@@ -6,8 +6,8 @@
  This file is part of a fork of the QGLViewer library version 2.7.0.
 
 *****************************************************************************/
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/GraphicsView/include/CGAL/Qt/qglviewer.h $
-// $Id: qglviewer.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/GraphicsView/include/CGAL/Qt/qglviewer.h $
+// $Id: qglviewer.h 624e8e8 2020-06-12T10:34:48+02:00 Maxime Gimeno
 // SPDX-License-Identifier: GPL-3.0-only
 
 #ifndef QGLVIEWER_QGLVIEWER_H
@@ -73,11 +73,11 @@ class CGAL_QT_EXPORT QGLViewer : public QOpenGLWidget, public QOpenGLFunctions {
 public:
   //todo check if this is used. If not remove it
   explicit QGLViewer(QGLContext* context, QWidget *parent = 0,
-                     ::Qt::WindowFlags flags = 0);
+                     ::Qt::WindowFlags flags = ::Qt::WindowType(0));
   explicit QGLViewer(QOpenGLContext* context, QWidget *parent = 0,
-                     ::Qt::WindowFlags flags = 0);
+                     ::Qt::WindowFlags flags = ::Qt::WindowType(0));
   explicit QGLViewer(QWidget *parent = 0,
-                     ::Qt::WindowFlags flags = 0);
+                     ::Qt::WindowFlags flags = ::Qt::WindowType(0));
 
   virtual ~QGLViewer();
 

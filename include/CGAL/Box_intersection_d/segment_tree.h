@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Box_intersection_d/include/CGAL/Box_intersection_d/segment_tree.h $
-// $Id: segment_tree.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Box_intersection_d/include/CGAL/Box_intersection_d/segment_tree.h $
+// $Id: segment_tree.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -16,14 +16,12 @@
 
 #include <CGAL/license/Box_intersection_d.h>
 
-
 #include <CGAL/basic.h>
 #include <CGAL/Box_intersection_d/box_limits.h>
 
 #include <boost/random/linear_congruential.hpp>
 #include <boost/random/uniform_int.hpp>
 #include <boost/random/variate_generator.hpp>
-
 
 #include <algorithm>
 #include <iterator>
@@ -93,6 +91,8 @@ void one_way_scan( RandomAccessIter1 p_begin, RandomAccessIter1 p_end,
                    bool in_order = true )
 {
     typedef typename Traits::Compare Compare;
+
+    // Putting a parallel sort here slows down the overall parallel algorithm
     std::sort( p_begin, p_end, Compare( 0 ) );
     std::sort( i_begin, i_end, Compare( 0 ) );
 
@@ -323,7 +323,7 @@ void segment_tree( RandomAccessIter1 p_begin, RandomAccessIter1 p_end,
                    RandomAccessIter2 i_begin, RandomAccessIter2 i_end,
                    T lo, T hi,
                    Callback callback, Predicate_traits traits,
-                   std::ptrdiff_t cutoff, int dim, bool in_order )
+                   std::ptrdiff_t cutoff, int dim, bool in_order)
 {
     typedef typename Predicate_traits::Spanning   Spanning;
     typedef typename Predicate_traits::Lo_less    Lo_less;

@@ -4,8 +4,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Surface_mesh_segmentation/include/CGAL/mesh_segmentation.h $
-// $Id: mesh_segmentation.h c43d6bd 2020-02-25T14:47:03+01:00 Laurent Rineau
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Surface_mesh_segmentation/include/CGAL/mesh_segmentation.h $
+// $Id: mesh_segmentation.h 358b2d2 2020-03-26T11:10:23+01:00 Simon Giraudot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Ilker O. Yaz
@@ -198,8 +198,7 @@ segmentation_from_sdf_values( const TriangleMesh& triangle_mesh,
                               PointPropertyMap ppmap=PointPropertyMap(),
                               GeomTraits traits=GeomTraits())
 {
-  typedef typename boost::property_map<TriangleMesh, boost::vertex_point_t>::type VPMap;
-  internal::Surface_mesh_segmentation<TriangleMesh, GeomTraits, VPMap> algorithm(triangle_mesh, traits, ppmap);
+  internal::Surface_mesh_segmentation<TriangleMesh, GeomTraits, PointPropertyMap> algorithm(triangle_mesh, traits, ppmap);
   return algorithm.partition(number_of_clusters, smoothing_lambda, sdf_values_map,
                              segment_ids, !output_cluster_ids);
 }

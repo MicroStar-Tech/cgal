@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Arrangement_on_surface_2/include/CGAL/Arr_geometry_traits/Bezier_cache.h $
-// $Id: Bezier_cache.h cba160f 2020-06-30T16:37:01+02:00 Laurent Rineau
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Arrangement_on_surface_2/include/CGAL/Arr_geometry_traits/Bezier_cache.h $
+// $Id: Bezier_cache.h 6d949cd 2020-08-08T17:29:55+02:00 Ahmed Essam
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -52,11 +52,11 @@ public:
   /// \name Type definitions for the intersection-point mapping.
   //@{
 
-  /*! \struct Intersection_point_2
+  /*! \struct Intersection_point
    * Representation of an intersection point (in both parameter and physical
    * spaces).
    */
-  struct Intersection_point_2
+  struct Intersection_point
   {
     Algebraic          s;      // The parameter for the first curve.
     Algebraic          t;      // The parameter for the second curve.
@@ -64,7 +64,7 @@ public:
     Algebraic          y;      // The y-coordinate.
 
     /*! Constructor. */
-    Intersection_point_2 (const Algebraic& _s, const Algebraic& _t,
+    Intersection_point (const Algebraic& _s, const Algebraic& _t,
                           const Algebraic& _x, const Algebraic& _y) :
       s(_s), t(_t),
       x(_x), y(_y)
@@ -73,7 +73,7 @@ public:
 
   typedef std::pair<Curve_id, Curve_id>              Curve_pair;
   typedef std::pair<Algebraic, Algebraic>            Parameter_pair;
-  typedef std::list<Intersection_point_2>            Intersection_list;
+  typedef std::list<Intersection_point>            Intersection_list;
   typedef
     typename Intersection_list::const_iterator       Intersection_iter;
 
@@ -378,7 +378,7 @@ _Bezier_cache<NtTraits>::get_intersections
             CGAL::compare (nt_traits.evaluate_at (polyY_1, *t_it),
                            y) == EQUAL)
         {
-          info.first.push_back (Intersection_point_2 (*s_it, *t_it,
+          info.first.push_back (Intersection_point (*s_it, *t_it,
                                                       x / denX, y / denY));
         }
       }
@@ -528,7 +528,7 @@ _Bezier_cache<NtTraits>::get_intersections
     if(CGAL::sign (s) != NEGATIVE && CGAL::compare (s, one) != LARGER &&
       CGAL::sign (t) != NEGATIVE && CGAL::compare (t, one) != LARGER)
     {
-      info.first.push_back (Intersection_point_2 (s, t,pit1->x, pit1->y));
+      info.first.push_back(Intersection_point(s, t,pit1->x, pit1->y));
     }
   }
 
@@ -653,7 +653,7 @@ void _Bezier_cache<NtTraits>::_self_intersection_params
   //   II: Y(t) - Y(s) / (t - s) = 0
   //
   Integer                 *coeffs;
-  int                      i, k;
+  int                      i;
 
   // Consruct the bivariate polynomial that corresponds to Equation I.
   // Note that we represent a bivariate polynomial as a vector of univariate
@@ -667,12 +667,11 @@ void _Bezier_cache<NtTraits>::_self_intersection_params
   coeffs = new Integer [degX];
 
   for (i = 0; i < degX; i++)
-  {
-    for (k = i + 1; k < degX; k++)
-      coeffs[k - i - 1] = nt_traits.get_coefficient (polyX, k);
+    coeffs[i] = nt_traits.get_coefficient(polyX, i + 1);
 
-    coeffsX_st[i] = nt_traits.construct_polynomial (coeffs, degX - i - 1);
-  }
+  for (i = 0; i < degX; i++)
+    coeffsX_st[degX - i - 1] =
+        nt_traits.construct_polynomial(coeffs + i, degX - i - 1);
 
   delete[] coeffs;
 
@@ -685,12 +684,11 @@ void _Bezier_cache<NtTraits>::_self_intersection_params
   coeffs = new Integer [degY];
 
   for (i = 0; i < degY; i++)
-  {
-    for (k = i + 1; k < degY; k++)
-      coeffs[k - i - 1] = nt_traits.get_coefficient (polyY, k);
+    coeffs[i] = nt_traits.get_coefficient(polyY, i + 1);
 
-    coeffsY_st[i] = nt_traits.construct_polynomial (coeffs, degY - i - 1);
-  }
+  for (i = 0; i < degY; i++)
+    coeffsY_st[degY - i - 1] =
+        nt_traits.construct_polynomial(coeffs + i, degY - i - 1);
 
   delete[] coeffs;
 

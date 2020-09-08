@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Mesh_3/include/CGAL/Mesh_3/C3T3_helpers.h $
-// $Id: C3T3_helpers.h ad23db2 2020-06-30T16:36:58+02:00 Laurent Rineau
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Mesh_3/include/CGAL/Mesh_3/C3T3_helpers.h $
+// $Id: C3T3_helpers.h 25eeff8 2020-07-22T12:29:55+02:00 Laurent Rineau
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -26,7 +26,7 @@
 
 #include <CGAL/linear_least_squares_fitting_3.h>
 #include <CGAL/Mesh_3/Triangulation_helpers.h>
-#include <CGAL/Hash_handles_with_or_without_timestamps.h>
+#include <CGAL/Time_stamper.h>
 #include <CGAL/tuple.h>
 #include <CGAL/iterator.h>
 #include <CGAL/array.h>
@@ -1224,8 +1224,8 @@ private:
       if(update_c3t3)
       {
         // Update status in c3t3
-        if(surface != boost::none)
-          c3t3_.add_to_complex(facet, surface.get());
+        if((bool)surface)
+          c3t3_.add_to_complex(facet, *surface);
         else
           c3t3_.remove_from_complex(facet);
       }
@@ -1246,7 +1246,7 @@ private:
         }
       }
 
-      return surface;
+      return surface ? surface : Surface_patch();
     }
 
 
@@ -1366,7 +1366,6 @@ private:
 
     std::size_t vertex_id(const std::size_t& i) const
     {
-      CGAL_precondition(i >= 0);
       CGAL_precondition((infinite_ && i < 3) || i < 4);
       return vertices_[i];
     }
@@ -1573,10 +1572,17 @@ private:
   Cell_vector c3t3_cells(const Cell_vector& cells) const
   {
     Cell_vector c3t3_cells;
+#ifdef CGAL_CXX17
+    std::remove_copy_if(cells.begin(),
+                        cells.end(),
+                        std::back_inserter(c3t3_cells),
+                        std::not_fn(Is_in_c3t3<Cell_handle>(c3t3_)));
+#else
     std::remove_copy_if(cells.begin(),
                         cells.end(),
                         std::back_inserter(c3t3_cells),
                         std::not1(Is_in_c3t3<Cell_handle>(c3t3_)) );
+#endif
     return c3t3_cells;
   }
 
@@ -2048,7 +2054,7 @@ private:
                                        true); /* update surface centers */
       // false means "do not update the c3t3"
       if ( c3t3_.is_in_complex(*fit) != (bool)sp ||
-           ((bool)sp && !(c3t3_.surface_patch_index(*fit) == sp.get()) ) )
+           ((bool)sp && !(c3t3_.surface_patch_index(*fit) == *sp) ) )
         return false;
     }
 

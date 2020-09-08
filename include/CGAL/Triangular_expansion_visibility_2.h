@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Visibility_2/include/CGAL/Triangular_expansion_visibility_2.h $
-// $Id: Triangular_expansion_visibility_2.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Visibility_2/include/CGAL/Triangular_expansion_visibility_2.h $
+// $Id: Triangular_expansion_visibility_2.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -66,13 +66,13 @@ public:
   typedef CGAL::Tag_true                      Supports_simple_polygon_category;
 
 private:
-  typedef CGAL::Triangulation_vertex_base_2<K>                     Vb;
-  typedef CGAL::Constrained_triangulation_face_base_2<K>           Fb;
-  typedef CGAL::Triangulation_data_structure_2<Vb,Fb>              TDS;
-  typedef CGAL::No_intersection_tag                                Itag;
-  typedef CGAL::Constrained_Delaunay_triangulation_2<K, TDS, Itag> CDT;
+  typedef CGAL::Triangulation_vertex_base_2<K>                          Vb;
+  typedef CGAL::Constrained_triangulation_face_base_2<K>                Fb;
+  typedef CGAL::Triangulation_data_structure_2<Vb, Fb>                  TDS;
+  typedef CGAL::No_constraint_intersection_requiring_constructions_tag  Itag;
+  typedef CGAL::Constrained_Delaunay_triangulation_2<K, TDS, Itag>      CDT;
 
-  typedef std::pair<Point_2,Point_2>                               Constraint;
+  typedef std::pair<Point_2, Point_2>                                   Constraint;
 
   // Functor to create edge constraints for the CDT out of Halfedges
   struct Make_constraint

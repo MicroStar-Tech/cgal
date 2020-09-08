@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Point_set_processing_3/include/CGAL/IO/write_off_points.h $
-// $Id: write_off_points.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Point_set_processing_3/include/CGAL/IO/write_off_points.h $
+// $Id: write_off_points.h c253679 2020-04-18T16:27:58+02:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s) : Pierre Alliez and Laurent Saboret
@@ -40,15 +40,26 @@ namespace CGAL {
 
    \param stream output stream.
    \param points input point range.
-   \param np optional sequence of \ref psp_namedparameters "Named Parameters" among the ones listed below.
+   \param np an optional sequence of \ref bgl_namedparameters "Named Parameters" among the ones listed below
 
    \cgalNamedParamsBegin
-     \cgalParamBegin{point_map} a model of `ReadablePropertyMap` with value type `geom_traits::Point_3`.
-     If this parameter is omitted, `CGAL::Identity_property_map<geom_traits::Point_3>` is used.\cgalParamEnd
-     \cgalParamBegin{normal_map} a model of `ReadablePropertyMap` with value type
-     `geom_traits::Vector_3`.\cgalParamEnd If this parameter is omitted, normals are not written to the
-     output stream.\cgalParamEnd
-     \cgalParamBegin{geom_traits} an instance of a geometric traits class, model of `Kernel`\cgalParamEnd
+     \cgalParamNBegin{point_map}
+       \cgalParamDescription{a property map associating points to the elements of the point range}
+       \cgalParamType{a model of `ReadablePropertyMap` with value type `geom_traits::Point_3`}
+       \cgalParamDefault{`CGAL::Identity_property_map<geom_traits::Point_3>`}
+     \cgalParamNEnd
+
+     \cgalParamNBegin{normal_map}
+       \cgalParamDescription{a property map associating normals to the elements of the poing range}
+       \cgalParamType{a model of `ReadablePropertyMap` with value type `geom_traits::Vector_3`}
+       \cgalParamDefault{If this parameter is omitted, normals are not written in the output stream.}
+     \cgalParamNEnd
+
+     \cgalParamNBegin{geom_traits}
+       \cgalParamDescription{an instance of a geometric traits class}
+       \cgalParamType{a model of `Kernel`}
+       \cgalParamDefault{a \cgal Kernel deduced from the point type, using `CGAL::Kernel_traits`}
+     \cgalParamNEnd
    \cgalNamedParamsEnd
 
    \return `true` on success.
@@ -66,14 +77,14 @@ write_off_points(
   using parameters::get_parameter;
 
   // basic geometric types
-  typedef typename Point_set_processing_3::GetPointMap<PointRange, NamedParameters>::type PointMap;
+  typedef typename CGAL::GetPointMap<PointRange, NamedParameters>::type PointMap;
   typedef typename Point_set_processing_3::GetNormalMap<PointRange, NamedParameters>::type NormalMap;
 
   bool has_normals = !(boost::is_same<NormalMap,
                        typename Point_set_processing_3::GetNormalMap<PointRange, NamedParameters>::NoMap>::value);
 
-  PointMap point_map = choose_parameter(get_parameter(np, internal_np::point_map), PointMap());
-  NormalMap normal_map = choose_parameter(get_parameter(np, internal_np::normal_map), NormalMap());
+  PointMap point_map = choose_parameter<PointMap>(get_parameter(np, internal_np::point_map));
+  NormalMap normal_map = choose_parameter<NormalMap>(get_parameter(np, internal_np::normal_map));
 
   CGAL_point_set_processing_precondition(points.begin() != points.end());
 

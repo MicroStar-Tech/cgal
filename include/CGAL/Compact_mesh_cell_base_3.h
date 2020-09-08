@@ -4,8 +4,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Mesh_3/include/CGAL/Compact_mesh_cell_base_3.h $
-// $Id: Compact_mesh_cell_base_3.h 113c3d1 2020-06-15T15:56:28+02:00 Laurent Rineau
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Mesh_3/include/CGAL/Compact_mesh_cell_base_3.h $
+// $Id: Compact_mesh_cell_base_3.h bd7d3c4 2020-06-23T18:49:58+02:00 Laurent Rineau
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Laurent Rineau, Stephane Tayeb, Andreas Fabri
@@ -491,7 +491,7 @@ public:
 
   // For use by Compact_container.
   void * for_compact_container() const { return N[0].for_compact_container(); }
-  void * & for_compact_container()     { return N[0].for_compact_container(); }
+  void for_compact_container(void *p) { N[0].for_compact_container(p); }
 
   // TDS internal data access functions.
         TDS_data& tds_data()       { return _tds_data; }

@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Intersections_2/include/CGAL/Intersection_traits_2.h $
-// $Id: Intersection_traits_2.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Intersections_2/include/CGAL/Intersection_traits_2.h $
+// $Id: Intersection_traits_2.h 8b41189 2020-03-26T18:58:21+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -104,6 +104,28 @@ struct Intersection_traits<K, typename K::Iso_rectangle_2, typename K::Triangle_
 template<typename K>
 struct Intersection_traits<K, typename K::Triangle_2, typename K::Iso_rectangle_2>
   : public Intersection_traits<K, typename K::Iso_rectangle_2, typename K::Triangle_2> {};
+
+template<typename K, class B>
+struct Intersection_traits<K, CGAL::Bbox_2, B>  {
+  typedef typename Intersection_traits<K,typename K::Iso_rectangle_2, B>::result_type result_type;
+};
+
+template<typename K, class A>
+struct Intersection_traits<K, A, CGAL::Bbox_2>  {
+  typedef typename Intersection_traits<K,typename K::Iso_rectangle_2, A>::result_type result_type;
+};
+
+template<typename K>
+struct Intersection_traits<K, CGAL::Bbox_2, typename K::Point_2>  {
+  typedef typename boost::variant<typename K::Point_2> variant_type;
+  typedef boost::optional<variant_type> result_type;
+};
+
+template<typename K>
+struct Intersection_traits<K, typename K::Point_2, CGAL::Bbox_2>  {
+  typedef typename boost::variant<typename K::Point_2> variant_type;
+  typedef boost::optional<variant_type> result_type;
+};
 
 } // namespace CGAL
 

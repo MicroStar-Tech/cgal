@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Number_types/include/CGAL/Exact_algebraic.h $
-// $Id: Exact_algebraic.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Number_types/include/CGAL/Exact_algebraic.h $
+// $Id: Exact_algebraic.h 66040cb 2020-07-20T17:13:01+02:00 Laurent Rineau
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -49,12 +49,10 @@ typedef unspecified_type Exact_algebraic;
 
 #else // not DOXYGEN_RUNNING
 
-#ifdef CGAL_USE_CORE
-  typedef CORE::Expr Exact_algebraic;
-#endif
-
 #ifdef CGAL_USE_LEDA
 typedef leda_real Exact_algebraic;
+#elif defined CGAL_USE_CORE
+  typedef CORE::Expr Exact_algebraic;
 #endif
 
 #endif

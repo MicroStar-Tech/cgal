@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Linear_cell_complex/examples/Linear_cell_complex/basic_viewer.h $
-// $Id: basic_viewer.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Linear_cell_complex/examples/Linear_cell_complex/basic_viewer.h $
+// $Id: basic_viewer.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Guillaume Damiand <guillaume.damiand@liris.cnrs.fr>
@@ -215,7 +215,6 @@ class Basic_viewer : public CGAL::QGLViewer, public QOpenGLFunctions_2_1
 
   typedef CGAL::Constrained_triangulation_face_base_2<P_traits, Fb1>    Fb;
   typedef CGAL::Triangulation_data_structure_2<Vb,Fb>                   TDS;
-  // typedef CGAL::No_intersection_tag                                     Itag;
   typedef CGAL::Exact_predicates_tag                                    Itag;
   typedef CGAL::Constrained_Delaunay_triangulation_2<P_traits, TDS,
                                                      Itag>              CDT;

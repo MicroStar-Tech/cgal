@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Point_set_3/include/CGAL/Point_set_3.h $
-// $Id: Point_set_3.h 157bdbd 2020-04-22T13:26:52+02:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Point_set_3/include/CGAL/Point_set_3.h $
+// $Id: Point_set_3.h 038869c 2020-05-12T15:12:21+02:00 Mael Rouxel-Labbé
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -947,13 +947,12 @@ public:
 
 
   /*!
-    \brief Returns a sequence of \ref psp_namedparameters "Named Parameters" for Point Set Processing algorithms.
+    \brief Returns a sequence of \ref bgl_namedparameters "Named Parameters" to be used in Point Set Processing algorithms.
 
-    \cgalNamedParamsBegin
-      \cgalParamBegin{point_map} contains the point map (see `point_map()`)\cgalParamEnd
-      \cgalParamBegin{normal_map} contains the normal map (see `normal_map()`)\cgalParamEnd
-      \cgalParamBegin{geom_traits} contains the kernel `typename Kernel_traits<Point>`::`Kernel`\cgalParamEnd
-    \cgalNamedParamsEnd
+    The following named parameters are used:
+    - `point_map`: contains the point property map (see `point_map()`)
+    - `normal_map`: contains the normal map (see `normal_map()`)
+    - `geom_traits`: contains the kernel `typename Kernel_traits<Point>`::`Kernel`
 
     \warning this method does not check if the normal map was
     instanciated or not. The normal map named parameter should not be
