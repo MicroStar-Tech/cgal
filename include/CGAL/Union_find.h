@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Union_find/include/CGAL/Union_find.h $
-// $Id: Union_find.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Union_find/include/CGAL/Union_find.h $
+// $Id: Union_find.h fcd4e57 2020-05-22T11:29:03+02:00 Marc Glisse
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -114,8 +114,7 @@ public:
 #ifdef _MSC_VER
     typedef CGAL_ALLOCATOR(Union_find_struct)                allocator;
 #else
-    typedef typename A::template rebind<Union_find_struct>   Rebind;
-    typedef typename Rebind::other                           allocator;
+    typedef typename std::allocator_traits<A>::template rebind_alloc<Union_find_struct> allocator;
 #endif
 
 private:

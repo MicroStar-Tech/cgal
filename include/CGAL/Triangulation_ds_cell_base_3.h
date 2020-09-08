@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/TDS_3/include/CGAL/Triangulation_ds_cell_base_3.h $
-// $Id: Triangulation_ds_cell_base_3.h fb83386 2020-05-12T16:58:32+02:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/TDS_3/include/CGAL/Triangulation_ds_cell_base_3.h $
+// $Id: Triangulation_ds_cell_base_3.h dcc4fb1 2020-05-20T09:46:26+02:00 Laurent Rineau
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Monique Teillaud <Monique.Teillaud@sophia.inria.fr>
@@ -180,7 +180,7 @@ public:
 
   // For use by Compact_container.
   void * for_compact_container() const { return N[0].for_compact_container(); }
-  void * & for_compact_container()     { return N[0].for_compact_container(); }
+  void for_compact_container(void* p) { N[0].for_compact_container(p); }
 
   // TDS internal data access functions.
         TDS_data& tds_data()       { return _tds_data; }

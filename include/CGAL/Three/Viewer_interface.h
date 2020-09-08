@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Three/include/CGAL/Three/Viewer_interface.h $
-// $Id: Viewer_interface.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Three/include/CGAL/Three/Viewer_interface.h $
+// $Id: Viewer_interface.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -238,6 +238,9 @@ public Q_SLOTS:
   //! If b is true, faces will be ligted from both internal and external side.
   //! If b is false, only the side that is exposed to the light source will be lighted.
   virtual void setTwoSides(bool b) = 0;
+  //! If b is true, then a special color mask is applied to points and meshes to differenciate
+  //! front-faced and back-faced elements.
+  virtual void setBackFrontShading(bool b) =0;
   //! \brief Sets the fast drawing mode
   //! @see inFastDrawing()
   virtual void setFastDrawing(bool b) = 0;

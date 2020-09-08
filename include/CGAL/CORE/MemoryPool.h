@@ -17,8 +17,8 @@
  * WWW URL: http://cs.nyu.edu/exact/
  * Email: exact@cs.nyu.edu
  *
- * $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/CGAL_Core/include/CGAL/CORE/MemoryPool.h $
- * $Id: MemoryPool.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+ * $URL: https://github.com/CGAL/cgal/blob/v5.1/CGAL_Core/include/CGAL/CORE/MemoryPool.h $
+ * $Id: MemoryPool.h 8a7d3fa 2020-07-21T17:32:30+02:00 Laurent Rineau
  * SPDX-License-Identifier: LGPL-3.0-or-later
  ***************************************************************************/
 #ifndef _CORE_MEMORYPOOL_H_
@@ -26,14 +26,6 @@
 
 #include <CGAL/config.h>
 #include <CGAL/tss.h>
-#include <boost/config.hpp>
-#if defined(CGAL_HAS_THREADS) && defined(BOOST_GCC) && BOOST_GCC < 90100
-// Force the use of Boost.Thread with g++ and C++11, because of the PR66944
-//   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=66944
-// See also CGAL PR #1888
-//   https://github.com/CGAL/cgal/pull/1888#issuecomment-278284232
-#  include <boost/thread/tss.hpp>
-#endif
 
 #include <new>           // for placement new
 #include <cassert>
@@ -85,10 +77,7 @@ public:
 
   // Access the corresponding static global allocator.
   static MemoryPool<T,nObjects>& global_allocator() {
-#if defined(CGAL_HAS_THREADS) && defined(BOOST_GCC) && BOOST_GCC < 90100
-    if(memPool_ptr.get() == nullptr) {memPool_ptr.reset(new Self());}
-    Self& memPool =  * memPool_ptr.get();
-#elif defined(CGAL_HAS_THREADS) // use the C++11 implementation
+#if defined(CGAL_HAS_THREADS) // use the C++11 implementation
     static thread_local Self memPool;
 #else // not CGAL_HAS_THREADS
     static Self memPool;
@@ -99,17 +88,7 @@ public:
 private:
    Thunk* head; // next available block in the pool
   std::vector<void*> blocks;
-
-#if defined(CGAL_HAS_THREADS) && defined(BOOST_GCC) && BOOST_GCC < 90100
-  static boost::thread_specific_ptr<Self> memPool_ptr;
-#endif // not CGAL_HAS_THREADS
 };
-
-#if defined(CGAL_HAS_THREADS) && defined(BOOST_GCC) && BOOST_GCC < 90100
-template <class T, int nObjects >
-boost::thread_specific_ptr<MemoryPool<T, nObjects> >
-MemoryPool<T, nObjects>::memPool_ptr;
-#endif
 
 template< class T, int nObjects >
 void* MemoryPool< T, nObjects >::allocate(std::size_t) {

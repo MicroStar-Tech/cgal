@@ -6,8 +6,8 @@
  This file is part of a fork of the QGLViewer library version 2.7.0.
 
 *****************************************************************************/
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/GraphicsView/include/CGAL/Qt/qglviewer_impl.h $
-// $Id: qglviewer_impl.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/GraphicsView/include/CGAL/Qt/qglviewer_impl.h $
+// $Id: qglviewer_impl.h 58b10a3 2020-03-26T18:58:50+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-only
 
 #ifdef CGAL_HEADER_ONLY
@@ -2248,7 +2248,7 @@ void CGAL::QGLViewer::keyPressEvent(QKeyEvent *e) {
     static QElapsedTimer doublePress;
 
     if (modifiers == playPathKeyboardModifiers()) {
-      int elapsed = doublePress.restart();
+      qint64 elapsed = doublePress.restart();
       if ((elapsed < 250) && (index == previousPathId_))
         camera()->resetPath(index);
       else {
@@ -2263,7 +2263,7 @@ void CGAL::QGLViewer::keyPressEvent(QKeyEvent *e) {
       }
       previousPathId_ = index;
     } else if (modifiers == addKeyFrameKeyboardModifiers()) {
-      int elapsed = doublePress.restart();
+      qint64 elapsed = doublePress.restart();
       if ((elapsed < 250) && (index == previousPathId_)) {
         if (camera()->keyFrameInterpolator(index)) {
           disconnect(camera()->keyFrameInterpolator(index),

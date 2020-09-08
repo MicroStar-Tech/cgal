@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Spatial_searching/include/CGAL/Fuzzy_iso_box.h $
-// $Id: Fuzzy_iso_box.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Spatial_searching/include/CGAL/Fuzzy_iso_box.h $
+// $Id: Fuzzy_iso_box.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -120,6 +120,17 @@ namespace CGAL {
     return true;
   }
 
+  template <typename Coord_iterator>
+  bool contains_point_given_as_coordinates(Coord_iterator it_coord_begin, Coord_iterator /*unused*/) const {
+          Construct_cartesian_const_iterator_d construct_it=traits.construct_cartesian_const_iterator_d_object();
+          Cartesian_const_iterator_d minit= min_begin, maxit = max_begin;
+                for (unsigned int i = 0; i < dim; ++i, ++it_coord_begin, ++minit, ++maxit) {
+                        if ( ((*it_coord_begin) < (*minit)) || ((*it_coord_begin) > (*maxit)) )
+        return false;
+    }
+    return true;
+  }
+
   bool inner_range_intersects(const Kd_tree_rectangle<FT,Dimension>& rectangle) const {
     // test whether the box eroded by 'eps' intersects 'rectangle'
     Cartesian_const_iterator_d minit= min_begin, maxit = max_begin;
@@ -130,7 +141,6 @@ namespace CGAL {
     }
     return true;
   }
-
 
   bool outer_range_contains(const Kd_tree_rectangle<FT,Dimension>& rectangle) const {
     // test whether the box dilated by 'eps' contains 'rectangle'

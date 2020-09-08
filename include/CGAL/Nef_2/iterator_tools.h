@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Nef_2/include/CGAL/Nef_2/iterator_tools.h $
-// $Id: iterator_tools.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Nef_2/include/CGAL/Nef_2/iterator_tools.h $
+// $Id: iterator_tools.h 9d16a42 2020-06-15T17:07:35+02:00 Laurent Rineau
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -46,6 +46,12 @@ public:
       return Iter::operator==(i);
     }
     bool operator!=( const Self& i) const {
+        return !(*this == i);
+    }
+    bool operator==( const Iter& i ) const {
+      return Iter::operator==(i);
+    }
+    bool operator!=( const Iter& i) const {
         return !(*this == i);
     }
 

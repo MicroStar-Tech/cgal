@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Classification/include/CGAL/Classification/Label_set.h $
-// $Id: Label_set.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Classification/include/CGAL/Classification/Label_set.h $
+// $Id: Label_set.h 9e2ce81 2020-04-07T10:15:50+02:00 Simon Giraudot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Simon Giraudot
@@ -37,6 +37,15 @@ class Label_set
 public:
 
   Label_set() { }
+
+  /*!
+    \brief Initializes the set with the provided `labels` names.
+  */
+  Label_set (const std::initializer_list<const char*>& labels)
+  {
+    for (const char* l : labels)
+      add(l);
+  }
 
   /// \cond SKIP_IN_MANUAL
   virtual ~Label_set() { }

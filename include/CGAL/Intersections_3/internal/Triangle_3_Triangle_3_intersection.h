@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Intersections_3/include/CGAL/Intersections_3/internal/Triangle_3_Triangle_3_intersection.h $
-// $Id: Triangle_3_Triangle_3_intersection.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Intersections_3/include/CGAL/Intersections_3/internal/Triangle_3_Triangle_3_intersection.h $
+// $Id: Triangle_3_Triangle_3_intersection.h 8b41189 2020-03-26T18:58:21+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -128,7 +128,7 @@ struct Triangle_Line_visitor {
 
   result_type
   operator()(const typename K::Point_3& p, const typename K::Segment_3& s) const {
-    if ( s.has_on(p) )
+    if ( typename K::Has_on_3()(s,p) )
       return intersection_return<typename K::Intersect_3, typename K::Triangle_3, typename K::Triangle_3>(p);
     else
       return result_type();

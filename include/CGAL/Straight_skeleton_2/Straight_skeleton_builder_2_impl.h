@@ -2,8 +2,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Straight_skeleton_2/include/CGAL/Straight_skeleton_2/Straight_skeleton_builder_2_impl.h $
-// $Id: Straight_skeleton_builder_2_impl.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Straight_skeleton_2/include/CGAL/Straight_skeleton_2/Straight_skeleton_builder_2_impl.h $
+// $Id: Straight_skeleton_builder_2_impl.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Fernando Cacciola <fernando_cacciola@ciudad.com.ar>
@@ -22,9 +22,10 @@
 #include <boost/type_traits/detail/ice_not.hpp>
 #endif
 #include <boost/graph/adjacency_matrix.hpp>
-#include <CGAL/Unique_hash_map.h>
 
+#include <CGAL/number_type_config.h>
 #include <CGAL/Real_timer.h>
+#include <CGAL/Unique_hash_map.h>
 
 #if defined(BOOST_MSVC)
 #  pragma warning(push)
@@ -1421,8 +1422,8 @@ double angle_wrt_X ( Point const& a, Point const& b )
   double dx = to_double(b.x() - a.x() ) ;
   double dy = to_double(b.y() - a.y() ) ;
   double atan = std::atan2(dy,dx);
-  double rad  = atan >= 0.0 ? atan : 2.0 * 3.141592 + atan ;
-  double deg  = rad * 180.0 / 3.141592 ;
+  double rad  = atan >= 0.0 ? atan : 2.0 * CGAL_PI + atan ;
+  double deg  = rad * 180.0 / CGAL_PI;
   return deg ;
 }
 

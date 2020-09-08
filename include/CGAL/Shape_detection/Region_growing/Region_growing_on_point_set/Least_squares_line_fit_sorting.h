@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Shape_detection/include/CGAL/Shape_detection/Region_growing/Region_growing_on_point_set/Least_squares_line_fit_sorting.h $
-// $Id: Least_squares_line_fit_sorting.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Shape_detection/include/CGAL/Shape_detection/Region_growing/Region_growing_on_point_set/Least_squares_line_fit_sorting.h $
+// $Id: Least_squares_line_fit_sorting.h 553d3c2 2020-04-10T13:03:50+02:00 Maxime Gimeno
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -178,8 +178,6 @@ namespace Point_set {
 
         points.clear();
         for (std::size_t j = 0; j < neighbors.size(); ++j) {
-
-          CGAL_precondition(neighbors[j] >= 0);
           CGAL_precondition(neighbors[j] < m_input_range.size());
 
           const auto& key = *(m_input_range.begin() + neighbors[j]);

@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Boolean_set_operations_2/include/CGAL/Boolean_set_operations_2/Gps_insertion_meta_traits.h $
-// $Id: Gps_insertion_meta_traits.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Boolean_set_operations_2/include/CGAL/Boolean_set_operations_2/Gps_insertion_meta_traits.h $
+// $Id: Gps_insertion_meta_traits.h 7436c14 2020-04-06T01:23:45+03:00 Efi Fogel
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -75,7 +75,7 @@ public:
   Construct_min_vertex_2 construct_min_vertex_2_object () const
   {
     return Construct_min_vertex_2
-      (this->m_base_tr->construct_min_vertex_2_object());
+      (this->m_base_traits->construct_min_vertex_2_object());
   }
 
 
@@ -100,7 +100,7 @@ public:
   Construct_max_vertex_2 construct_max_vertex_2_object () const
   {
     return Construct_max_vertex_2
-      (this->m_base_tr->construct_max_vertex_2_object());
+      (this->m_base_traits->construct_max_vertex_2_object());
   }
 
   class Compare_xy_2
@@ -123,7 +123,7 @@ public:
   /*! Get a Compare_xy_2 functor object. */
   Compare_xy_2 compare_xy_2_object () const
   {
-    return Compare_xy_2(m_base_tr->compare_xy_2_object());
+    return Compare_xy_2(m_base_traits->compare_xy_2_object());
   }
 
 };

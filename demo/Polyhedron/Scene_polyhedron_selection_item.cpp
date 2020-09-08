@@ -2497,7 +2497,7 @@ QString Scene_polyhedron_selection_item::computeStats(int type)
       return QString("n/a");
     if(is_triangle_mesh(*d->poly)){
       bool self_intersect
-          = CGAL::Polygon_mesh_processing::does_self_intersect(*(d->poly));
+        = CGAL::Polygon_mesh_processing::does_self_intersect<CGAL::Parallel_if_available_tag>(*(d->poly));
       if (self_intersect)
         return QString("Yes");
       else
@@ -2609,4 +2609,18 @@ CGAL::Three::Scene_item::Header_data Scene_polyhedron_selection_item::header() c
   data.titles.append(QString("Maximum"));
   data.titles.append(QString("Average"));
   return data;
+}
+
+
+void Scene_polyhedron_selection_item::updateDisplayedIds(QEvent* e)
+{
+  if(e->type() == QEvent::MouseButtonRelease )
+  {
+    QMouseEvent* mouse_event = static_cast<QMouseEvent*>(e);
+    if((mouse_event->button() == Qt::RightButton || mouse_event->button() == Qt::MiddleButton)
+       && temp_selected_vertices.size() == 1) {
+      fg_vertex_descriptor vh = *temp_selected_vertices.begin();
+      poly_item->updateIds(vh);
+    }
+  }
 }

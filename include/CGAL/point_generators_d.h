@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Generator/include/CGAL/point_generators_d.h $
-// $Id: point_generators_d.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Generator/include/CGAL/point_generators_d.h $
+// $Id: point_generators_d.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Olivier Devillers
@@ -18,6 +18,8 @@
 
 #include <CGAL/generators.h>
 #include <CGAL/number_type_basic.h>
+#include <CGAL/number_type_config.h>
+
 #include <cmath>
 #include <vector>
 
@@ -56,11 +58,10 @@ generate_point() {
   for(int i=0; i<dimension; ++i) {
     // normal distribution
     //( a product of normal distib is a normal distrib in higher dim)
-    const double pi = 3.141592653589793238462643;
     double a=this->_rnd.get_double();
     a = std::sqrt( -2* std::log(1-a) );
     double b=this->_rnd.get_double();
-    b = std::cos(2*pi*b);
+    b = std::cos(2*CGAL_PI*b);
     coord[i]= a*b;
     norm += coord[i]*coord[i];
   }
@@ -104,11 +105,10 @@ generate_point() {
 
   for(int i=0; i<dimension; ++i) {
     // normal distribution
-    const double pi = 3.141592653589793238462643;
     double a=this->_rnd.get_double();
     a = std::sqrt( -2* std::log(1-a) );
     double b=this->_rnd.get_double();
-    b = std::cos(2*pi*b);
+    b = std::cos(2*CGAL_PI*b);
     coord[i]= a*b;
     norm += coord[i]*coord[i];
   }

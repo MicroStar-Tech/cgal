@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Convex_hull_d/include/CGAL/Delaunay_d.h $
-// $Id: Delaunay_d.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Convex_hull_d/include/CGAL/Delaunay_d.h $
+// $Id: Delaunay_d.h adb8210 2020-04-06T21:45:32+02:00 Mael Rouxel-Labbé
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -822,8 +822,7 @@ locate(const Point_d& x) const
     lifted_kernel().lift_to_paraboloid_d_object();;
   Lifted_point_d lp = lift(x);
   if ( is_dimension_jump(lp) ) {
-    Simplex_iterator s;
-    for (s = const_cast<Self*>(this)->simplices_begin(NEAREST);
+    for (Simplex_iterator s = const_cast<Self*>(this)->simplices_begin(NEAREST);
          s != const_cast<Self*>(this)->simplices_end(); ++s)
       if ( contains(s,x) ) return s;
     return Simplex_handle();

@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Intersections_3/include/CGAL/Intersections_3/internal/intersection_3_1_impl.h $
-// $Id: intersection_3_1_impl.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Intersections_3/include/CGAL/Intersections_3/internal/intersection_3_1_impl.h $
+// $Id: intersection_3_1_impl.h 8b41189 2020-03-26T18:58:21+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -25,6 +25,7 @@
 #include <CGAL/Intersections_3/Iso_cuboid_3_Iso_cuboid_3.h>
 #include <CGAL/Intersections_3/Iso_cuboid_3_Line_3.h>
 #include <CGAL/utils_classes.h>
+#include <CGAL/squared_distance_3.h>
 
 #include <CGAL/Intersections_3/internal/bbox_intersection_3.h>
 namespace CGAL {
@@ -1243,6 +1244,37 @@ intersection(const Bbox_3 &box,
   return intersection(seg, box, k);
 }
 
+template <class K>
+inline
+typename Intersection_traits<K, Bbox_3, Bbox_3>::result_type
+intersection(const Bbox_3 &a,
+             const Bbox_3 &b,
+             const K&)
+{
+  return CGAL::intersection<K>(a, b);
+}
+
+template <class K>
+typename Intersection_traits<K, CGAL::Bbox_3, typename K::Iso_cuboid_3>::result_type
+intersection(const CGAL::Bbox_3 &box,
+             const typename K::Iso_cuboid_3 &cub,
+             const K&)
+{
+  typename K::Iso_cuboid_3 iso_cub(box);
+    return intersection(iso_cub, cub);
+}
+
+
+template <class K>
+inline
+typename Intersection_traits<K, typename K::Iso_cuboid_3, CGAL::Bbox_3>::result_type
+intersection(const typename K::Iso_cuboid_3 &cub,
+             const CGAL::Bbox_3 &box,
+             const K& k)
+{
+  return intersection(box,cub, k);
+}
+
 
 template <class K>
 typename Intersection_traits<K, typename K::Line_3, typename K::Iso_cuboid_3>::result_type
@@ -1567,7 +1599,6 @@ do_intersect(const Iso_cuboid_3<R> &j, const Line_3<R> &l, const R&)
 {
   return bool(CGAL::intersection(l, j));
 }
-
 } // namespace internal
 } // namespace Intersections
 } // namespace CGAL

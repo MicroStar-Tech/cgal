@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Homogeneous_kernel/include/CGAL/Homogeneous/ConicHPA2.h $
-// $Id: ConicHPA2.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Homogeneous_kernel/include/CGAL/Homogeneous/ConicHPA2.h $
+// $Id: ConicHPA2.h 29b2957 2020-04-06T21:46:00+02:00 Mael Rouxel-Labbé
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -310,13 +310,8 @@ class ConicHPA2
     PT center () const
     {
         CGAL_kernel_precondition (type != PARABOLA);
-        // PT p;
-        // replaced previous line by following hack (no idea
-        // why original version doesn't work)
-        typename DA::Point_2 p;
         RT two = RT(2);
-        dao.set( p, two*s()*u() - t()*v(), two*r()*v() - t()*u(), -det());
-        return p;
+        return PT(two*s()*u() - t()*v(), two*r()*v() - t()*u(), -det());
     }
 
     Conic_type conic_type () const

@@ -105,11 +105,11 @@ struct Top
 
 typedef EPICK                                                        Gt;
 typedef CGAL::Triangulation_vertex_base_2<Gt>                        Vb;
-typedef CGAL::Triangulation_face_base_with_info_2<FaceInfo2,Gt >    Fbb;
+typedef CGAL::Triangulation_face_base_with_info_2<FaceInfo2,Gt >     Fbb;
 typedef CGAL::Constrained_triangulation_face_base_2<Gt,Fbb>          Fb;
-typedef CGAL::Triangulation_data_structure_2<Vb, Fb>                TDS;
-typedef CGAL::No_intersection_tag                                   Tag;
-typedef CGAL::Constrained_Delaunay_triangulation_2<Gt, TDS, Tag>    CDT;
+typedef CGAL::Triangulation_data_structure_2<Vb, Fb>                 TDS;
+typedef CGAL::No_constraint_intersection_requiring_constructions_tag Tag;
+typedef CGAL::Constrained_Delaunay_triangulation_2<Gt, TDS, Tag>     CDT;
 
 //Parameterization and text displaying
 class ParamItem : public QGraphicsItem
@@ -249,12 +249,17 @@ protected:
     }
     case QEvent::Wheel: {
       QWheelEvent* event = static_cast<QWheelEvent*>(ev);
-      QPointF old_pos = v->mapToScene(event->pos());
-      if(event->delta() <0)
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+      QPoint pos = event->pos();
+#else
+      QPointF pos = event->position();
+#endif
+      QPointF old_pos = v->mapToScene(pos.x(), pos.y());
+      if(event->angleDelta().y() <0)
         v->scale(1.2, 1.2);
       else
         v->scale(0.8, 0.8);
-      QPointF new_pos = v->mapToScene(event->pos());
+      QPointF new_pos = v->mapToScene(pos.x(), pos.y());
       QPointF delta = new_pos - old_pos;
       v->translate(delta.x(), delta.y());
       v->update();

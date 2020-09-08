@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Classification/include/CGAL/Classification/Local_eigen_analysis.h $
-// $Id: Local_eigen_analysis.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Classification/include/CGAL/Classification/Local_eigen_analysis.h $
+// $Id: Local_eigen_analysis.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Simon Giraudot
@@ -226,7 +226,7 @@ public:
     is `CGAL::Point_3`.
     \tparam NeighborQuery model of `NeighborQuery`
     \tparam ConcurrencyTag enables sequential versus parallel
-    algorithm. Possible values are `Parallel_tag` (default value is %CGAL
+    algorithm. Possible values are `Parallel_tag` (default value if %CGAL
     is linked with TBB) or `Sequential_tag` (default value otherwise).
     \tparam DiagonalizeTraits model of `DiagonalizeTraits` used for
     matrix diagonalization. It can be omitted if Eigen 3 (or greater)
@@ -242,10 +242,8 @@ public:
             typename NeighborQuery,
 #if defined(DOXYGEN_RUNNING)
             typename ConcurrencyTag,
-#elif defined(CGAL_LINKED_WITH_TBB)
-            typename ConcurrencyTag = CGAL::Parallel_tag,
 #else
-            typename ConcurrencyTag = CGAL::Sequential_tag,
+            typename ConcurrencyTag = CGAL::Parallel_if_available_tag,
 #endif
 #if defined(DOXYGEN_RUNNING)
             typename DiagonalizeTraits>
@@ -310,7 +308,7 @@ public:
     \tparam FaceListGraph model of `FaceListGraph`.
     \tparam NeighborQuery model of `NeighborQuery`
     \tparam ConcurrencyTag enables sequential versus parallel
-    algorithm. Possible values are `Parallel_tag` (default value is %CGAL
+    algorithm. Possible values are `Parallel_tag` (default value if %CGAL
     is linked with TBB) or `Sequential_tag` (default value otherwise).
     \tparam DiagonalizeTraits model of `DiagonalizeTraits` used for
     matrix diagonalization. It can be omitted: if Eigen 3 (or greater)
@@ -325,10 +323,8 @@ public:
             typename NeighborQuery,
 #if defined(DOXYGEN_RUNNING)
             typename ConcurrencyTag,
-#elif defined(CGAL_LINKED_WITH_TBB)
-            typename ConcurrencyTag = CGAL::Parallel_tag,
 #else
-            typename ConcurrencyTag = CGAL::Sequential_tag,
+            typename ConcurrencyTag = CGAL::Parallel_if_available_tag,
 #endif
 #if defined(DOXYGEN_RUNNING)
             typename DiagonalizeTraits>
@@ -396,7 +392,7 @@ public:
     `RandomAccessIterator` and its value type is the key type of
     `PointMap`.
     \tparam ConcurrencyTag enables sequential versus parallel
-    algorithm. Possible values are `Parallel_tag` (default value is %CGAL
+    algorithm. Possible values are `Parallel_tag` (default value if %CGAL
     is linked with TBB) or `Sequential_tag` (default value otherwise).
     \tparam DiagonalizeTraits model of `DiagonalizeTraits` used for
     matrix diagonalization. It can be omitted: if Eigen 3 (or greater)
@@ -409,10 +405,8 @@ public:
   template <typename ClusterRange,
 #if defined(DOXYGEN_RUNNING)
             typename ConcurrencyTag,
-#elif defined(CGAL_LINKED_WITH_TBB)
-            typename ConcurrencyTag = CGAL::Parallel_tag,
 #else
-            typename ConcurrencyTag = CGAL::Sequential_tag,
+            typename ConcurrencyTag = CGAL::Parallel_if_available_tag,
 #endif
 #if defined(DOXYGEN_RUNNING)
             typename DiagonalizeTraits>

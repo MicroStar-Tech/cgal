@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Classification/include/CGAL/Classification/Evaluation.h $
-// $Id: Evaluation.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Classification/include/CGAL/Classification/Evaluation.h $
+// $Id: Evaluation.h c03e69d 2020-04-20T08:56:08+02:00 Simon Giraudot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Simon Giraudot
@@ -16,6 +16,10 @@
 
 #include <CGAL/Classification/Label.h>
 #include <CGAL/Classification/Label_set.h>
+
+#include <boost/iterator/zip_iterator.hpp>
+#include <CGAL/Iterator_range.h>
+
 #include <map>
 #include <cmath> // for std::isnan
 
@@ -80,10 +84,13 @@ public:
     std::size_t sum_true_positives = 0;
     std::size_t total = 0;
 
-    for (std::size_t j = 0; j < ground_truth.size(); ++ j)
+    for (const auto& zip : CGAL::make_range (boost::make_zip_iterator
+                                             (boost::make_tuple(ground_truth.begin(), result.begin())),
+                                             boost::make_zip_iterator
+                                             (boost::make_tuple(ground_truth.end(), result.end()))))
     {
-      int gt = static_cast<int>(ground_truth[j]);
-      int res = static_cast<int>(result[j]);
+      int gt = static_cast<int>(boost::get<0>(zip));
+      int res = static_cast<int>(boost::get<1>(zip));
       if (gt == -1 || res == -1)
         continue;
       ++ total;
@@ -221,4 +228,3 @@ public:
 } // namespace CGAL
 
 #endif // CGAL_CLASSIFICATION_EVALUATION_H
-

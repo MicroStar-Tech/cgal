@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Cartesian_kernel/include/CGAL/Cartesian/ConicCPA2.h $
-// $Id: ConicCPA2.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Cartesian_kernel/include/CGAL/Cartesian/ConicCPA2.h $
+// $Id: ConicCPA2.h fdb17cb 2020-03-26T19:26:10+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -312,15 +312,12 @@ class ConicCPA2
     PT center () const
     {
         CGAL_kernel_precondition (type != PARABOLA);
-        // PT p;
-        // replaced previous line by following hack (no idea
-        // why original version doesn't work)
-        typename DA::Point p;
-        FT two = FT(2);
-        FT div = -det();
-        dao.set( p, (two*s()*u() - t()*v()) / div,
-                    (two*r()*v() - t()*u()) / div);
-        return p;
+
+        const FT two = FT(2);
+        const FT div = -det();
+
+        return PT((two*s()*u() - t()*v()) / div,
+                  (two*r()*v() - t()*u()) / div);
     }
 
     Conic_type conic_type () const

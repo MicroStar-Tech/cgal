@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Homogeneous_kernel/include/CGAL/Homogeneous/function_objects.h $
-// $Id: function_objects.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Homogeneous_kernel/include/CGAL/Homogeneous/function_objects.h $
+// $Id: function_objects.h 4527b1f 2020-03-26T19:01:49+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -758,6 +758,52 @@ namespace HomogeneousKernelFunctors {
       return CGAL::compare_power_distanceH2(p.hx(), p.hy(), p.hw(), p.weight(),
                                             q.hx(), q.hy(), q.hw(), q.weight(),
                                             r.hx(), r.hy(), r.hw());
+    }
+  };
+
+  template <typename K>
+  class Compare_signed_distance_to_line_2
+  {
+    typedef typename K::Point_2   Point_2;
+    typedef typename K::Line_2    Line_2;
+    typedef typename K::Less_signed_distance_to_line_2 Less_signed_distance_to_line_2;
+
+  public:
+    typedef Comparison_result   result_type;
+
+    result_type
+    operator()(const Point_2& p, const Point_2& q,
+               const Point_2& r, const Point_2& s) const
+    {
+      typedef typename K::RT RT;
+
+      const RT & phx = p.hx();
+      const RT & phy = p.hy();
+      const RT & phw = p.hw();
+      const RT & qhx = q.hx();
+      const RT & qhy = q.hy();
+      const RT & qhw = q.hw();
+      const RT & rhx = r.hx();
+      const RT & rhy = r.hy();
+      const RT & rhw = r.hw();
+      const RT & shx = s.hx();
+      const RT & shy = s.hy();
+      const RT & shw = s.hw();
+
+      RT  scaled_dist_r_minus_scaled_dist_s =
+          ( rhx*shw - shx*rhw ) * (phy*qhw - qhy*phw)
+          - ( rhy*shw - shy*rhw ) * (phx*qhw - qhx*phw);
+
+      return compare(scaled_dist_r_minus_scaled_dist_s, 0);
+    }
+
+    result_type
+    operator()(const Line_2& l, const Point_2& p, const Point_2& q) const
+    {
+      Less_signed_distance_to_line_2 less = K().less_signed_distance_to_line_2_object();
+      if (less(l, p, q)) return SMALLER;
+      if (less(l, q, p)) return LARGER;
+      return EQUAL;
     }
   };
 
@@ -4109,26 +4155,7 @@ namespace HomogeneousKernelFunctors {
     operator()(const Point_2& p, const Point_2& q,
                const Point_2& r, const Point_2& s) const
     {
-      typedef typename K::RT RT;
-
-      const RT & phx= p.hx();
-      const RT & phy= p.hy();
-      const RT & phw= p.hw();
-      const RT & qhx= q.hx();
-      const RT & qhy= q.hy();
-      const RT & qhw= q.hw();
-      const RT & rhx= r.hx();
-      const RT & rhy= r.hy();
-      const RT & rhw= r.hw();
-      const RT & shx= s.hx();
-      const RT & shy= s.hy();
-      const RT & shw= s.hw();
-
-      RT  scaled_dist_r_minus_scaled_dist_s =
-        ( rhx*shw - shx*rhw ) * (phy*qhw - qhy*phw)
-        - ( rhy*shw - shy*rhw ) * (phx*qhw - qhx*phw);
-
-      return scaled_dist_r_minus_scaled_dist_s < 0;
+      return Compare_signed_distance_to_line_2<K>().operator()(p, q, r, s) == SMALLER;
     }
 
     result_type

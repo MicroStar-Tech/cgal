@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Interval_skip_list/include/CGAL/Interval_skip_list.h $
-// $Id: Interval_skip_list.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Interval_skip_list/include/CGAL/Interval_skip_list.h $
+// $Id: Interval_skip_list.h d1a323c 2020-03-26T19:24:14+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -115,7 +115,7 @@ class Interval_for_container : public Interval_
       {}
 
       void *   for_compact_container() const { return p; }
-      void * & for_compact_container()       { return p; }
+      void for_compact_container(void *ptr) { p = ptr; }
     };
 
 
@@ -457,7 +457,7 @@ class Interval_for_container : public Interval_
   public:
 #ifdef CGAL_ISL_USE_CCC
     void *   for_compact_container() const { return p; }
-    void * & for_compact_container()       { return p; }
+    void for_compact_container(void *ptr) { p = ptr; }
 #endif
 
     bool operator==(const IntervalListElt& e)

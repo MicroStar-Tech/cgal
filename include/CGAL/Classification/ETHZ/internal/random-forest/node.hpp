@@ -2,8 +2,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Classification/include/CGAL/Classification/ETHZ/internal/random-forest/node.hpp $
-// $Id: node.hpp 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Classification/include/CGAL/Classification/ETHZ/internal/random-forest/node.hpp $
+// $Id: node.hpp 7cfe6df 2020-04-07T11:02:16+02:00 Simon Giraudot
 // SPDX-License-Identifier: LicenseRef-RFL
 // License notice in Installation/LICENSE.RFL
 //
@@ -21,8 +21,15 @@
 #define CGAL_INTERNAL_LIBLEARNING_RANDOMFORESTS_NODE_H
 #include "../dataview.h"
 #include "common-libraries.hpp"
+
+#if defined(CGAL_LINKED_WITH_BOOST_IOSTREAMS) && defined(CGAL_LINKED_WITH_BOOST_SERIALIZATION)
 #include <boost/serialization/scoped_ptr.hpp>
 #include <boost/serialization/vector.hpp>
+#else
+#include <boost/scoped_ptr.hpp>
+#include <vector>
+#endif
+
 #if VERBOSE_NODE_LEARNING
 #include <cstdio>
 #endif
@@ -228,6 +235,7 @@ public:
         right->train(samples, labels, sample_idxes + offset_right, n_samples_right, split_generator, gen);
     }
 
+#if defined(CGAL_LINKED_WITH_BOOST_IOSTREAMS) && defined(CGAL_LINKED_WITH_BOOST_SERIALIZATION)
     template <typename Archive>
     void serialize(Archive& ar, unsigned /*version*/)
     {
@@ -243,6 +251,7 @@ public:
           ar & BOOST_SERIALIZATION_NVP(right);
         }
     }
+#endif
 
     void get_feature_usage (std::vector<std::size_t>& count) const
     {

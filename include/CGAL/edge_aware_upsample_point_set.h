@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Point_set_processing_3/include/CGAL/edge_aware_upsample_point_set.h $
-// $Id: edge_aware_upsample_point_set.h 67b53fa 2020-04-29T14:06:37+02:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Point_set_processing_3/include/CGAL/edge_aware_upsample_point_set.h $
+// $Id: edge_aware_upsample_point_set.h b6a5502 2020-08-06T11:33:47+02:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s) : Shihao Wu, Clement Jamin, Pierre Alliez
@@ -147,10 +147,8 @@ update_new_point(
   typedef typename rich_grid_internal::Rich_point<Kernel> Rich_point;
 
   CGAL_assertion_code( unsigned int size = static_cast<unsigned int>(rich_point_set.size()) );
-  CGAL_point_set_processing_precondition(father_index >= 0 &&
-                                         father_index < size);
-  CGAL_point_set_processing_precondition(mother_index >= 0 &&
-                                           mother_index < size);
+  CGAL_point_set_processing_precondition(father_index < size);
+  CGAL_point_set_processing_precondition(mother_index < size);
 
   // 1, get neighbor information from the two "parent points"
   Rich_point& new_v = rich_point_set[new_point_index];
@@ -280,8 +278,8 @@ update_new_point(
    Normals of points are required as input. For more details, please refer to \cgalCite{ear-2013}.
 
    \tparam ConcurrencyTag enables sequential versus parallel versions
-   of `compute_average_spacing()` (called internally).  Possible
-   values are `Sequential_tag` and `Parallel_tag`.
+   of `compute_average_spacing()` (called internally). Possible
+   values are `Sequential_tag`, `Parallel_tag`, and `Parallel_if_available_tag`.
    \tparam PointRange is a model of `ConstRange`. The value type of
    its iterator is the key type of the named parameter `point_map`.
    \tparam OutputIterator Type of the output iterator.
@@ -293,21 +291,61 @@ update_new_point(
 
    \param points input point range.
    \param output iterator where output points and normals are put.
-   \param np optional sequence of \ref psp_namedparameters "Named Parameters" among the ones listed below.
+   \param np an optional sequence of \ref bgl_namedparameters "Named Parameters" among the ones listed below
 
    \cgalNamedParamsBegin
-     \cgalParamBegin{point_map} a model of `ReadablePropertyMap` with value type `geom_traits::Point_3`.
-     If this parameter is omitted, `CGAL::Identity_property_map<geom_traits::Point_3>` is used.\cgalParamEnd
-     \cgalParamBegin{normal_map} a model of `ReadablePropertyMap` with value type
-     `geom_traits::Vector_3`.\cgalParamEnd
-     \cgalParamBegin{sharpness_angle} controls the sharpness of the result.\cgalParamEnd
-     \cgalParamBegin{edge_sensitivity} controls the priority of points inserted along sharp features. See
-     section \ref Point_set_processing_3Upsample_Parameter1 for an example.\cgalParamEnd
-     \cgalParamBegin{neighbor_radius} spherical neighborhood radius.\cgalParamEnd
-     \cgalParamBegin{number_of_output_points} is the number of output points to generate.\cgalParamEnd
-     \cgalParamBegin{geom_traits} an instance of a geometric traits class, model of `Kernel`\cgalParamEnd
-   \cgalNamedParamsEnd
+     \cgalParamNBegin{point_map}
+       \cgalParamDescription{a property map associating points to the elements of the point set `points`}
+       \cgalParamType{a model of `ReadablePropertyMap` whose key type is the value type
+                      of the iterator of `PointRange` and whose value type is `geom_traits::Point_3`}
+       \cgalParamDefault{`CGAL::Identity_property_map<geom_traits::Point_3>`}
+     \cgalParamNEnd
 
+     \cgalParamNBegin{normal_map}
+       \cgalParamDescription{a property map associating normals to the elements of the point set `points`}
+       \cgalParamType{a model of `ReadablePropertyMap` whose key type is the value type
+                      of the iterator of `PointRange` and whose value type is `geom_traits::Vector_3`}
+     \cgalParamNEnd
+
+     \cgalParamNBegin{sharpness_angle}
+       \cgalParamDescription{controls the sharpness of the result}
+       \cgalParamType{floating scalar value}
+       \cgalParamDefault{`30.00`}
+       \cgalParamExtra{The larger the value is, the smoother the result will be.
+                       The range of possible value is `[0, 90]`}
+     \cgalParamNEnd
+
+     \cgalParamNBegin{edge_sensitivity}
+       \cgalParamDescription{controls the priority of points inserted along sharp features}
+       \cgalParamType{floating scalar value}
+       \cgalParamDefault{`1`}
+       \cgalParamExtra{Larger values of edge-sensitivity give higher priority to inserting points
+                       along sharp features. The range of possible values is `[0, 1]`.
+                       See section \ref Point_set_processing_3Upsample_Parameter1 for an example}
+     \cgalParamNEnd
+
+     \cgalParamNBegin{number_of_output_points}
+       \cgalParamDescription{the number of output points to generate}
+       \cgalParamType{unsigned int}
+       \cgalParamDefault{`1000`}
+     \cgalParamNEnd
+
+     \cgalParamNBegin{neighbor_radius}
+       \cgalParamDescription{the spherical neighborhood radius}
+       \cgalParamType{floating scalar value}
+       \cgalParamDefault{`0` (no limit)}
+       \cgalParamExtra{If provided, the neighborhood of a query point is computed with a fixed spherical
+                       radius instead of a fixed number of neighbors. In that case, the parameter
+                       `k` is used as a limit on the number of points returned by each spherical
+                       query (to avoid overly large number of points in high density areas).}
+     \cgalParamNEnd
+
+     \cgalParamNBegin{geom_traits}
+       \cgalParamDescription{an instance of a geometric traits class}
+       \cgalParamType{a model of `Kernel`}
+       \cgalParamDefault{a \cgal Kernel deduced from the point type, using `CGAL::Kernel_traits`}
+     \cgalParamNEnd
+   \cgalNamedParamsEnd
 */
 template <typename ConcurrencyTag,
           typename PointRange,
@@ -323,7 +361,7 @@ edge_aware_upsample_point_set(
   using parameters::get_parameter;
 
   // basic geometric types
-  typedef typename Point_set_processing_3::GetPointMap<PointRange, NamedParameters>::type PointMap;
+  typedef typename CGAL::GetPointMap<PointRange, NamedParameters>::type PointMap;
   typedef typename Point_set_processing_3::GetNormalMap<PointRange, NamedParameters>::type NormalMap;
   typedef typename Point_set_processing_3::GetK<PointRange, NamedParameters>::Kernel Kernel;
 
@@ -336,8 +374,8 @@ edge_aware_upsample_point_set(
   typedef typename Kernel::FT FT;
   typedef typename rich_grid_internal::Rich_point<Kernel> Rich_point;
 
-  PointMap point_map = choose_parameter(get_parameter(np, internal_np::point_map), PointMap());
-  NormalMap normal_map = choose_parameter(get_parameter(np, internal_np::normal_map), NormalMap());
+  PointMap point_map = choose_parameter<PointMap>(get_parameter(np, internal_np::point_map));
+  NormalMap normal_map = choose_parameter<NormalMap>(get_parameter(np, internal_np::normal_map));
   double sharpness_angle = choose_parameter(get_parameter(np, internal_np::sharpness_angle), 30.);
   double edge_sensitivity = choose_parameter(get_parameter(np, internal_np::edge_sensitivity), 1);
   double neighbor_radius = choose_parameter(get_parameter(np, internal_np::neighbor_radius), -1);
@@ -355,7 +393,6 @@ edge_aware_upsample_point_set(
                                        &&sharpness_angle <= 90);
   CGAL_point_set_processing_precondition(edge_sensitivity >= 0
                                        &&edge_sensitivity <= 1);
-  CGAL_point_set_processing_precondition(neighbor_radius > 0);
 
   edge_sensitivity *= 10;  // just project [0, 1] to [0, 10].
 

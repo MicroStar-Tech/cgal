@@ -5,10 +5,10 @@
 #include <CGAL/Surface_mesh.h>
 #include <CGAL/Polygonal_surface_reconstruction.h>
 
-#ifdef CGAL_USE_SCIP
+#ifdef CGAL_USE_SCIP // defined (or not) by CMake scripts, do not define by hand
 #include <CGAL/SCIP_mixed_integer_program_traits.h>
 typedef CGAL::SCIP_mixed_integer_program_traits<double>                        MIP_Solver;
-#elif defined(CGAL_USE_GLPK)
+#elif defined(CGAL_USE_GLPK) // defined (or not) by CMake scripts, do not define by hand
 #include <CGAL/GLPK_mixed_integer_program_traits.h>
 typedef CGAL::GLPK_mixed_integer_program_traits<double>                        MIP_Solver;
 #endif
@@ -95,8 +95,11 @@ int main()
         else {
        const std::string& output_file = "data/building_result-0.05.off";
        std::ofstream output_stream(output_file.c_str());
-       if (output_stream && CGAL::write_off(output_stream, model))
+       if (output_stream && CGAL::write_off(output_stream, model)) {
+                        // flush the buffer
+                        output_stream << std::flush;
                         std::cout << " Done. Saved to " << output_file << ". Time: " << t.time() << " sec." << std::endl;
+       }
                 else {
            std::cerr << " Failed saving file." << std::endl;
            return EXIT_FAILURE;
@@ -113,8 +116,11 @@ int main()
         else {
        const std::string& output_file = "data/building_result-0.5.off";
        std::ofstream output_stream(output_file.c_str());
-       if (output_stream && CGAL::write_off(output_stream, model))
+       if (output_stream && CGAL::write_off(output_stream, model)) {
+                        // flush the buffer
+                        output_stream << std::flush;
                         std::cout << " Done. Saved to " << output_file << ". Time: " << t.time() << " sec." << std::endl;
+       }
                 else {
            std::cerr << " Failed saving file." << std::endl;
            return EXIT_FAILURE;
@@ -131,8 +137,11 @@ int main()
         else {
                 const std::string& output_file = "data/building_result-0.7.off";
                 std::ofstream output_stream(output_file.c_str());
-                if (output_stream && CGAL::write_off(output_stream, model))
+                if (output_stream && CGAL::write_off(output_stream, model)) {
+                        // flush the buffer
+                        output_stream << std::flush;
                         std::cout << " Done. Saved to " << output_file << ". Time: " << t.time() << " sec." << std::endl;
+                }
                 else {
                         std::cerr << " Failed saving file." << std::endl;
                         return EXIT_FAILURE;

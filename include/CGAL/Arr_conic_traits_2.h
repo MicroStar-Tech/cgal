@@ -3,13 +3,13 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Arrangement_on_surface_2/include/CGAL/Arr_conic_traits_2.h $
-// $Id: Arr_conic_traits_2.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Arrangement_on_surface_2/include/CGAL/Arr_conic_traits_2.h $
+// $Id: Arr_conic_traits_2.h 523fcfd 2020-03-31T17:32:38+03:00 Efi Fogel
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
-// Author(s)     : Ron Wein   <wein@post.tau.ac.il>
-//                 Waqar Khan <wkhan@mpi-inf.mpg.de>
+// Author(s): Ron Wein   <wein@post.tau.ac.il>
+//            Waqar Khan <wkhan@mpi-inf.mpg.de>
 
 #ifndef CGAL_ARR_CONIC_TRAITS_2_H
 #define CGAL_ARR_CONIC_TRAITS_2_H
@@ -22,14 +22,14 @@
  * The conic traits-class for the arrangement package.
  */
 
+#include <fstream>
+
 #include <CGAL/atomic.h>
 #include <CGAL/tags.h>
 #include <CGAL/Arr_tags.h>
 #include <CGAL/Arr_geometry_traits/Conic_arc_2.h>
 #include <CGAL/Arr_geometry_traits/Conic_x_monotone_arc_2.h>
 #include <CGAL/Arr_geometry_traits/Conic_point_2.h>
-
-#include <fstream>
 
 namespace CGAL {
 
@@ -88,8 +88,7 @@ private:
 
   // Type definition for the intersection points mapping.
   typedef typename X_monotone_curve_2::Conic_id           Conic_id;
-  typedef typename X_monotone_curve_2::Intersection_point_2
-                                                          Intersection_point_2;
+  typedef typename X_monotone_curve_2::Intersection_point Intersection_point;
   typedef typename X_monotone_curve_2::Intersection_map   Intersection_map;
 
   mutable Intersection_map  inter_map;  // Mapping conic pairs to their
@@ -604,21 +603,15 @@ public:
     return Split_2();
   }
 
-  class Intersect_2
-  {
+  class Intersect_2 {
   private:
-
-    Intersection_map&  _inter_map;       // The map of intersection points.
+    Intersection_map& _inter_map;       // The map of intersection points.
 
   public:
-
     /*! Constructor. */
-    Intersect_2 (Intersection_map& map) :
-      _inter_map (map)
-    {}
+    Intersect_2(Intersection_map& map) : _inter_map(map) {}
 
-    /*!
-     * Find the intersections of the two given curves and insert them to the
+    /*! Find the intersections of the two given curves and insert them to the
      * given output iterator. As two segments may itersect only once, only a
      * single will be contained in the iterator.
      * \param cv1 The first curve.
@@ -626,20 +619,15 @@ public:
      * \param oi The output iterator.
      * \return The past-the-end iterator.
      */
-    template<class OutputIterator>
-    OutputIterator operator() (const X_monotone_curve_2& cv1,
-                               const X_monotone_curve_2& cv2,
-                               OutputIterator oi) const
-    {
-      return (cv1.intersect (cv2, _inter_map, oi));
-    }
+    template <typename OutputIterator>
+    OutputIterator operator()(const X_monotone_curve_2& cv1,
+                              const X_monotone_curve_2& cv2,
+                              OutputIterator oi) const
+    { return (cv1.intersect(cv2, _inter_map, oi)); }
   };
 
   /*! Get an Intersect_2 functor object. */
-  Intersect_2 intersect_2_object () const
-  {
-    return (Intersect_2 (inter_map));
-  }
+  Intersect_2 intersect_2_object () const { return (Intersect_2(inter_map)); }
 
   class Are_mergeable_2
   {

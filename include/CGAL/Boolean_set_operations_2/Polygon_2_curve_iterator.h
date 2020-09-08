@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Boolean_set_operations_2/include/CGAL/Boolean_set_operations_2/Polygon_2_curve_iterator.h $
-// $Id: Polygon_2_curve_iterator.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Boolean_set_operations_2/include/CGAL/Boolean_set_operations_2/Polygon_2_curve_iterator.h $
+// $Id: Polygon_2_curve_iterator.h 2756b2a 2020-05-24T11:11:32+02:00 Marc Glisse
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -60,9 +60,9 @@ public:
     Edge_const_iterator m_curr_edge;   // points to the current edge iterator
 
 public:
-    Polygon_2_curve_iterator< X_monotone_curve_2_, Polygon_ >(){}
+    Polygon_2_curve_iterator(){}
 
-    Polygon_2_curve_iterator< X_monotone_curve_2_, Polygon_ >
+    Polygon_2_curve_iterator
       (const Polygon* pgn, Edge_const_iterator ci) : m_pgn(pgn),
                                                      m_curr_edge(ci) {}
 

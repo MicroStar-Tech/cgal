@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Triangulation_3/include/CGAL/Regular_triangulation_cell_base_with_weighted_circumcenter_3.h $
-// $Id: Regular_triangulation_cell_base_with_weighted_circumcenter_3.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Triangulation_3/include/CGAL/Regular_triangulation_cell_base_with_weighted_circumcenter_3.h $
+// $Id: Regular_triangulation_cell_base_with_weighted_circumcenter_3.h dbbee66 2020-04-02T18:31:00+05:30 rathod-sahaab
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Monique Teillaud <Monique.Teillaud@sophia.inria.fr>
@@ -132,7 +132,7 @@ public:
       return *weighted_circumcenter_;
   }
 
-  void swap (Regular_triangulation_cell_base_with_weighted_circumcenter_3& other) throw()
+  void swap (Regular_triangulation_cell_base_with_weighted_circumcenter_3& other) noexcept
   {
     std::swap(static_cast<Cb&>(*this), static_cast<Cb&>(other));
     std::swap(weighted_circumcenter_, other.weighted_circumcenter_);

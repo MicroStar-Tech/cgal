@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Shape_detection/include/CGAL/Shape_detection/Region_growing/Region_growing_on_point_set/Sphere_neighbor_query.h $
-// $Id: Sphere_neighbor_query.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Shape_detection/include/CGAL/Shape_detection/Region_growing/Region_growing_on_point_set/Sphere_neighbor_query.h $
+// $Id: Sphere_neighbor_query.h 553d3c2 2020-04-10T13:03:50+02:00 Maxime Gimeno
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -101,7 +101,7 @@ namespace Point_set {
     = CGAL::Fuzzy_sphere<Search_traits>;
 
     using Tree
-    = CGAL::Kd_tree<Search_traits, Splitter, CGAL::Tag_true>;
+    = CGAL::Kd_tree<Search_traits, Splitter, CGAL::Tag_true, CGAL::Tag_true>;
     /// \endcond
 
     /// @}
@@ -169,8 +169,6 @@ namespace Point_set {
     void operator()(
       const std::size_t query_index,
       std::vector<std::size_t>& neighbors) const {
-
-      CGAL_precondition(query_index >= 0);
       CGAL_precondition(query_index < m_input_range.size());
 
       const std::size_t sphere_center = query_index;

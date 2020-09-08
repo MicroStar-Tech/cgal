@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/NewKernel_d/include/CGAL/NewKernel_d/function_objects_cartesian.h $
-// $Id: function_objects_cartesian.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/NewKernel_d/include/CGAL/NewKernel_d/function_objects_cartesian.h $
+// $Id: function_objects_cartesian.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Marc Glisse
@@ -665,11 +665,13 @@ template <class R_> struct Construct_circumcenter : Store_kernel<R_> {
       Vec b(k);
       Vec l(k);
       int j,i=0;
+      // We are doing a quadratic number of *f, which can be costly with transforming_iterator.
       for(Iter f2=f;f2!=e;++f2,++i){
-        b(i)=m(i,i)=sdo(*f2);
+        Point const& p2=*f2;
+        b(i)=m(i,i)=sdo(p2);
         j=0;
         for(Iter f3=f;f3!=e;++f3,++j){
-          m(j,i)=m(i,j)=sp(*f2,*f3);
+          m(j,i)=m(i,j)=sp(p2,*f3);
         }
       }
       for(i=1;i<k;++i){

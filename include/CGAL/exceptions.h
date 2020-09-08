@@ -4,8 +4,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/STL_Extension/include/CGAL/exceptions.h $
-// $Id: exceptions.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/STL_Extension/include/CGAL/exceptions.h $
+// $Id: exceptions.h 04305dc 2020-06-13T23:39:35+05:30 Abhay Raj Singh
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -97,8 +97,6 @@ public:
     m_msg( msg)
     {}
 
-    ~Failure_exception() throw() {}
-
     //! the name of the library that issues this message.
     std::string      library() const { return m_lib; }
 
@@ -185,7 +183,19 @@ public:
                              "warning condition failed") {}
 };
 
+namespace internal {
 
+// The following classes are useful to create output iterators (with the help
+// of boost::function_output_iterator) that will throw as soon as something is being written.
+class Throw_at_output_exception : public std::exception { };
+
+struct Throw_at_output
+{
+  template<class T>
+  void operator()(const T& /* t */) const { throw Throw_at_output_exception(); }
+};
+
+} // namespace internal
 } //namespace CGAL
 
 #endif // CGAL_EXCEPTIONS_H

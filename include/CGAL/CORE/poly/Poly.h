@@ -39,8 +39,8 @@
  * WWW URL: http://cs.nyu.edu/exact/
  * Email: exact@cs.nyu.edu
  *
- * $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/CGAL_Core/include/CGAL/CORE/poly/Poly.h $
- * $Id: Poly.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+ * $URL: https://github.com/CGAL/cgal/blob/v5.1/CGAL_Core/include/CGAL/CORE/poly/Poly.h $
+ * $Id: Poly.h bd172e5 2020-07-21T17:15:45+02:00 Laurent Rineau
  * SPDX-License-Identifier: LGPL-3.0-or-later
  ***************************************************************************/
 
@@ -252,6 +252,7 @@ public:
 template < class NT >
 CORE_INLINE
 const Polynomial<NT> & Polynomial<NT>::polyZero() {
+  init_CORE();
   CGAL_STATIC_THREAD_LOCAL_VARIABLE_0(Polynomial<NT>, zeroP);
   return zeroP;
 }
@@ -259,6 +260,7 @@ const Polynomial<NT> & Polynomial<NT>::polyZero() {
 template < class NT >
 CORE_INLINE
 const Polynomial<NT> & Polynomial<NT>::polyUnity() {
+  init_CORE();
   static const NT c[] = {1};
   CGAL_STATIC_THREAD_LOCAL_VARIABLE_2(Polynomial<NT>, unityP, 0, c);
   return unityP;

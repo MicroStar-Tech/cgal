@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Combinatorial_map/include/CGAL/Combinatorial_map_storages.h $
-// $Id: Combinatorial_map_storages.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Combinatorial_map/include/CGAL/Combinatorial_map_storages.h $
+// $Id: Combinatorial_map_storages.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Guillaume Damiand <guillaume.damiand@liris.cnrs.fr>
@@ -127,6 +127,8 @@ namespace CGAL {
       CGAL_assertion(i <= dimension);
       return dh->mf[i]==null_dart_handle;
     }
+    bool is_perforated(Dart_const_handle /*dh*/) const
+    { return false; }
 
     /// Set simultaneously all the marks of this dart to a given value.
     void set_dart_marks(Dart_const_handle ADart,

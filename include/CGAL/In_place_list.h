@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/STL_Extension/include/CGAL/In_place_list.h $
-// $Id: In_place_list.h dc12dea 2020-05-04T17:52:26+02:00 Laurent Rineau
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/STL_Extension/include/CGAL/In_place_list.h $
+// $Id: In_place_list.h 704cdab 2020-04-26T07:43:22+02:00 Michael Hemmer
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //

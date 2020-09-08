@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Interpolation/include/CGAL/interpolation_functions.h $
-// $Id: interpolation_functions.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Interpolation/include/CGAL/interpolation_functions.h $
+// $Id: interpolation_functions.h d7224e5 2020-05-24T11:08:44+02:00 Marc Glisse
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Julia Floetotto
@@ -34,7 +34,7 @@ struct Data_access
   typedef typename Map::mapped_type   Data_type;
   typedef typename Map::key_type      Key_type;
 
-  Data_access<Map>(const Map& m): map(m){}
+  Data_access(const Map& m): map(m){}
 
   std::pair< Data_type, bool>
   operator()(const Key_type& p) const

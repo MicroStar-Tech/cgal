@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Shape_detection/include/CGAL/Shape_detection/Efficient_RANSAC/Octree.h $
-// $Id: Octree.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Shape_detection/include/CGAL/Shape_detection/Efficient_RANSAC/Octree.h $
+// $Id: Octree.h fdb17cb 2020-03-26T19:26:10+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -204,7 +204,7 @@ namespace CGAL {
       FT get_z(const Point_3& p){ return m_traits.compute_z_3_object()(p); }
       FT get_coord(const Point_3& p, unsigned int d)
       {
-        CGAL_assertion(d >= 0 && d < 3);
+        CGAL_assertion(d < 3);
         switch (d)
         {
           case 0: return get_x(p);

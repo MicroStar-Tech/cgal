@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Three/include/CGAL/Three/Scene_group_item.h $
-// $Id: Scene_group_item.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Three/include/CGAL/Three/Scene_group_item.h $
+// $Id: Scene_group_item.h 9551708 2020-06-03T15:02:58+02:00 Maxime Gimeno
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -245,8 +245,12 @@ public Q_SLOTS:
     {
       for(int i = 0; i < children.size(); ++i)
       {
-        if(children[i] >= removed_id)
+        if(children[i] > removed_id)
           --children[i];
+        else if(children[i] == removed_id)//child has been removed from the scene, it doesn't exist anymore.
+        {
+          children.removeAll(removed_id);
+        }
       }
     }
 private:

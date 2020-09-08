@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Kernel_23/include/CGAL/Kernel/interface_macros.h $
-// $Id: interface_macros.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Kernel_23/include/CGAL/Kernel/interface_macros.h $
+// $Id: interface_macros.h a943082 2020-03-26T19:01:31+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -116,6 +116,8 @@ CGAL_Kernel_pred_RT(Compare_power_distance_2,
                     compare_power_distance_2_object)
 CGAL_Kernel_pred_RT(Compare_power_distance_3,
                     compare_power_distance_3_object)
+CGAL_Kernel_pred(Compare_signed_distance_to_line_2,
+                 compare_signed_distance_to_line_2_object)
 CGAL_Kernel_pred(Compare_slope_2,
                  compare_slope_2_object)
 CGAL_Kernel_pred(Compare_slope_3,
@@ -488,7 +490,7 @@ CGAL_Kernel_pred_RT(Coplanar_orientation_3,
                     coplanar_orientation_3_object)
 CGAL_Kernel_pred_RT(Coplanar_side_of_bounded_circle_3,
                     coplanar_side_of_bounded_circle_3_object)
-CGAL_Kernel_pred(Coplanar_3,
+CGAL_Kernel_pred_RT(Coplanar_3,
                  coplanar_3_object)
 CGAL_Kernel_pred(Counterclockwise_in_between_2,
                  counterclockwise_in_between_2_object)

@@ -2,8 +2,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Straight_skeleton_2/include/CGAL/Straight_skeleton_halfedge_base_2.h $
-// $Id: Straight_skeleton_halfedge_base_2.h 6e4eb71 2020-06-23T18:48:04+02:00 Laurent Rineau
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Straight_skeleton_2/include/CGAL/Straight_skeleton_halfedge_base_2.h $
+// $Id: Straight_skeleton_halfedge_base_2.h 3d78df1 2020-06-23T18:49:55+02:00 Laurent Rineau
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Fernando Cacciola <fernando_cacciola@ciudad.com.ar>

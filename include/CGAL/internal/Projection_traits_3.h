@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Kernel_23/include/CGAL/internal/Projection_traits_3.h $
-// $Id: Projection_traits_3.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Kernel_23/include/CGAL/internal/Projection_traits_3.h $
+// $Id: Projection_traits_3.h 9f2eafd 2020-03-26T19:17:02+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Mariette Yvinec, Sebastien Loriot, Mael Rouxel-Labbé
@@ -521,7 +521,7 @@ public:
 
   Weighted_point_2 project(const Weighted_point_3& wp) const
   {
-    Point_3 p = R().construct_point_3_object()(wp);
+    const Point_3& p = R().construct_point_3_object()(wp);
     return Weighted_point_2(Point_2(x(p), y(p)), wp.weight());
   }
 
@@ -550,7 +550,7 @@ public:
 
   Weighted_point_2 project(const Weighted_point_3& wp) const
   {
-    Point_3 p = R().construct_point_3_object()(wp);
+    const Point_3& p = R().construct_point_3_object()(wp);
     return Weighted_point_2(Point_2(x(p), y(p)), wp.weight());
   }
 
@@ -577,7 +577,7 @@ public:
 
   Weighted_point_2 project(const Weighted_point_3& wp) const
   {
-    Point_3 p = R().construct_point_3_object()(wp);
+    const Point_3& p = R().construct_point_3_object()(wp);
     return Weighted_point_2(Point_2(x(p), y(p)), wp.weight());
   }
 
@@ -614,7 +614,7 @@ public:
 
   Weighted_point_2 project(const Weighted_point_3& wp) const
   {
-    Point_3 p = R().construct_point_3_object()(wp);
+    const Point_3& p = R().construct_point_3_object()(wp);
     return Weighted_point_2(Point_2(x(p), y(p)), wp.weight());
   }
 
@@ -659,7 +659,7 @@ public:
 
   Weighted_point_2 project(const Weighted_point_3& wp) const
   {
-    Point_3 p = R().construct_point_3_object()(wp);
+    const Point_3& p = R().construct_point_3_object()(wp);
     return Weighted_point_2(Point_2(x(p), y(p)), wp.weight());
   }
 
@@ -697,7 +697,7 @@ public:
 
   Weighted_point_2 project(const Weighted_point_3& wp) const
   {
-    Point_3 p = R().construct_point_3_object()(wp);
+    const Point_3& p = R().construct_point_3_object()(wp);
     return Weighted_point_2(Point_2(x(p), y(p)), wp.weight());
   }
 
@@ -739,7 +739,7 @@ public:
 
   Weighted_point_2 project(const Weighted_point_3& wp) const
   {
-    Point_3 p = R().construct_point_3_object()(wp);
+    const Point_3& p = R().construct_point_3_object()(wp);
     return Weighted_point_2(Point_2(x(p), y(p)), wp.weight());
   }
 

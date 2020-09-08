@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Classification/include/CGAL/Classification/Point_set_feature_generator.h $
-// $Id: Point_set_feature_generator.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Classification/include/CGAL/Classification/Point_set_feature_generator.h $
+// $Id: Point_set_feature_generator.h d42113b 2020-03-26T19:35:20+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Simon Giraudot
@@ -90,10 +90,8 @@ template <typename GeomTraits,
           typename PointMap,
 #if defined(DOXYGEN_RUNNING)
           typename ConcurrencyTag,
-#elif defined(CGAL_LINKED_WITH_TBB)
-          typename ConcurrencyTag = CGAL::Parallel_tag,
 #else
-          typename ConcurrencyTag = CGAL::Sequential_tag,
+          typename ConcurrencyTag = CGAL::Parallel_if_available_tag,
 #endif
 #if defined(DOXYGEN_RUNNING)
           typename DiagonalizeTraits>
@@ -163,9 +161,9 @@ private:
       CGAL::Real_timer t;
       t.start();
       if (lower_grid == nullptr)
-        neighborhood = new Neighborhood (input, point_map);
+        neighborhood = new Neighborhood (input, point_map, ConcurrencyTag());
       else
-        neighborhood = new Neighborhood (input, point_map, voxel_size);
+        neighborhood = new Neighborhood (input, point_map, voxel_size, ConcurrencyTag());
       t.stop();
 
       if (lower_grid == nullptr)

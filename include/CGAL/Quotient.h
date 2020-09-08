@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Number_types/include/CGAL/Quotient.h $
-// $Id: Quotient.h 5b2d46c 2020-04-21T10:03:00+02:00 Maxime Gimeno
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Number_types/include/CGAL/Quotient.h $
+// $Id: Quotient.h 14c3b7e 2020-05-27T16:33:33+02:00 Laurent Rineau
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -128,6 +128,15 @@ class Quotient
   Quotient<NT>& operator-= (const CGAL_double(NT)& r);
   Quotient<NT>& operator*= (const CGAL_double(NT)& r);
   Quotient<NT>& operator/= (const CGAL_double(NT)& r);
+
+  friend bool operator==(const Quotient& x, const Quotient& y)
+  { return x.num * y.den == x.den * y.num; }
+  friend bool operator==(const Quotient& x, const NT& y)
+  { return x.den * y == x.num; }
+  friend inline bool operator==(const Quotient& x, const CGAL_int(NT) & y)
+  { return x.den * y == x.num; }
+  friend inline bool operator==(const Quotient& x, const CGAL_double(NT) & y)
+  { return x.den * y == x.num; } // Uh?
 
   Quotient<NT>&    normalize();
 
@@ -436,31 +445,6 @@ NT
 quotient_truncation(const Quotient<NT>& r)
 { return (r.num / r.den); }
 
-
-
-template <class NT>
-CGAL_MEDIUM_INLINE
-bool
-operator==(const Quotient<NT>& x, const Quotient<NT>& y)
-{ return x.num * y.den == x.den * y.num; }
-
-template <class NT>
-CGAL_MEDIUM_INLINE
-bool
-operator==(const Quotient<NT>& x, const NT& y)
-{ return x.den * y == x.num; }
-
-template <class NT>
-inline
-bool
-operator==(const Quotient<NT>& x, const CGAL_int(NT) & y)
-{ return x.den * y == x.num; }
-
-template <class NT>
-inline
-bool
-operator==(const Quotient<NT>& x, const CGAL_double(NT) & y)
-{ return x.den * y == x.num; }
 
 
 

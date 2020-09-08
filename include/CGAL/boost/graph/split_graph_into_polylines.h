@@ -2,8 +2,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/BGL/include/CGAL/boost/graph/split_graph_into_polylines.h $
-// $Id: split_graph_into_polylines.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/BGL/include/CGAL/boost/graph/split_graph_into_polylines.h $
+// $Id: split_graph_into_polylines.h ebd65c9 2020-07-20T11:47:30+02:00 Mael Rouxel-Labbé
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Laurent Rineau, Xiang Gao
@@ -131,7 +131,7 @@ public:
   }
 }; // end class Less_on_G_copy_vertex_descriptors
 
-// Splits a graph at vertices with degree higher than two and at vertices where `is_terminal` returns `true`
+// splits a graph at vertices with degree higher than two and at vertices where `is_terminal` returns `true`
 // The vertices are duplicated, and new incident edges created.
 // `OrigGraph` must be undirected
 template <typename Graph,
@@ -192,6 +192,7 @@ void duplicate_terminal_vertices(Graph& graph,
 
 } // namespace internal
 
+#ifndef DOXYGEN_RUNNING
 template <typename Graph,
           typename Visitor,
           typename IsTerminal,
@@ -201,6 +202,7 @@ split_graph_into_polylines(const Graph& graph,
                            Visitor& polyline_visitor,
                            IsTerminal is_terminal,
                            LessForVertexDescriptors less);
+#endif
 
 /*!
 \ingroup PkgBGLRef

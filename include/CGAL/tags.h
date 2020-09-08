@@ -7,8 +7,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/STL_Extension/include/CGAL/tags.h $
-// $Id: tags.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/STL_Extension/include/CGAL/tags.h $
+// $Id: tags.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -26,7 +26,7 @@ namespace CGAL {
 struct Void {};
 
 // Boolean_tag<bool> is a model of the Boost Integral Constant concept.
-//   https://www.boost.org/libs/mpl/doc/refmanual/integral-constant.html
+// https://www.boost.org/libs/mpl/doc/refmanual/integral-constant.html
 template <bool b>
 struct Boolean_tag {
   typedef boost::mpl::integral_c_tag tag;
@@ -57,6 +57,12 @@ struct Null_functor {
 // For concurrency
 struct Sequential_tag {};
 struct Parallel_tag : public Sequential_tag {};
+
+#ifdef CGAL_LINKED_WITH_TBB
+typedef CGAL::Parallel_tag Parallel_if_available_tag;
+#else
+typedef CGAL::Sequential_tag Parallel_if_available_tag;
+#endif
 
 // A function that asserts a specific compile time tag
 // forcing its two arguments to have equal type.

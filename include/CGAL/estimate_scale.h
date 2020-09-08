@@ -4,8 +4,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Point_set_processing_3/include/CGAL/estimate_scale.h $
-// $Id: estimate_scale.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Point_set_processing_3/include/CGAL/estimate_scale.h $
+// $Id: estimate_scale.h c253679 2020-04-18T16:27:58+02:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s) : Simon Giraudot
@@ -452,22 +452,30 @@ public:
    \param points input point range.
    \param queries range of locations where scale must be estimated
    \param output iterator to store the computed scales
-   \param np optional sequence of \ref psp_namedparameters "Named Parameters" among the ones listed below.
+   \param np an optional sequence of \ref bgl_namedparameters "Named Parameters" among the ones listed below
 
    \cgalNamedParamsBegin
-     \cgalParamBegin{point_map} a model of `ReadablePropertyMap` with
-     value type `geom_traits::Point_3` (or `geom_traits::Point_2`).
-     If this parameter is omitted,
-     `CGAL::Identity_property_map<geom_traits::Point_3>` (or
-     `CGAL::Identity_property_map<geom_traits::Point_2>`) is
-     used.\cgalParamEnd
-     \cgalParamBegin{query_point_map} a model of `ReadablePropertyMap` with
-     value type `geom_traits::Point_3` (or `geom_traits::Point_2`).
-     If this parameter is omitted,
-     `CGAL::Identity_property_map<geom_traits::Point_3>` (or
-     `CGAL::Identity_property_map<geom_traits::Point_2>`) is
-     used.\cgalParamEnd
-     \cgalParamBegin{geom_traits} an instance of a geometric traits class, model of `Kernel`\cgalParamEnd
+     \cgalParamNBegin{point_map}
+       \cgalParamDescription{a property map associating points to the elements of the point set `points`}
+       \cgalParamType{a model of `ReadablePropertyMap` whose key type is the value type
+                      of the iterator of `PointRange` and whose value type is `geom_traits::Point_3`
+                      (or `geom_traits::Point_2`)}
+       \cgalParamDefault{`CGAL::Identity_property_map<geom_traits::Point_3>` (or
+                         `CGAL::Identity_property_map<geom_traits::Point_2>`)}
+     \cgalParamNEnd
+
+     \cgalParamNBegin{query_point_map}
+       \cgalParamDescription{the property map containing the points associated to the elements of the point range `queries`}
+       \cgalParamType{a model of `ReadablePropertyMap` with value type `geom_traits::Point_3` (or `geom_traits::Point_2`)}
+       \cgalParamDefault{`CGAL::Identity_property_map<geom_traits::Point_3>` (or
+                         `CGAL::Identity_property_map<geom_traits::Point_2>`)}
+     \cgalParamNEnd
+
+     \cgalParamNBegin{geom_traits}
+       \cgalParamDescription{an instance of a geometric traits class}
+       \cgalParamType{a model of `Kernel`}
+       \cgalParamDefault{a \cgal Kernel deduced from the point type, using `CGAL::Kernel_traits`}
+     \cgalParamNEnd
    \cgalNamedParamsEnd
 
    \note This function accepts both 2D and 3D points, but sample
@@ -488,14 +496,14 @@ estimate_local_k_neighbor_scales(
   using parameters::choose_parameter;
   using parameters::get_parameter;
 
-  typedef typename Point_set_processing_3::GetPointMap<PointRange, NamedParameters>::const_type PointMap;
+  typedef typename CGAL::GetPointMap<PointRange, NamedParameters>::const_type PointMap;
   typedef typename Point_set_processing_3::GetQueryPointMap<QueryPointRange, NamedParameters>::const_type QueryPointMap;
   typedef typename Point_set_processing_3::GetK<PointRange, NamedParameters>::Kernel Kernel;
 
   typedef typename boost::property_traits<PointMap>::value_type Point_d;
 
-  PointMap point_map = choose_parameter(get_parameter(np, internal_np::point_map), PointMap());
-  QueryPointMap query_point_map = choose_parameter(get_parameter(np, internal_np::query_point_map), QueryPointMap());
+  PointMap point_map = choose_parameter<PointMap>(get_parameter(np, internal_np::point_map));
+  QueryPointMap query_point_map = choose_parameter<QueryPointMap>(get_parameter(np, internal_np::query_point_map));
 
   // Build multi-scale KD-tree
   internal::Quick_multiscale_approximate_knn_distance<Kernel, Point_d> kdtree (points.begin(),
@@ -539,16 +547,23 @@ estimate_local_k_neighbor_scales(
    its iterator is the key type of the named parameter `point_map`.
 
    \param points input point range.
-   \param np optional sequence of \ref psp_namedparameters "Named Parameters" among the ones listed below.
+   \param np an optional sequence of \ref bgl_namedparameters "Named Parameters" among the ones listed below
 
    \cgalNamedParamsBegin
-     \cgalParamBegin{point_map} a model of `ReadablePropertyMap` with
-     value type `geom_traits::Point_3` (or `geom_traits::Point_2`).
-     If this parameter is omitted,
-     `CGAL::Identity_property_map<geom_traits::Point_3>` (or
-     `CGAL::Identity_property_map<geom_traits::Point_2>`) is
-     used.\cgalParamEnd
-     \cgalParamBegin{geom_traits} an instance of a geometric traits class, model of `Kernel`\cgalParamEnd
+     \cgalParamNBegin{point_map}
+       \cgalParamDescription{a property map associating points to the elements of the point set `points`}
+       \cgalParamType{a model of `ReadablePropertyMap` whose key type is the value type
+                      of the iterator of `PointRange` and whose value type is `geom_traits::Point_3`
+                      (or `geom_traits::Point_2`)}
+       \cgalParamDefault{`CGAL::Identity_property_map<geom_traits::Point_3>` (or
+                         `CGAL::Identity_property_map<geom_traits::Point_2>`)}
+     \cgalParamNEnd
+
+     \cgalParamNBegin{geom_traits}
+       \cgalParamDescription{an instance of a geometric traits class}
+       \cgalParamType{a model of `Kernel`}
+       \cgalParamDefault{a \cgal Kernel deduced from the point type, using `CGAL::Kernel_traits`}
+     \cgalParamNEnd
    \cgalNamedParamsEnd
 
    \note This function accepts both 2D and 3D points.
@@ -566,8 +581,8 @@ estimate_global_k_neighbor_scale(
   using parameters::choose_parameter;
   using parameters::get_parameter;
 
-  typedef typename Point_set_processing_3::GetPointMap<PointRange, NamedParameters>::const_type PointMap;
-  PointMap point_map = choose_parameter(get_parameter(np, internal_np::point_map), PointMap());
+  typedef typename CGAL::GetPointMap<PointRange, NamedParameters>::const_type PointMap;
+  PointMap point_map = choose_parameter<PointMap>(get_parameter(np, internal_np::point_map));
   std::vector<std::size_t> scales;
   estimate_local_k_neighbor_scales (points, points, std::back_inserter (scales), np.query_point_map(point_map));
   std::sort (scales.begin(), scales.end());
@@ -605,22 +620,30 @@ estimate_global_k_neighbor_scale(const PointRange& points)
    \param points input point range.
    \param queries range of locations where scale must be estimated
    \param output iterator to store the computed scales
-   \param np optional sequence of \ref psp_namedparameters "Named Parameters" among the ones listed below.
+   \param np an optional sequence of \ref bgl_namedparameters "Named Parameters" among the ones listed below
 
    \cgalNamedParamsBegin
-     \cgalParamBegin{point_map} a model of `ReadablePropertyMap` with
-     value type `geom_traits::Point_3` (or `geom_traits::Point_2`).
-     If this parameter is omitted,
-     `CGAL::Identity_property_map<geom_traits::Point_3>` (or
-     `CGAL::Identity_property_map<geom_traits::Point_2>`) is
-     used.\cgalParamEnd
-     \cgalParamBegin{query_point_map} a model of `ReadablePropertyMap` with
-     value type `geom_traits::Point_3` (or `geom_traits::Point_2`).
-     If this parameter is omitted,
-     `CGAL::Identity_property_map<geom_traits::Point_3>` (or
-     `CGAL::Identity_property_map<geom_traits::Point_2>`) is
-     used.\cgalParamEnd
-     \cgalParamBegin{geom_traits} an instance of a geometric traits class, model of `Kernel`\cgalParamEnd
+     \cgalParamNBegin{point_map}
+       \cgalParamDescription{a property map associating points to the elements of the point set `points`}
+       \cgalParamType{a model of `ReadablePropertyMap` whose key type is the value type
+                      of the iterator of `PointRange` and whose value type is `geom_traits::Point_3`
+                      (or `geom_traits::Point_2`)}
+       \cgalParamDefault{`CGAL::Identity_property_map<geom_traits::Point_3>` (or
+                         `CGAL::Identity_property_map<geom_traits::Point_2>`)}
+     \cgalParamNEnd
+
+     \cgalParamNBegin{query_point_map}
+       \cgalParamDescription{the property map containing the points associated to the elements of the point range `queries`}
+       \cgalParamType{a model of `ReadablePropertyMap` with value type `geom_traits::Point_3` (or `geom_traits::Point_2`)}
+       \cgalParamDefault{`CGAL::Identity_property_map<geom_traits::Point_3>` (or
+                         `CGAL::Identity_property_map<geom_traits::Point_2>`)}
+     \cgalParamNEnd
+
+     \cgalParamNBegin{geom_traits}
+       \cgalParamDescription{an instance of a geometric traits class}
+       \cgalParamType{a model of `Kernel`}
+       \cgalParamDefault{a \cgal Kernel deduced from the point type, using `CGAL::Kernel_traits`}
+     \cgalParamNEnd
    \cgalNamedParamsEnd
 
    \note This function accepts both 2D and 3D points, but sample
@@ -641,14 +664,14 @@ estimate_local_range_scales(
   using parameters::choose_parameter;
   using parameters::get_parameter;
 
-  typedef typename Point_set_processing_3::GetPointMap<PointRange, NamedParameters>::const_type PointMap;
+  typedef typename CGAL::GetPointMap<PointRange, NamedParameters>::const_type PointMap;
   typedef typename Point_set_processing_3::GetQueryPointMap<QueryPointRange, NamedParameters>::const_type QueryPointMap;
   typedef typename Point_set_processing_3::GetK<PointRange, NamedParameters>::Kernel Kernel;
 
   typedef typename boost::property_traits<PointMap>::value_type Point_d;
 
-  PointMap point_map = choose_parameter(get_parameter(np, internal_np::point_map), PointMap());
-  QueryPointMap query_point_map = choose_parameter(get_parameter(np, internal_np::query_point_map), QueryPointMap());
+  PointMap point_map = choose_parameter<PointMap>(get_parameter(np, internal_np::point_map));
+  QueryPointMap query_point_map = choose_parameter<QueryPointMap>(get_parameter(np, internal_np::query_point_map));
 
   // Build multi-scale KD-tree
   internal::Quick_multiscale_approximate_knn_distance<Kernel, Point_d> kdtree (points.begin(),
@@ -692,22 +715,29 @@ estimate_local_range_scales(
    its iterator is the key type of the named parameter `point_map`.
 
    \param points input point range.
-   \param np optional sequence of \ref psp_namedparameters "Named Parameters" among the ones listed below.
+   \param np an optional sequence of \ref bgl_namedparameters "Named Parameters" among the ones listed below
 
    \cgalNamedParamsBegin
-     \cgalParamBegin{point_map} a model of `ReadablePropertyMap` with
-     value type `geom_traits::Point_3` (or `geom_traits::Point_2`).
-     If this parameter is omitted,
-     `CGAL::Identity_property_map<geom_traits::Point_3>` (or
-     `CGAL::Identity_property_map<geom_traits::Point_2>`) is
-     used.\cgalParamEnd
-     \cgalParamBegin{geom_traits} an instance of a geometric traits class, model of `Kernel`\cgalParamEnd
+     \cgalParamNBegin{point_map}
+       \cgalParamDescription{a property map associating points to the elements of the point set `points`}
+       \cgalParamType{a model of `ReadablePropertyMap` whose key type is the value type
+                      of the iterator of `PointRange` and whose value type is `geom_traits::Point_3`
+                      (or `geom_traits::Point_2`)}
+       \cgalParamDefault{`CGAL::Identity_property_map<geom_traits::Point_3>` (or
+                         `CGAL::Identity_property_map<geom_traits::Point_2>`)}
+     \cgalParamNEnd
+
+     \cgalParamNBegin{geom_traits}
+       \cgalParamDescription{an instance of a geometric traits class}
+       \cgalParamType{a model of `Kernel`}
+       \cgalParamDefault{a \cgal Kernel deduced from the point type, using `CGAL::Kernel_traits`}
+     \cgalParamNEnd
    \cgalNamedParamsEnd
 
    \note This function accepts both 2D and 3D points.
 
    \return The estimated scale in the range sense. The return type `FT` is a number type. It is
-   either deduced from the `geom_traits` \ref psp_namedparameters "Named Parameters" if provided,
+   either deduced from the `geom_traits` \ref bgl_namedparameters "Named Parameters" if provided,
    or the geometric traits class deduced from the point property map
    of `points`.
 */
@@ -727,8 +757,8 @@ estimate_global_range_scale(
   using parameters::get_parameter;
 
   std::vector<double> scales;
-  typedef typename Point_set_processing_3::GetPointMap<PointRange, NamedParameters>::const_type PointMap;
-  PointMap point_map = choose_parameter(get_parameter(np, internal_np::point_map), PointMap());
+  typedef typename CGAL::GetPointMap<PointRange, NamedParameters>::const_type PointMap;
+  PointMap point_map = choose_parameter<PointMap>(get_parameter(np, internal_np::point_map));
   estimate_local_range_scales (points, points, std::back_inserter (scales), np.query_point_map(point_map));
   std::sort (scales.begin(), scales.end());
   return std::sqrt (scales[scales.size() / 2]);

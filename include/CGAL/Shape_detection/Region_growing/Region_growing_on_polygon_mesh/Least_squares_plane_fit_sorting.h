@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Shape_detection/include/CGAL/Shape_detection/Region_growing/Region_growing_on_polygon_mesh/Least_squares_plane_fit_sorting.h $
-// $Id: Least_squares_plane_fit_sorting.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Shape_detection/include/CGAL/Shape_detection/Region_growing/Region_growing_on_polygon_mesh/Least_squares_plane_fit_sorting.h $
+// $Id: Least_squares_plane_fit_sorting.h d8789f0 2020-04-15T09:06:36+02:00 Mael Rouxel-Labbé
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -193,8 +193,6 @@ namespace Polygon_mesh {
 
         points.clear();
         for (std::size_t j = 0; j < neighbors.size(); ++j) {
-
-          CGAL_precondition(neighbors[j] >= 0);
           CGAL_precondition(neighbors[j] < m_face_range.size());
 
           const auto face = *(m_face_range.begin() + neighbors[j]);

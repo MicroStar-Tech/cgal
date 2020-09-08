@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Mesh_2/include/CGAL/Delaunay_mesh_size_criteria_2.h $
-// $Id: Delaunay_mesh_size_criteria_2.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Mesh_2/include/CGAL/Delaunay_mesh_size_criteria_2.h $
+// $Id: Delaunay_mesh_size_criteria_2.h 8bb22d5 2020-03-26T14:23:37+01:00 Sébastien Loriot
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -111,10 +111,8 @@ public:
       typedef typename Geom_traits::Compute_squared_distance_2
         Compute_squared_distance_2;
 
-      Geom_traits traits; /** @warning traits with data!! */
-
       Compute_squared_distance_2 squared_distance =
-        traits.compute_squared_distance_2_object();
+        this->traits.compute_squared_distance_2_object();
 
       const Point_2& pa = fh->vertex(0)->point();
       const Point_2& pb = fh->vertex(1)->point();
@@ -165,7 +163,7 @@ public:
             }
         }
 
-      Compute_area_2 area_2 = traits.compute_area_2_object();
+      Compute_area_2 area_2 = this->traits.compute_area_2_object();
 
       double area = 2*CGAL::to_double(area_2(pa, pb, pc));
 

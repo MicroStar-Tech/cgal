@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Combinatorial_map/include/CGAL/Cell_attribute.h $
-// $Id: Cell_attribute.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Combinatorial_map/include/CGAL/Cell_attribute.h $
+// $Id: Cell_attribute.h d1a323c 2020-03-26T19:24:14+01:00 Sébastien Loriot
 // SPDX-License-Identifier: LGPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Guillaume Damiand <guillaume.damiand@liris.cnrs.fr>
@@ -197,8 +197,8 @@ namespace CGAL {
 
     void * for_compact_container() const
     { return vp; }
-    void * & for_compact_container()
-    { return vp; }
+    void for_compact_container(void *p)
+    { vp = p; }
 
   private:
     /// Reference counting: the number of darts linked to this cell.
@@ -310,8 +310,8 @@ namespace CGAL {
 
     void * for_compact_container() const
     { return mdart.for_compact_container(); }
-    void * & for_compact_container()
-    { return mdart.for_compact_container(); }
+    void for_compact_container(void *p)
+    { mdart.for_compact_container(p); }
 
   private:
     /// The dart handle associated with the cell.

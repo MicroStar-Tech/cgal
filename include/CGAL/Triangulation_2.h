@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org).
 //
-// $URL: https://github.com/CGAL/cgal/blob/releases/CGAL-5.0.3/Triangulation_2/include/CGAL/Triangulation_2.h $
-// $Id: Triangulation_2.h 0779373 2020-03-26T13:31:46+01:00 Sébastien Loriot
+// $URL: https://github.com/CGAL/cgal/blob/v5.1/Triangulation_2/include/CGAL/Triangulation_2.h $
+// $Id: Triangulation_2.h dcc4fb1 2020-05-20T09:46:26+02:00 Laurent Rineau
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 // Author(s)     : Olivier Devillers, Mariette Yvinec
@@ -37,7 +37,6 @@
 #include <CGAL/Spatial_sort_traits_adapter_2.h>
 
 #include <CGAL/double.h>
-#include <CGAL/internal/boost/function_property_map.hpp>
 
 #include <boost/utility/result_of.hpp>
 #include <boost/random/linear_congruential.hpp>
@@ -243,6 +242,7 @@ public:
   // CONSTRUCTORS
   Triangulation_2(const Geom_traits& geom_traits=Geom_traits());
   Triangulation_2(const Triangulation_2<Gt,Tds> &tr);
+  Triangulation_2(Triangulation_2&&) = default;
 
   template <class InputIterator>
   Triangulation_2(InputIterator first, InputIterator last,
@@ -255,6 +255,10 @@ public:
 
   //Assignement
   Triangulation_2 &operator=(const Triangulation_2 &tr);
+  Triangulation_2 &operator=(Triangulation_2 &&) = default;
+
+  // Destructor
+  ~Triangulation_2() = default;
 
   //Helping
   void copy_triangulation(const Triangulation_2 &tr);
@@ -629,7 +633,7 @@ std::ptrdiff_t insert(InputIterator first, InputIterator last,
          typename std::iterator_traits<InputIterator>::value_type,
          Point
          >
-         >::type* = NULL)
+         >::type* = nullptr)
 #else
   template < class InputIterator >
   std::ptrdiff_t
@@ -1017,7 +1021,7 @@ includes_edge(Vertex_handle va, Vertex_handle vb,
   Orientation orient;
   int indv;
   Edge_circulator ec = incident_edges(va), done(ec);
-  if (ec != 0) {
+  if (ec != nullptr) {
     do {
       //find the index of the other vertex of *ec
       indv = 3 - ((*ec).first)->index(va) - (*ec).second ;
@@ -2598,7 +2602,7 @@ march_locate_2D_LFC(Face_handle start,
   }else {
     lfc = Line_face_circulator(start->vertex(0), this, t);
   }
-  if(lfc==0 || lfc.collinear_outside()){
+  if(lfc==nullptr || lfc.collinear_outside()){
     // point t lies outside or on the convex hull
     // we walk on the convex hull to find it out
     Face_circulator fc = incident_faces(infinite_vertex());
