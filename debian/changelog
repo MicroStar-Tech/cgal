@@ -1,3 +1,11 @@
+cgal (5.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Remove patch fix-fpu-rounding-mode-control-mipsel-and-mips64el,
+    applied upstream.
+
+ -- Joachim Reichel <reichel@debian.org>  Tue, 08 Sep 2020 22:26:11 +0200
+
 cgal (5.0.3-1) unstable; urgency=medium
 
   * New upstream release.
