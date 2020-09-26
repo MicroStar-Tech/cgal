@@ -1,3 +1,9 @@
+cgal (5.1-2) UNRELEASED; urgency=medium
+
+  * Adapt debian/watch to new release tag naming scheme.
+
+ -- Joachim Reichel <reichel@debian.org>  Sat, 26 Sep 2020 09:43:34 +0200
+
 cgal (5.1-1) unstable; urgency=medium
 
   * New upstream release.
