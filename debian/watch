@@ -6,7 +6,7 @@
 version=4
 
 opts="\
-    downloadurlmangle=s|/tag/v(.*)|/download/$1/CGAL-$1.tar.xz|, \
+    downloadurlmangle=s|/tag/v(.*)|/download/v$1/CGAL-$1.tar.xz|, \
     filenamemangle=s|.*/v(.*)|cgal_$1.orig.tar.xz|" \
 https://github.com/CGAL/cgal/tags \
     /CGAL/cgal/releases/tag/v(\d[\d.]*) debian uupdate
