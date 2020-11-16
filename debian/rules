@@ -20,7 +20,7 @@ endif
 OPENGL_ES_ARCHITECTURES := armel armhf
 ifneq (,$(findstring $(DEB_HOST_ARCH), $(OPENGL_ES_ARCHITECTURES)))
   DEBHELPER_QT5 := -Nlibcgal-qt5-dev
-	CMAKE_QT5 := -DWITH_CGAL_Qt5=OFF
+  CMAKE_QT5 := -DWITH_CGAL_Qt5=OFF
 endif
 
 %:
@@ -69,7 +69,7 @@ override_dh_install-arch:
 	$(MAKE) -C build/demo/CGAL_ipelets DESTDIR=$(CURDIR)/debian/tmp install
 
 	# remove -fdebug-prefix-map, -ffile-prefix-map, and -fmacro-prefix-map settings
-  # from CGALConfig.cmake to avoid false positives in reproducible builds report
+	# from CGALConfig.cmake to avoid false positives in reproducible builds report
 	sed -i 's/-f\(debug\|file\|macro\)-prefix-map=[^ ]* //' debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/CGAL/CGALConfig.cmake
 
 	# tweak installed documentation files
