@@ -3,7 +3,7 @@ Thu, 29 Apr 2004 18:43:18 +0200.
 
 It was downloaded from http://www.cgal.org/download/index.html.
 
-The Debian packaging is Copyright (c) 2004-2017 Joachim Reichel
+The Debian packaging is Copyright (c) 2004-2020 Joachim Reichel
 <reichel@debian.org> and is licensed under the LGPL license, version 2.1 or
 later (at your option), which can be found in
 /usr/share/common-licenses/LGPL-2.1.
@@ -181,10 +181,12 @@ Copyright (from upstream file LICENSE)
      (see LICENSE.LGPL).
    - OpenNL, in the directory "include/CGAL/OpenNL", is licensed under the LGPL
      (see LICENSE.LGPL).
+   - ETH Zurich random forest algorithm, in the directory "CGAL/Classification/ETHZ",
+     is licensed under a MIT like license (see LICENSE.RFL).
 
    All other files that do not have an explicit copyright notice (e.g., all
-   examples and some demos) are licensed under a very permissive license. The
-   exact license text can be found in the file LICENSE.FREE_USE.
+   examples and some demos) are licensed under the Creative Commons CC0 1.0 license. The
+   exact text can be found at https://creativecommons.org/publicdomain/zero/1.0/".
 
    More information on the CGAL license can be found at
    https://www.cgal.org/license.html
@@ -241,8 +243,8 @@ file to file.
 
 
 
-Copright statement for files under the FREE_USE license
-=======================================================
+Copright statement for files under the CC0 license
+==================================================
 
    Copyright (c) 1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007
    Utrecht University (The Netherlands),
