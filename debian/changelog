@@ -2,6 +2,7 @@ cgal (5.2-1) unstable; urgency=medium
 
   * New upstream release.
   * Add libqt5websockets5-dev to Suggests: of libcgal-demo.
+  * Update Standards-Version to 4.5.1 (no changes needed).
 
  -- Joachim Reichel <reichel@debian.org>  Tue, 22 Dec 2020 18:14:44 +0100
 
