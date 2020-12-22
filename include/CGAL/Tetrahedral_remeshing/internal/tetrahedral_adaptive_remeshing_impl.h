@@ -3,8 +3,8 @@
 //
 // This file is part of CGAL (www.cgal.org)
 //
-// $URL: https://github.com/CGAL/cgal/blob/v5.1.1/Tetrahedral_remeshing/include/CGAL/Tetrahedral_remeshing/internal/tetrahedral_adaptive_remeshing_impl.h $
-// $Id: tetrahedral_adaptive_remeshing_impl.h 962b681 2020-07-31T15:52:56+02:00 Laurent Rineau
+// $URL: https://github.com/CGAL/cgal/blob/v5.2/Tetrahedral_remeshing/include/CGAL/Tetrahedral_remeshing/internal/tetrahedral_adaptive_remeshing_impl.h $
+// $Id: tetrahedral_adaptive_remeshing_impl.h e96f846 2020-12-16T17:52:16+01:00 Laurent Rineau
 // SPDX-License-Identifier: GPL-3.0-or-later OR LicenseRef-Commercial
 //
 //
@@ -368,8 +368,18 @@ public:
     CGAL::Tetrahedral_remeshing::debug::dump_c3t3(m_c3t3, "99-postprocess");
 #endif
 #ifdef CGAL_TETRAHEDRAL_REMESHING_VERBOSE
-    std::cout << "(peeling removed " << nb_slivers_peel << " slivers)" << std::endl;
-    std::cout << "done." << std::endl;
+    mindh = 180.;
+    for (Cell_handle cit : tr().finite_cell_handles())
+    {
+      if (m_c3t3.is_in_complex(cit))
+      {
+        const double dh = min_dihedral_angle(tr(), cit);
+        mindh = (std::min)(dh, mindh);
+      }
+    }
+    std::cout << "Peeling done (removed " << nb_slivers_peel << " slivers, "
+      << "min dihedral angle = " << mindh << ")." << std::endl;
+
 #endif
     return nb_slivers_peel;
   }
@@ -607,6 +617,9 @@ public:
       ossi << "statistics_" << it_nb << ".txt";
       Tetrahedral_remeshing::internal::compute_statistics(
         tr(), m_cell_selector, ossi.str().c_str());
+#endif
+#ifdef CGAL_TETRAHEDRAL_REMESHING_DEBUG
+      CGAL::Tetrahedral_remeshing::debug::check_surface_patch_indices(m_c3t3);
 #endif
     }
 
