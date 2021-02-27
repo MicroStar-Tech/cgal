@@ -1,0 +1,108 @@
+Description: Fix some warnings with Boost 1.74 (see issue #5303), adapted to
+  tarball layout and without the tests.
+Origin: https://github.com/CGAL/cgal/commit/59658c3642a1e1bd7c7c849476c853dab94cd2d6
+
+Index: cgal/examples/Minkowski_sum_2/approx_inset.cpp
+===================================================================
+--- cgal.orig/examples/Minkowski_sum_2/approx_inset.cpp
++++ cgal/examples/Minkowski_sum_2/approx_inset.cpp
+@@ -4,7 +4,7 @@
+ #include <fstream>
+ #include <iostream>
+ #include <list>
+-#include <boost/timer.hpp>
++#include <CGAL/Timer.h>
+ 
+ #include <CGAL/approximated_offset_2.h>
+ 
+@@ -33,9 +33,10 @@ int main(int argc, char* argv[])
+ 
+   // Approximate the offset polygon.
+   std::list<Polygon_2> inset_polygons;
+-  boost::timer timer;
++  CGAL::Timer timer;
++  timer.start();
+   approximated_inset_2(P, 1, 0.00001, std::back_inserter(inset_polygons));
+-  double secs = timer.elapsed();
++  double secs = timer.time();
+ 
+   std::list<Polygon_2>::iterator it;
+   std::cout << "The inset comprises " << inset_polygons.size()
+Index: cgal/examples/Minkowski_sum_2/approx_offset.cpp
+===================================================================
+--- cgal.orig/examples/Minkowski_sum_2/approx_offset.cpp
++++ cgal/examples/Minkowski_sum_2/approx_offset.cpp
+@@ -2,7 +2,7 @@
+ // Computing the approximated offset of a polygon.
+ 
+ #include <fstream>
+-#include <boost/timer.hpp>
++#include <CGAL/Timer.h>
+ 
+ #include <CGAL/approximated_offset_2.h>
+ 
+@@ -26,9 +26,10 @@ int main(int argc, char* argv[])
+             << std::endl;
+ 
+   // Approximate the offset polygon with radius 5 and error bound 0.00001.
+-  boost::timer timer;
++  CGAL::Timer timer;
++  timer.start();
+   Polygon_with_holes_2 offset = CGAL::approximated_offset_2(P, 5, 0.00001);
+-  double secs = timer.elapsed();
++  double secs = timer.time();
+ 
+   std::cout << "The offset polygon has " << offset.outer_boundary().size()
+             << " vertices, " << offset.number_of_holes() << " holes."
+Index: cgal/examples/Minkowski_sum_2/exact_inset.cpp
+===================================================================
+--- cgal.orig/examples/Minkowski_sum_2/exact_inset.cpp
++++ cgal/examples/Minkowski_sum_2/exact_inset.cpp
+@@ -14,7 +14,7 @@ int main()
+ #else
+ 
+ #include <fstream>
+-#include <boost/timer.hpp>
++#include <CGAL/Timer.h>
+ 
+ #include <CGAL/Gps_traits_2.h>
+ #include <CGAL/offset_polygon_2.h>
+@@ -43,9 +43,10 @@ int main(int argc, char* argv[])
+   // Compute the inner offset of the polygon.
+   Traits traits;
+   std::list<Offset_polygon> inset_polygons;
+-  boost::timer timer;
++  CGAL::Timer timer;
++  timer.start();
+   inset_polygon_2(P, 1, traits, std::back_inserter(inset_polygons));
+-  double secs = timer.elapsed();
++  double secs = timer.time();
+ 
+   std::list<Offset_polygon>::iterator it;
+   std::cout << "The inset comprises "
+Index: cgal/examples/Minkowski_sum_2/exact_offset.cpp
+===================================================================
+--- cgal.orig/examples/Minkowski_sum_2/exact_offset.cpp
++++ cgal/examples/Minkowski_sum_2/exact_offset.cpp
+@@ -14,7 +14,7 @@ int main()
+ #else
+ 
+ #include <fstream>
+-#include <boost/timer.hpp>
++#include <CGAL/Timer.h>
+ 
+ #include <CGAL/Gps_traits_2.h>
+ #include <CGAL/offset_polygon_2.h>
+@@ -42,9 +42,10 @@ int main(int argc, char* argv[])
+ 
+   // Compute the offset polygon.
+   Traits traits;
+-  boost::timer timer;
++  CGAL::Timer timer;
++  timer.start();
+   Offset_polygon_with_holes_2 offset = CGAL::offset_polygon_2(P, 5, traits);
+-  double secs = timer.elapsed();
++  double secs = timer.time();
+ 
+   std::cout << "The offset polygon has " << offset.outer_boundary().size()
+             << " vertices, " << offset.number_of_holes() << " holes."
