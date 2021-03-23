@@ -1,2 +1,3 @@
 fix-warnings-with-boost-1.74-issue5303-function-output-iterator.diff
 fix-warnings-with-boost-1.74-pr5308-without-tests-tarball-layout.diff
+fix-nef-polygon-parsing-code-pr5371-tarball-layout.diff

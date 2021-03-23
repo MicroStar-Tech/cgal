@@ -1,3 +1,10 @@
+cgal (5.2-3) unstable; urgency=medium
+
+  * Add patch to fix out-of-bounds accesses in Nef_* (issue #5371),
+    CVE-2020-28601..28636, CVE-2020-35628..35636 (Closes: #985671).
+
+ -- Joachim Reichel <reichel@debian.org>  Sun, 21 Mar 2021 21:33:13 +0100
+
 cgal (5.2-2) unstable; urgency=medium
 
   * Add two patches to fix warnings with Boost 1.74 (issue #5303).
