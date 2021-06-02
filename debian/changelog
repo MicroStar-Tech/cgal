@@ -1,3 +1,11 @@
+cgal (5.2.1-1) experimental; urgency=medium
+
+  * New upstream release.
+  * Remove patches for Boost warnings and out-of-bounds acceses
+    (superseded upstream).
+
+ -- Joachim Reichel <reichel@debian.org>  Mon, 22 Mar 2021 19:12:53 +0100
+
 cgal (5.2-3) unstable; urgency=medium
 
   * Add patch to fix out-of-bounds accesses in Nef_* (issue #5371),
