@@ -102,8 +102,10 @@ endif
 
 override_dh_install-indep:
 	mkdir -p debian/tmp/usr/share/doc/cgal
-	tar cf - --sort=name --mode u=rwX,g=rX,o=rX --owner root --group root demo | gzip --no-name --best >debian/tmp/usr/share/doc/cgal/demo.tar.gz
-	tar cf - --sort=name --mode u=rwX,g=rX,o=rX --owner root --group root examples | gzip --no-name --best >debian/tmp/usr/share/doc/cgal/examples.tar.gz
+	# patches affecting the demos or examples will change the timestamps of affected files
+	# use timestamp of debian/changelog to improve reproducibility
+	tar cf - --sort=name --mode u=rwX,g=rX,o=rX --owner root --group root --mtime=debian/changelog demo | gzip --no-name --best >debian/tmp/usr/share/doc/cgal/demo.tar.gz
+	tar cf - --sort=name --mode u=rwX,g=rX,o=rX --owner root --group root --mtime=debian/changelog examples | gzip --no-name --best >debian/tmp/usr/share/doc/cgal/examples.tar.gz
 
 	dh_install --sourcedir=debian/tmp
 	dh_missing --list-missing

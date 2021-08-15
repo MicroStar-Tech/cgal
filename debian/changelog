@@ -1,3 +1,11 @@
+cgal (5.3-2) unstable; urgency=medium
+
+  * Upload to unstable.
+  * Use timestamp of debian/changelog for demos/exampels to improve
+    reproducibility in case of patches.
+
+ -- Joachim Reichel <reichel@debian.org>  Sun, 15 Aug 2021 17:00:18 +0200
+
 cgal (5.3-1) experimental; urgency=medium
 
   * New upstream release.
