@@ -1,3 +1,12 @@
+cgal (5.3-3) unstable; urgency=medium
+
+  * Do not put CGAL Qt5 headers into libcgal-dev on architectures where Qt5
+    support is disabled (Closes: #993329).
+  * Fix timestamp for demos/examples by passing absolute filename to
+    --mtime option of tar.
+
+ -- Joachim Reichel <reichel@debian.org>  Tue, 31 Aug 2021 22:27:58 +0200
+
 cgal (5.3-2) unstable; urgency=medium
 
   * Upload to unstable.

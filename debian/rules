@@ -70,7 +70,8 @@ override_dh_install-arch:
 
 	# remove -fdebug-prefix-map, -ffile-prefix-map, and -fmacro-prefix-map settings
 	# from CGALConfig.cmake to avoid false positives in reproducible builds report
-	sed -i 's/-f\(debug\|file\|macro\)-prefix-map=[^ ]* //' debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/CGAL/CGALConfig.cmake
+	sed -i 's/-f\(debug\|file\|macro\)-prefix-map=[^ ]* //' \
+	  debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/CGAL/CGALConfig.cmake
 
 	# tweak installed documentation files
 	mv debian/tmp/usr/share/doc/CGAL debian/tmp/usr/share/doc/cgal
@@ -84,12 +85,18 @@ override_dh_install-arch:
 	dh_install --sourcedir=debian/tmp
 	dh_missing --list-missing
 
-	# move Qt header and cmake files into libcgal-qt5-dev package
 ifeq (,$(findstring $(DEB_HOST_ARCH), $(OPENGL_ES_ARCHITECTURES)))
+	# move Qt header and cmake files into libcgal-qt5-dev package
 	mkdir -p  debian/libcgal-qt5-dev/usr/include/CGAL
 	mv debian/libcgal-dev/usr/include/CGAL/Qt debian/libcgal-qt5-dev/usr/include/CGAL
 	mkdir -p debian/libcgal-qt5-dev/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/CGAL
-	mv debian/libcgal-dev/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/CGAL/CGAL_Qt5* debian/libcgal-qt5-dev/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/CGAL
+	mv debian/libcgal-dev/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/CGAL/CGAL_Qt5* \
+	  debian/libcgal-qt5-dev/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/CGAL
+else
+	# remove Qt header and cmake files
+	# use -f to avoid build failures if the files should disappear again in future releases
+	rm -rf debian/libcgal-dev/usr/include/CGAL/Qt
+	rm -f debian/libcgal-dev/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/CGAL/CGAL_Qt5*
 endif
 
 	# create symlinks to /usr/share/doc/libcgal-dev
@@ -104,8 +111,10 @@ override_dh_install-indep:
 	mkdir -p debian/tmp/usr/share/doc/cgal
 	# patches affecting the demos or examples will change the timestamps of affected files
 	# use timestamp of debian/changelog to improve reproducibility
-	tar cf - --sort=name --mode u=rwX,g=rX,o=rX --owner root --group root --mtime=debian/changelog demo | gzip --no-name --best >debian/tmp/usr/share/doc/cgal/demo.tar.gz
-	tar cf - --sort=name --mode u=rwX,g=rX,o=rX --owner root --group root --mtime=debian/changelog examples | gzip --no-name --best >debian/tmp/usr/share/doc/cgal/examples.tar.gz
+	tar cf - --sort=name --mode u=rwX,g=rX,o=rX --owner root --group root --mtime=$(CURDIR)/debian/changelog demo | \
+	  gzip --no-name --best >debian/tmp/usr/share/doc/cgal/demo.tar.gz
+	tar cf - --sort=name --mode u=rwX,g=rX,o=rX --owner root --group root --mtime=$(CURDIR)/debian/changelog examples | \
+	  gzip --no-name --best >debian/tmp/usr/share/doc/cgal/examples.tar.gz
 
 	dh_install --sourcedir=debian/tmp
 	dh_missing --list-missing
