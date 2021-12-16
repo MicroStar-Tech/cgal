@@ -1,3 +1,11 @@
+cgal (5.3.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update Standards-Version to 4.6.0 (no changes needed).
+  * debian/control: Use https for Homepage: field.
+
+ -- Joachim Reichel <reichel@debian.org>  Thu, 16 Dec 2021 09:38:34 +0100
+
 cgal (5.3-3) unstable; urgency=medium
 
   * Do not put CGAL Qt5 headers into libcgal-dev on architectures where Qt5
