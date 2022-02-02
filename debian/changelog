@@ -1,3 +1,12 @@
+cgal (5.4-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Ship data files for demos and examples in
+    /usr/share/doc/libcgal-dev/data.tar.gz.
+  * Add superficial autopkgtests. Label them as flaky for now.
+
+ -- Joachim Reichel <reichel@debian.org>  Tue, 01 Feb 2022 22:52:43 +0100
+
 cgal (5.3.1-1) unstable; urgency=medium
 
   * New upstream release.

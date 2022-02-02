@@ -111,6 +111,8 @@ override_dh_install-indep:
 	mkdir -p debian/tmp/usr/share/doc/cgal
 	# patches affecting the demos or examples will change the timestamps of affected files
 	# use timestamp of debian/changelog to improve reproducibility
+	tar cf - --sort=name --mode u=rwX,g=rX,o=rX --owner root --group root --mtime=$(CURDIR)/debian/changelog data | \
+	  gzip --no-name --best >debian/tmp/usr/share/doc/cgal/data.tar.gz
 	tar cf - --sort=name --mode u=rwX,g=rX,o=rX --owner root --group root --mtime=$(CURDIR)/debian/changelog demo | \
 	  gzip --no-name --best >debian/tmp/usr/share/doc/cgal/demo.tar.gz
 	tar cf - --sort=name --mode u=rwX,g=rX,o=rX --owner root --group root --mtime=$(CURDIR)/debian/changelog examples | \
