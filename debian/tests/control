@@ -3,18 +3,18 @@ Features: test-name=rounding_math_simple
 # Poor man's way of specifying [!armel]
 Architecture: amd64, arm64, armhf, i386, mips64el, mipsel, ppc64el, s390x
 Depends: build-essential
-Restrictions: superficial, flaky
+Restrictions: superficial
 
 Test-Command: debian/tests/run.sh rounding_modes_cgal
 Features: test-name=rounding_modes_cgal
 # Poor man's way of specifying [!armel]
 Architecture: amd64, arm64, armhf, i386, mips64el, mipsel, ppc64el, s390x
 Depends: build-essential, libcgal-dev
-Restrictions: superficial, flaky
+Restrictions: superficial
 
 Test-Command: debian/tests/run.sh rounding_modes_simple
 Features: test-name=rounding_modes_simple
 # Poor man's way of specifying [!armel]
 Architecture: amd64, arm64, armhf, i386, mips64el, mipsel, ppc64el, s390x
 Depends: build-essential
-Restrictions: superficial, flaky
+Restrictions: superficial
