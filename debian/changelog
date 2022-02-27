@@ -1,5 +1,6 @@
-cgal (5.4-2) UNRELEASED; urgency=medium
+cgal (5.4-2) unstable; urgency=medium
 
+  * Add patch fix-build-on-mipsel (Closes: #1005696).
   * debian/tests/control: Remove flaky restriction.
   * debian/test/run.sh: Avoid test failures due to compiler warnings.
 
