@@ -1,3 +1,10 @@
+cgal (5.4-3) UNRELEASED; urgency=medium
+
+  * Update Standards-Version to 4.6.0 (no changes needed).
+  * debian/control: Use https for Homepage: field.
+
+ -- Joachim Reichel <reichel@debian.org>  Tue, 08 Mar 2022 11:02:51 +0100
+
 cgal (5.4-2) unstable; urgency=medium
 
   * Add patch fix-build-on-mipsel (Closes: #1005696).

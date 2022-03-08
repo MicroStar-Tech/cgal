@@ -21,10 +21,10 @@ Build-Depends:
  qtbase5-dev [!armel !armhf],
  tar (>= 1.28),
  zlib1g-dev
-Standards-Version: 4.5.1
+Standards-Version: 4.6.0
 Section: libs
 Rules-Requires-Root: no
-Homepage: http://www.cgal.org/
+Homepage: https://www.cgal.org/
 Vcs-Git: https://salsa.debian.org/reichel/cgal.git
 Vcs-Browser: https://salsa.debian.org/reichel/cgal
 
