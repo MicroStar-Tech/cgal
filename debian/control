@@ -21,7 +21,7 @@ Build-Depends:
  qtbase5-dev [!armel !armhf],
  tar (>= 1.28),
  zlib1g-dev
-Standards-Version: 4.6.0
+Standards-Version: 4.6.1
 Section: libs
 Rules-Requires-Root: no
 Homepage: https://www.cgal.org/
@@ -106,11 +106,11 @@ Suggests:
  libssh-dev,
  libsuitesparse-dev,
  libtbb-dev,
- libvtk7-dev,
+ libvtk9-dev,
  qtscript5-dev,
  qttools5-dev,
  qttools5-dev-tools,
- vtk7
+ vtk9
 Description: C++ library for computational geometry (demos)
  CGAL (Computational Geometry Algorithms Library) makes the most important
  of the solutions and methods developed in computational geometry available
