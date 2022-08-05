@@ -1,11 +1,11 @@
 Description: Link with -latomic on mipsel.
 Author: Joachim Reichel <reichel@debian.org>
 
-Index: cgal/cmake/modules/CGAL_SetupCGALDependencies.cmake
+Index: cgal-5.5/cmake/modules/CGAL_SetupCGALDependencies.cmake
 ===================================================================
---- cgal.orig/cmake/modules/CGAL_SetupCGALDependencies.cmake
-+++ cgal/cmake/modules/CGAL_SetupCGALDependencies.cmake
-@@ -171,5 +171,9 @@ function(CGAL_setup_CGAL_dependencies ta
+--- cgal-5.5.orig/cmake/modules/CGAL_SetupCGALDependencies.cmake
++++ cgal-5.5/cmake/modules/CGAL_SetupCGALDependencies.cmake
+@@ -162,5 +162,9 @@ function(CGAL_setup_CGAL_dependencies ta
        message( STATUS "Using gcc on alpha. Adding -mieee -mfp-rounding-mode=d" )
        target_compile_options(${target} INTERFACE "-mieee" "-mfp-rounding-mode=d" )
      endif()
