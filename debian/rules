@@ -100,8 +100,6 @@ else
 endif
 
 	# create symlinks to /usr/share/doc/libcgal-dev
-	mkdir -p debian/libcgal-ipelets/usr/share/doc
-	ln -s libcgal-dev debian/libcgal-ipelets/usr/share/doc/libcgal-ipelets
 ifeq (,$(findstring $(DEB_HOST_ARCH), $(OPENGL_ES_ARCHITECTURES)))
 	mkdir -p debian/libcgal-qt5-dev/usr/share/doc
 	ln -s libcgal-dev debian/libcgal-qt5-dev/usr/share/doc/libcgal-qt5-dev
@@ -125,10 +123,10 @@ override_dh_install-indep:
 	ln -s libcgal-dev debian/libcgal-demo/usr/share/doc/libcgal-demo
 
 override_dh_installdocs:
-	dh_installdocs -plibcgal-dev debian/copyright
+	dh_installdocs -plibcgal-dev -plibcgal-ipelets debian/copyright
 
 override_dh_installchangelogs:
-	dh_installchangelogs -plibcgal-dev
+	dh_installchangelogs -plibcgal-dev -plibcgal-ipelets
 
 override_dh_gencontrol:
 	dh_gencontrol -- -VIpe-Version=`dpkg-awk 'Package:^ipe$$' -- Version | grep Version | sed 's/Version: //;s/-[^-]*$$//'`

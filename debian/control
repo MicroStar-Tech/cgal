@@ -123,7 +123,7 @@ Package: libcgal-ipelets
 Section: graphics
 Architecture: any
 Depends: ipe (>= ${Ipe-Version}), ipe (<< ${Ipe-Version}+),
- libcgal-dev (>= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+ ${shlibs:Depends}, ${misc:Depends}
 Description: C++ library for computational geometry (ipelets)
  CGAL (Computational Geometry Algorithms Library) makes the most important
  of the solutions and methods developed in computational geometry available

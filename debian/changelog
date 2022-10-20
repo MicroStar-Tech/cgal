@@ -1,3 +1,11 @@
+cgal (5.5.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/control: Remove unnecessary dependency on libcgal-dev from
+    libcgal-ipelets.
+
+ -- Joachim Reichel <reichel@debian.org>  Mon, 17 Oct 2022 21:06:50 +0200
+
 cgal (5.5-1) unstable; urgency=medium
 
   * New upstream release.
