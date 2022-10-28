@@ -1,0 +1,3 @@
+# The directory in /usr/share/doc is no longer shared since 5.5.1-1 to drop the
+# dependency on libcgal-dev.
+symlink_to_dir /usr/share/doc/libcgal-ipelets libcgal-dev 5.5.1-1~

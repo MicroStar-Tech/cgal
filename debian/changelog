@@ -1,3 +1,11 @@
+cgal (5.5.1-2) unstable; urgency=medium
+
+  * Add debian/libcgal-ipelets.maintscript to fix the upgrade of
+    libcgal-ipelets (/usr/share/doc/libcgal-ipelets is no longer a
+    symlink since 5.5.1-1).
+
+ -- Joachim Reichel <reichel@debian.org>  Fri, 28 Oct 2022 18:13:54 +0200
+
 cgal (5.5.1-1) unstable; urgency=medium
 
   * New upstream release.
