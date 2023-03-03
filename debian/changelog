@@ -1,3 +1,10 @@
+cgal (5.5.2-1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update Standards-Version to 4.6.2 (no changes needed).
+
+ -- Joachim Reichel <reichel@debian.org>  Thu, 02 Mar 2023 12:06:05 +0100
+
 cgal (5.5.1-2) unstable; urgency=medium
 
   * Add debian/libcgal-ipelets.maintscript to fix the upgrade of

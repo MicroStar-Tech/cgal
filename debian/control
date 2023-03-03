@@ -21,7 +21,7 @@ Build-Depends:
  qtbase5-dev [!armel !armhf],
  tar (>= 1.28),
  zlib1g-dev
-Standards-Version: 4.6.1
+Standards-Version: 4.6.2
 Section: libs
 Rules-Requires-Root: no
 Homepage: https://www.cgal.org/
